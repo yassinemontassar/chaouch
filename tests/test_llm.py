@@ -33,6 +33,7 @@ CONFIG = ModelsConfig.model_validate(
         "models": {
             "m": {"provider": "local", "name": "local-model"},
             "c": {"provider": "capped", "name": "capped-model"},
+            "t": {"provider": "local", "name": "thinker", "params": {"reasoning_effort": "none"}},
         },
     }
 )
@@ -221,3 +222,11 @@ async def test_rate_limiter_daily_cap() -> None:
     await limiter.acquire()
     with pytest.raises(QuotaExhausted):
         await limiter.acquire()
+
+
+async def test_model_params_are_sent() -> None:
+    handler = Recorder(httpx2.Response(200, json=ok_body()))
+    await make_client(handler).complete(MESSAGES, "t")
+    sent = json.loads(handler.requests[0].content)
+    assert sent["reasoning_effort"] == "none"
+    assert sent["model"] == "thinker"

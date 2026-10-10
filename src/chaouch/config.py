@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, ValidationError, model_validator
@@ -31,6 +32,7 @@ class ProviderConfig(StrictModel):
 class ModelConfig(StrictModel):
     provider: str
     name: str
+    params: dict[str, Any] = {}
 
 
 class ModelsConfig(StrictModel):

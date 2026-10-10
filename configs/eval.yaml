@@ -15,7 +15,7 @@ cache_path: C:\dev\cache\chaouch\eval_cache.sqlite
 # Judge: a different family from every evaluated system (the runner flags self-judging).
 judge_model: groq_judge
 
-# Oracle context for B1/B2, in bge-m3 tokens (an approximation of the LLM's tokenizer).
+# Oracle context for B1/B2/B3, in bge-m3 tokens (an approximation of the LLM's tokenizer).
 # Leaves room for the prompt, question and answer inside OLLAMA_CONTEXT_LENGTH=4096.
 oracle_token_budget: 2500
 
@@ -24,13 +24,23 @@ smoke_size: 20
 smoke_systems: [B2]
 
 # Baselines (spec 8.3). Model keys refer to configs/models.yaml.
+# B0 and B1 run once per local model, as separate rows.
 systems:
-  B0:  # base local model, question only
-    model: local
+  B0_qwen:  # local model, question only
+    model: qwen3_5_2b
     use_oracle: false
-  B1:  # base local model + gold documents
-    model: local
+  B0_falcon:
+    model: falcon_h1_3b
+    use_oracle: false
+  B1_qwen:  # local model + gold documents
+    model: qwen3_5_2b
     use_oracle: true
-  B2:  # free API model + gold documents
+  B1_falcon:
+    model: falcon_h1_3b
+    use_oracle: true
+  B2:  # Gemini Flash + gold documents
     model: gemini_flash
+    use_oracle: true
+  B3:  # ALLaM 2 7B on Groq + gold documents
+    model: allam_2_7b
     use_oracle: true

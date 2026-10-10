@@ -7,7 +7,7 @@ import pytest
 from chaouch.config import ModelsConfig, Settings, load_models_config
 from chaouch.ingestion.tokens import whitespace_token_counter as count
 from chaouch.llm import LLMClient, SQLiteCache
-from evals.config import load_eval_config
+from evals.config import SystemConfig, load_eval_config
 from evals.gold import load_gold
 from evals.judge.judge import Judge
 from evals.prompts import load_prompt
@@ -54,7 +54,16 @@ MODELS = ModelsConfig.model_validate(
         },
     }
 )
-CFG = load_eval_config().model_copy(update={"judge_model": "groq_judge"})
+CFG = load_eval_config().model_copy(
+    update={
+        "judge_model": "groq_judge",
+        "systems": {
+            "B0": SystemConfig(model="local", use_oracle=False),
+            "B1": SystemConfig(model="local", use_oracle=True),
+            "B2": SystemConfig(model="gemini_flash", use_oracle=True),
+        },
+    }
+)
 
 
 class FakeServer:
@@ -234,6 +243,8 @@ def test_missing_processed_doc(tmp_path: Path) -> None:
         ("qwen/qwen3.8-27b", "qwen"),
         ("gemini-2.5-flash", "gemini"),
         ("openai/gpt-oss-120b", "gpt"),
+        ("hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M", "falcon"),
+        ("allam-2-7b", "allam"),
     ],
 )
 def test_model_family(name: str, family: str) -> None:
@@ -248,6 +259,7 @@ def test_self_judging_detection() -> None:
                 **MODELS.model_dump()["models"],
                 "qwen_judge": {"provider": "judge", "name": "qwen/qwen3.8-27b"},
                 "gemini_judge": {"provider": "api", "name": "gemini-y"},
+                "allam": {"provider": "judge", "name": "allam-2-7b"},
             },
         }
     )
@@ -255,6 +267,7 @@ def test_self_judging_detection() -> None:
     assert not is_self_judged(models, "gemini_flash", "groq_judge")
     assert is_self_judged(models, "local", "qwen_judge")  # same family, other provider
     assert is_self_judged(models, "gemini_flash", "gemini_judge")
+    assert not is_self_judged(models, "allam", "groq_judge")  # same provider, other family
 
 
 def test_repo_eval_config_matches_models() -> None:
@@ -262,7 +275,6 @@ def test_repo_eval_config_matches_models() -> None:
     models = load_models_config()
     assert cfg.judge_model in models.models
     assert all(s.model in models.models for s in cfg.systems.values())
-    # The default judge must not judge any configured baseline (B2 especially).
     assert not any(is_self_judged(models, s.model, cfg.judge_model) for s in cfg.systems.values())
 
 

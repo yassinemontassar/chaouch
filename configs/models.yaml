@@ -28,15 +28,23 @@ providers:
     max_retries: 4
     concurrency: 2
 
-# Keys are referenced from configs/eval.yaml. Model names are placeholders
-# until the owner's Phase 0 notes (docs/decisions/0001-model-observations.md) pick them.
+# Keys are referenced from configs/eval.yaml (spec 3.1.2 and 5.1).
+# `params` are extra request fields sent with every call to that model.
 models:
-  local:
+  qwen3_5_2b:
     provider: ollama
-    name: qwen3:4b
+    name: qwen3.5:2b
+    params:
+      reasoning_effort: none  # Ollama maps this to think=false
+  falcon_h1_3b:  # stand-in for Falcon-H1 Arabic 3B, which has no public weights (ADR 0005)
+    provider: ollama
+    name: hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M
   gemini_flash:
     provider: gemini
     name: gemini-2.5-flash
+  allam_2_7b:
+    provider: groq
+    name: allam-2-7b  # 4096-token context on Groq
   groq_judge:
     provider: groq
-    name: openai/gpt-oss-120b  # a different family from the local model (Qwen) and B2 (Gemini)
+    name: openai/gpt-oss-120b  # a different family from every evaluated model (ADR 0002)

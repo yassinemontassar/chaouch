@@ -80,6 +80,7 @@ class LLMClient:
         model = self._config.models[model_key]
         provider = model.provider
         request: dict[str, Any] = {
+            **model.params,
             "model": model.name,
             "messages": messages,
             "temperature": temperature,

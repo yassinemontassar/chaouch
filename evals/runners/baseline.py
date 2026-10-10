@@ -107,7 +107,7 @@ def model_family(name: str) -> str:
 
 def is_self_judged(models: ModelsConfig, system_model: str, judge_model: str) -> bool:
     a, b = models.models[system_model], models.models[judge_model]
-    return a.provider == b.provider or model_family(a.name) == model_family(b.name)
+    return model_family(a.name) == model_family(b.name)
 
 
 @dataclass(frozen=True)
@@ -232,7 +232,7 @@ def markdown_table(reports: list[dict[str, Any]]) -> str:
     ]
     for r in reports:
         if r["self_judged"]:
-            lines.append(f"Warning: {r['system']} is judged by its own provider or model family.")
+            lines.append(f"Warning: {r['system']} is judged by its own model family.")
         if r["incomplete"]:
             lines.append(f"Warning: {r['system']} is incomplete (quota hit); re-run to resume.")
     lines.append(

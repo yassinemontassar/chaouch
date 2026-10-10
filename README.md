@@ -19,13 +19,15 @@ Examples of failures seen in Phase 0: _to be added from the model notes in
 
 ## Baseline
 
-Three baselines on the gold set, written by a native speaker:
+Baselines on the gold set, written by a native speaker. B0 and B1 run once per local model
+(Qwen3.5 2B and Falcon-H1 3B Instruct, both Q4 via Ollama):
 
 | ID | System |
 |---|---|
-| B0 | Local model (3B–4B, Q4 via Ollama), question only |
-| B1 | Same local model + the official documents pasted into the prompt |
-| B2 | Free API model (Gemini Flash) + the same documents |
+| B0 | Local model, question only |
+| B1 | Local model + the official documents pasted into the prompt |
+| B2 | Gemini Flash (free API) + the same documents |
+| B3 | ALLaM 2 7B on Groq (Arabic specialist) + the same documents |
 
 Answers are graded by an LLM judge from a different model family (correctness against the required facts,
 faithfulness to the documents, dialect on a 1–5 scale). Results: _pending the gold set; the table will be in
