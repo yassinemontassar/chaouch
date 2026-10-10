@@ -1,0 +1,42 @@
+# LLM providers and models. All three expose OpenAI-compatible endpoints.
+# Free-tier limits change often: check the provider's limits page before a big run
+# and update rpm/rpd here (never in code). Values below are conservative placeholders.
+
+providers:
+  ollama:
+    base_url: http://localhost:11434/v1
+    api_key_env: null
+    rpm: 600
+    rpd: null
+    timeout_s: 180
+    max_retries: 1
+    concurrency: 1  # one GPU, one loaded model (OLLAMA_MAX_LOADED_MODELS=1)
+  gemini:
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai/
+    api_key_env: GEMINI_API_KEY
+    rpm: 10
+    rpd: 250
+    timeout_s: 60
+    max_retries: 4
+    concurrency: 2
+  groq:
+    base_url: https://api.groq.com/openai/v1
+    api_key_env: GROQ_API_KEY
+    rpm: 30
+    rpd: 1000
+    timeout_s: 60
+    max_retries: 4
+    concurrency: 2
+
+# Keys are referenced from configs/eval.yaml. Model names are placeholders
+# until the owner's Phase 0 notes (docs/decisions/0001-model-observations.md) pick them.
+models:
+  local:
+    provider: ollama
+    name: qwen3:4b
+  gemini_flash:
+    provider: gemini
+    name: gemini-2.5-flash
+  groq_judge:
+    provider: groq
+    name: llama-3.3-70b-versatile
