@@ -16,8 +16,10 @@ blog post links only to a chat demo, no `tiiuae/*Arabic*` repo exists, and no co
 3. Another Arabic-capable model of 3B or less.
 
 ## Experiment
-Checked the repo, license and file size with the Hugging Face API, and Ollama's engine version. Not
-downloaded or run yet.
+Checked the repo, license and file size with the Hugging Face API, and Ollama's engine version. After the
+owner pulled both local models (2026-10-11), ran `uv run tasks.py test-live` and called each model directly
+through Ollama's OpenAI-compatible endpoint (temperature 0, `OLLAMA_CONTEXT_LENGTH=4096`,
+`OLLAMA_MAX_LOADED_MODELS=1`).
 
 ## Results
 | Item | Value |
@@ -27,6 +29,17 @@ downloaded or run yet.
 | License | Falcon LLM License (`falcon-llm-license`) |
 | Ollama tag | `hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M` |
 | Ollama support | Ollama 0.40.2 runs llama.cpp b11351; Falcon-H1 support was merged in llama.cpp PR #14534 (2025-07-09) |
+| Loads | yes: Ollama reports architecture `falcon-h1`, 3.15B parameters |
+| Chat template | the one embedded in the GGUF works: clean replies, no leaked template tokens ("Reply with the single word: ok" gave `ok`; a French question got a correct one-sentence French answer) |
+| VRAM, 4096 context | Falcon-H1 3B 2.13 GB, Qwen3.5 2B 2.36 GB, both fully on the GPU (6 GB card, one model loaded at a time) |
+| Latency once loaded | about 4–9 s per short answer for either model |
+
+Qwen3.5 2B thinking-off (spec 3.1.2), checked with the same prompt:
+
+| Request | Reasoning output | Completion tokens |
+|---|---|---|
+| with `reasoning_effort: none` (our config) | none | 2 |
+| without it | 346 characters | 93 |
 
 ## Decision
 Option 1, configured as `falcon_h1_3b` (not called "Arabic") in `configs/models.yaml`, used by B0_falcon and
@@ -34,6 +47,4 @@ B1_falcon.
 
 ## Consequences
 - B0/B1 measure a general multilingual Falcon, not the Arabic specialist. Say so wherever the numbers appear.
-- Still to verify after the download: the model loads in Ollama, the chat template works, and it fits the
-  VRAM budget with a 4096 context.
 - Switch to Falcon-H1 Arabic if TII publishes it, and re-run B0/B1.
