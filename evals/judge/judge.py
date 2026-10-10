@@ -1,5 +1,3 @@
-"""LLM-as-judge: correctness, faithfulness and dialect, one JSON call per metric."""
-
 from __future__ import annotations
 
 import json

@@ -1,21 +1,13 @@
-"""Typed view of `configs/eval.yaml`."""
-
 from __future__ import annotations
 
 from pathlib import Path
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import Field, model_validator
 
-from chaouch.config import CONFIG_DIR, load_yaml
-
-
-class _Strict(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True)
+from chaouch.config import CONFIG_DIR, StrictModel, load_yaml
 
 
-class GoldChecks(_Strict):
-    """Distribution targets from spec 7.2; violations are warnings, not errors."""
-
+class GoldChecks(StrictModel):
     min_questions: int = Field(ge=0)
     script_share_min: float = Field(ge=0, le=1)
     script_share_max: float = Field(ge=0, le=1)
@@ -23,12 +15,12 @@ class GoldChecks(_Strict):
     not_in_scope_share_max: float = Field(ge=0, le=1)
 
 
-class SystemConfig(_Strict):
-    model: str  # key in configs/models.yaml
-    use_oracle: bool  # paste the gold documents into the prompt (B1/B2)
+class SystemConfig(StrictModel):
+    model: str
+    use_oracle: bool
 
 
-class EvalConfig(_Strict):
+class EvalConfig(StrictModel):
     gold: GoldChecks
     cache_path: Path
     judge_model: str

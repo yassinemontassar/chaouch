@@ -67,7 +67,6 @@ class GoldReport:
 
 
 def load_gold(path: Path = GOLD_PATH) -> list[GoldQuestion]:
-    """Load a gold file that must be valid (used by eval runners)."""
     report = parse_gold(path)
     if report.errors:
         raise ConfigError(f"invalid gold set {path}:\n" + "\n".join(report.errors))

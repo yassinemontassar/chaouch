@@ -88,7 +88,6 @@ def load_docs(doc_ids: set[str], processed_dir: Path) -> dict[str, OracleDoc]:
 
 
 def build_oracle(docs: list[OracleDoc], budget: int, count: TokenCounter) -> tuple[str, int, bool]:
-    """Gold documents, cut at a paragraph boundary to fit `budget` tokens."""
     parts: list[str] = []
     used = 0
     for doc in docs:
@@ -103,7 +102,6 @@ def build_oracle(docs: list[OracleDoc], budget: int, count: TokenCounter) -> tup
 
 
 def model_family(name: str) -> str:
-    """'qwen/qwen3.8-27b' -> 'qwen', 'gemini-2.5-flash' -> 'gemini', 'openai/gpt-oss' -> 'gpt'."""
     match = re.match(r"[a-z]+", name.rsplit("/", 1)[-1].lower())
     return match.group(0) if match else name
 

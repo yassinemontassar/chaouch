@@ -1,5 +1,3 @@
-"""Typed configuration: YAML files in `configs/` plus secrets from `.env`."""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -13,29 +11,29 @@ CONFIG_DIR = ROOT / "configs"
 
 
 class ConfigError(Exception):
-    """Configuration is missing or invalid."""
+    pass
 
 
-class _Strict(BaseModel):
+class StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
 
-class ProviderConfig(_Strict):
+class ProviderConfig(StrictModel):
     base_url: str
-    api_key_env: str | None  # None for providers without auth (local Ollama)
+    api_key_env: str | None
     rpm: int = Field(gt=0)
-    rpd: int | None = Field(gt=0)  # None = no daily cap
+    rpd: int | None = Field(gt=0)
     timeout_s: float = Field(gt=0)
     max_retries: int = Field(ge=0)
     concurrency: int = Field(gt=0)
 
 
-class ModelConfig(_Strict):
+class ModelConfig(StrictModel):
     provider: str
     name: str
 
 
-class ModelsConfig(_Strict):
+class ModelsConfig(StrictModel):
     providers: dict[str, ProviderConfig]
     models: dict[str, ModelConfig]
 
@@ -47,13 +45,13 @@ class ModelsConfig(_Strict):
         return self
 
 
-class IngestionConfig(_Strict):
+class IngestionConfig(StrictModel):
     user_agent: str = Field(min_length=1)
     request_delay_s: float = Field(ge=0)
     timeout_s: float = Field(gt=0)
 
 
-class ChunkingConfig(_Strict):
+class ChunkingConfig(StrictModel):
     tokenizer: str
     target_tokens: int = Field(gt=0)
     max_tokens: int = Field(gt=0)
@@ -66,14 +64,12 @@ class ChunkingConfig(_Strict):
         return self
 
 
-class RetrievalConfig(_Strict):
+class RetrievalConfig(StrictModel):
     ingestion: IngestionConfig
     chunking: ChunkingConfig
 
 
 class Settings(BaseSettings):
-    """Secrets, read from the environment or `.env`."""
-
     model_config = SettingsConfigDict(env_file=ROOT / ".env", extra="ignore")
 
     gemini_api_key: SecretStr | None = None

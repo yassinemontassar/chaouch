@@ -6,7 +6,7 @@ import httpx2
 import pytest
 
 from chaouch.config import IngestionConfig
-from chaouch.ingestion.fetch import Fetcher, fetch_all, meta_path
+from chaouch.ingestion.fetch import Fetcher, meta_path
 from chaouch.ingestion.sources import Source
 
 CFG = IngestionConfig(user_agent="TestBot", request_delay_s=3.0, timeout_s=5)
@@ -97,7 +97,9 @@ def test_robots_server_error_blocks(tmp_path: Path) -> None:
 def test_robots_fetched_once_per_host(tmp_path: Path) -> None:
     site = Site(httpx2.Response(404), {"/a": html(), "/b": html()})
     sources = [source("doc_a", "https://gov.test/a"), source("doc_b", "https://gov.test/b")]
-    fetch_all(sources, tmp_path, make_fetcher(site))
+    fetcher = make_fetcher(site)
+    for s in sources:
+        fetcher.fetch(s, tmp_path)
     assert [r.url.path for r in site.requests] == ["/robots.txt", "/a", "/b"]
 
 
@@ -105,7 +107,9 @@ def test_per_host_delay(tmp_path: Path) -> None:
     clock = FakeClock()
     site = Site(httpx2.Response(404), {"/a": html(), "/b": html()})
     sources = [source("doc_a", "https://gov.test/a"), source("doc_b", "https://gov.test/b")]
-    fetch_all(sources, tmp_path, make_fetcher(site, clock))
+    fetcher = make_fetcher(site, clock)
+    for s in sources:
+        fetcher.fetch(s, tmp_path)
     assert clock.sleeps == [3.0, 3.0]  # robots -> /a -> /b, each 3 s apart
 
 

@@ -1,5 +1,3 @@
-"""Aggregate per-question results into the numbers that go in reports."""
-
 from __future__ import annotations
 
 import math

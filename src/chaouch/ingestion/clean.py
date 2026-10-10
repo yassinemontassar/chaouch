@@ -1,12 +1,9 @@
-"""Raw HTML/PDF -> clean Markdown (headings kept, navigation stripped) + metadata JSON."""
-
 from __future__ import annotations
 
 import json
 import re
 from pathlib import Path
 
-import pymupdf
 import pymupdf4llm
 import trafilatura
 
@@ -17,7 +14,7 @@ HEADING = re.compile(r"^#{1,6}\s+(.+?)\s*#*\s*$", re.MULTILINE)
 
 
 class CleanError(Exception):
-    """A document produced no usable text."""
+    pass
 
 
 def first_heading(markdown: str) -> str | None:
@@ -37,19 +34,11 @@ def html_to_markdown(html: bytes) -> tuple[str, str | None]:
     return markdown or "", metadata.title if metadata else None
 
 
-def pdf_to_markdown(path: Path) -> tuple[str, str | None]:
-    markdown = pymupdf4llm.to_markdown(str(path))
-    with pymupdf.open(path) as doc:
-        meta_title = (doc.metadata or {}).get("title") or None
-    # PDF metadata titles are often junk ("Microsoft Word - x.docx"): prefer the first heading.
-    return markdown, first_heading(markdown) or meta_title
-
-
 def clean_document(source: Source, raw_dir: Path, processed_dir: Path) -> Path:
     meta = json.loads(meta_path(raw_dir, source.doc_id).read_text(encoding="utf-8"))
     raw_file = raw_dir / meta["raw_file"]
     if raw_file.suffix == ".pdf":
-        markdown, title = pdf_to_markdown(raw_file)
+        markdown, title = pymupdf4llm.to_markdown(str(raw_file)), None
     else:
         markdown, title = html_to_markdown(raw_file.read_bytes())
     if not markdown.strip():

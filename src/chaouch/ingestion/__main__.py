@@ -10,7 +10,7 @@ import httpx2
 from chaouch.config import ROOT, load_retrieval_config
 from chaouch.ingestion.chunk import chunk_all
 from chaouch.ingestion.clean import CleanError, clean_document
-from chaouch.ingestion.fetch import Fetcher, fetch_all
+from chaouch.ingestion.fetch import Fetcher
 from chaouch.ingestion.sources import load_sources
 from chaouch.ingestion.tokens import hf_token_counter
 from chaouch.log import setup_logging
@@ -35,7 +35,8 @@ def main() -> int:
 
     if args.stage in ("fetch", "all"):
         with httpx2.Client() as client:
-            results = fetch_all(sources, RAW_DIR, Fetcher(cfg.ingestion, client), force=args.force)
+            fetcher = Fetcher(cfg.ingestion, client)
+            results = [fetcher.fetch(s, RAW_DIR, force=args.force) for s in sources]
         for r in results:
             print(f"fetch {r.doc_id}: {r.status} {r.detail}")
         failed += sum(r.status in ("blocked", "failed") for r in results)

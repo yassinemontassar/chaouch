@@ -1,5 +1,3 @@
-"""One async client for every provider, using their OpenAI-compatible endpoints."""
-
 from __future__ import annotations
 
 import asyncio
@@ -17,7 +15,7 @@ from chaouch.config import ConfigError, ModelsConfig, Settings
 from chaouch.llm.cache import SQLiteCache
 from chaouch.llm.rate_limit import QuotaExhausted, RateLimiter
 
-Message = dict[str, str]  # {"role": "system" | "user" | "assistant", "content": ...}
+Message = dict[str, str]
 
 
 @dataclass(frozen=True)
@@ -28,12 +26,10 @@ class Completion:
     prompt_tokens: int | None
     completion_tokens: int | None
     latency_ms: float
-    cached: bool = False
 
 
 class LLMClient:
-    """Retries/backoff on 429 and 5xx come from the SDK (`max_retries`, honors Retry-After);
-    pacing (rpm/rpd) and concurrency limits come from configs/models.yaml."""
+    """Retries and backoff come from the SDK; rpm/rpd pacing and concurrency from models.yaml."""
 
     def __init__(
         self,
@@ -57,7 +53,6 @@ class LLMClient:
         }
 
     def openai(self, provider: str) -> AsyncOpenAI:
-        """The raw SDK client for a provider (reused by PydanticAI in Phase 2)."""
         if provider not in self._clients:
             cfg = self._config.providers[provider]
             # The SDK needs a non-empty key even for servers without auth (local Ollama).
@@ -94,7 +89,7 @@ class LLMClient:
 
         key = SQLiteCache.key(provider, request) if cache else None
         if cache and key and (hit := cache.get(key)) is not None:
-            return dataclasses.replace(Completion(**hit), cached=True)
+            return Completion(**hit)
 
         async with self._semaphores[provider]:
             await self._limiters[provider].acquire()

@@ -1,5 +1,3 @@
-"""SQLite cache for LLM calls, so eval runs are cheap to repeat and resumable across days."""
-
 from __future__ import annotations
 
 import hashlib
@@ -19,7 +17,6 @@ class SQLiteCache:
 
     @staticmethod
     def key(provider: str, request: dict[str, Any]) -> str:
-        """Hash of everything that determines the answer (prompt text carries its version)."""
         blob = json.dumps([provider, request], sort_keys=True, ensure_ascii=False)
         return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
@@ -33,6 +30,3 @@ class SQLiteCache:
                 "INSERT OR REPLACE INTO calls (key, value) VALUES (?, ?)",
                 (key, json.dumps(value, ensure_ascii=False)),
             )
-
-    def close(self) -> None:
-        self._db.close()

@@ -44,7 +44,6 @@ ignore = ["RUF001", "RUF002", "RUF003"]
 strict = true
 files = ["src", "evals", "tasks.py"]
 plugins = ["pydantic.mypy"]
-untyped_calls_exclude = ["pymupdf"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -56,5 +55,5 @@ addopts = "-m 'not live'"
 
 [[tool.mypy.overrides]]
 # PyMuPDF ships no type information.
-module = ["pymupdf4llm", "pymupdf"]
+module = ["pymupdf4llm"]
 ignore_missing_imports = true

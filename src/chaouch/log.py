@@ -1,5 +1,3 @@
-"""Structured JSON logging (stdlib only). PII redaction arrives in Phase 2."""
-
 from __future__ import annotations
 
 import json

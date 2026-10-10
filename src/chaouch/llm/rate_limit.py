@@ -1,5 +1,3 @@
-"""Client-side request pacing so free-tier limits are rarely hit."""
-
 from __future__ import annotations
 
 import asyncio
@@ -8,15 +6,11 @@ from collections.abc import Awaitable, Callable
 
 
 class QuotaExhausted(Exception):
-    """The provider's request budget is used up; stop and resume later (results are cached)."""
+    pass
 
 
 class RateLimiter:
-    """Spaces requests at least 60/rpm seconds apart and stops after `rpd` requests.
-
-    ponytail: rpd counts this process only, not other runs earlier the same day; the provider's
-    own 429 (mapped to QuotaExhausted by LLMClient) is the backstop.
-    """
+    # ponytail: rpd counts this process only; the provider's own 429 is the backstop.
 
     def __init__(
         self,

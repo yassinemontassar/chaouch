@@ -53,7 +53,7 @@ def test_html_keeps_headings_and_content_drops_nav(tmp_path: Path) -> None:
     assert meta["title"]
 
 
-def test_pdf_prefers_first_heading_over_junk_metadata(tmp_path: Path) -> None:
+def test_pdf_title_is_first_heading(tmp_path: Path) -> None:
     put_raw(tmp_path / "raw", "doc_a.pdf", make_pdf())
     out = clean_document(SOURCE, tmp_path / "raw", tmp_path / "processed")
     assert "Synthetic body line one" in out.read_text(encoding="utf-8")

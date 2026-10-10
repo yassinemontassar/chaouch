@@ -1,5 +1,3 @@
-"""Heading-aware chunking of the cleaned Markdown into `processed/chunks.jsonl`."""
-
 from __future__ import annotations
 
 import json
@@ -19,14 +17,14 @@ JOIN = "\n\n"
 
 @dataclass(frozen=True)
 class Section:
-    heading: str  # heading path, e.g. "Passeport > Pièces requises"; "" before the first heading
+    heading: str  # "A > B"; "" before the first heading
     body: str
 
 
 @dataclass(frozen=True)
 class Chunk:
-    text: str  # what gets indexed: overlap from the previous chunk + body
-    body: str  # this chunk's own text, without the overlap
+    text: str
+    body: str  # text without the overlap from the previous chunk
     section: str
 
 
@@ -90,7 +88,6 @@ def split_units(body: str, limit: int, count: TokenCounter) -> list[str]:
 
 
 def tail(text: str, budget: int, count: TokenCounter) -> str:
-    """The longest run of final words of `text` that fits in `budget` tokens."""
     words = text.split()
     taken = 0
     while taken < len(words) and count(" ".join(words[-(taken + 1) :])) <= budget:
@@ -134,7 +131,6 @@ def chunk_document(markdown: str, cfg: ChunkingConfig, count: TokenCounter) -> l
 def chunk_all(
     sources: list[Source], processed_dir: Path, cfg: ChunkingConfig, count: TokenCounter
 ) -> tuple[Path, list[str]]:
-    """Writes chunks.jsonl for every cleaned source; returns its path and the missing doc_ids."""
     out = processed_dir / "chunks.jsonl"
     missing: list[str] = []
     records: list[str] = []

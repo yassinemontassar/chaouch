@@ -1,10 +1,7 @@
-"""Download the official sources politely: robots.txt, a per-host delay, no re-downloads."""
-
 from __future__ import annotations
 
 import hashlib
 import json
-import logging
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -18,8 +15,6 @@ import httpx2
 
 from chaouch.config import IngestionConfig
 from chaouch.ingestion.sources import Source
-
-log = logging.getLogger(__name__)
 
 Status = Literal["fetched", "skipped", "blocked", "failed"]
 DISALLOW_ALL = ["User-agent: *", "Disallow: /"]
@@ -126,14 +121,3 @@ class Fetcher:
             json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8"
         )
         return FetchResult(source.doc_id, "fetched", raw_file.name)
-
-
-def fetch_all(
-    sources: list[Source], raw_dir: Path, fetcher: Fetcher, *, force: bool = False
-) -> list[FetchResult]:
-    results = []
-    for source in sources:
-        result = fetcher.fetch(source, raw_dir, force=force)
-        log.info("fetch", extra={"fields": {"doc_id": result.doc_id, "status": result.status}})
-        results.append(result)
-    return results

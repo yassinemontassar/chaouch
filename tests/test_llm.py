@@ -85,7 +85,6 @@ async def test_complete_returns_text_and_usage() -> None:
     assert result.text == "salut"
     assert (result.provider, result.model) == ("local", "local-model")
     assert (result.prompt_tokens, result.completion_tokens) == (7, 3)
-    assert result.cached is False
     sent = json.loads(handler.requests[0].content)
     assert sent["model"] == "local-model"
     assert sent["temperature"] == 0.0
@@ -159,9 +158,8 @@ async def test_cache_hit_skips_network(tmp_path: Path) -> None:
     cache = SQLiteCache(tmp_path / "sub" / "cache.sqlite")
     handler = Recorder(httpx2.Response(200, json=ok_body("first")))
     client = make_client(handler)
-    first = await client.complete(MESSAGES, "m", cache=cache)
+    await client.complete(MESSAGES, "m", cache=cache)
     second = await client.complete(MESSAGES, "m", cache=cache)
-    assert (first.cached, second.cached) == (False, True)
     assert second.text == "first"
     assert len(handler.requests) == 1
 
@@ -183,7 +181,6 @@ def test_cache_persists_across_instances(tmp_path: Path) -> None:
     key = SQLiteCache.key("p", {"x": "عسلامة"})
     first = SQLiteCache(path)
     first.put(key, {"text": "عسلامة"})
-    first.close()
     assert SQLiteCache(path).get(key) == {"text": "عسلامة"}
     assert SQLiteCache(path).get("missing") is None
 

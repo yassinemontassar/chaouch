@@ -1,5 +1,3 @@
-"""Versioned prompt files: `{{name}}` placeholders; the file stem is the version."""
-
 from __future__ import annotations
 
 import re
@@ -11,7 +9,7 @@ PLACEHOLDER = re.compile(r"\{\{(\w+)\}\}")
 
 @dataclass(frozen=True)
 class Prompt:
-    version: str  # e.g. "answer_oracle_v1"
+    version: str
     template: str
 
     def render(self, **values: str) -> str:

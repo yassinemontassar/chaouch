@@ -1,20 +1,16 @@
-"""The list of official sources (`data/documents/sources.yaml`), written by the owner."""
-
 from __future__ import annotations
 
 from pathlib import Path
 from typing import Literal
 
-from pydantic import AnyHttpUrl, BaseModel, ConfigDict, Field, model_validator
+from pydantic import AnyHttpUrl, Field, model_validator
 
-from chaouch.config import ROOT, load_yaml
+from chaouch.config import ROOT, StrictModel, load_yaml
 
 SOURCES_PATH = ROOT / "data" / "documents" / "sources.yaml"
 
 
-class Source(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True)
-
+class Source(StrictModel):
     doc_id: str = Field(pattern=r"^[a-z0-9_]+$")  # stable: gold questions reference it
     url: AnyHttpUrl
     procedure: str = Field(pattern=r"^[a-z0-9_]+$")
@@ -22,9 +18,7 @@ class Source(BaseModel):
     license_note: str = Field(min_length=1)
 
 
-class SourcesFile(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True)
-
+class SourcesFile(StrictModel):
     sources: list[Source]
 
     @model_validator(mode="after")
