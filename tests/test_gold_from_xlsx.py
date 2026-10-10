@@ -20,3 +20,8 @@ def test_empty_lists() -> None:
     assert record["required_facts"] == []
     assert record["gold_doc_ids"] == []
     assert record["notes"] == "out of scope"
+
+
+def test_out_of_scope_procedure_becomes_null() -> None:
+    record = to_record(HEADER, ("oos-001", "out_of_scope", "x", None, None, None))
+    assert record["procedure"] is None

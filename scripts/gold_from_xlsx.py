@@ -29,6 +29,8 @@ def to_record(header: list[str], row: tuple[Any, ...]) -> dict[str, Any]:
         else:
             record[name] = value
     record["notes"] = record.get("notes") or ""
+    if record.get("procedure") == "out_of_scope":  # a label in the sheet; the schema wants null
+        record["procedure"] = None
     return record
 
 
