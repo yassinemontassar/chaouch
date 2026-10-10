@@ -6,7 +6,7 @@ A Tunisian Derja assistant for administrative procedures, built and measured as 
 
 ## The problem
 
-Tunisians ask about paperwork (passport renewal, birth certificates, ID cards, CNSS, taxes) in Derja:
+Tunisians ask about paperwork (passport renewal, birth certificates, ID cards, CNSS, criminal record extracts) in Derja:
 in Arabic script, in Latin letters with numbers (Arabizi: `3`, `7`, `9`), or mixed with French.
 The official information is in French or Modern Standard Arabic, spread over many sites and PDFs.
 

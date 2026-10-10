@@ -48,9 +48,16 @@ sources:
     license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
     notes: "Self-employed registration only. Mentions the old CNSS domain (cnss.nat.tn)."
 
-  - doc_id: doc_tax_01
-    url: "https://jibaya.tn/formulaires-a-telecharger/"
-    procedure: tax_declaration
+  - doc_id: doc_b3_01
+    url: "http://www.sicad.gov.tn/Fr/Prestation_Obtention-dun-Bulletin-n-3-pour-les-Tunisiens-et-pour-les-etrangers-nes-sur-le-territoire-Tunisien-et-les-etrangers-y-residant_57_7_D1705"
+    procedure: criminal_record
     language: fr
-    license_note: "Footer: 'Copyright © 2026 JIBAYA'. No terms-of-use page found."
-    notes: "Index page of forms; no deadline information."
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Residents in Tunisia (Tunisians + foreigners born or living in Tunisia). Validity of the bulletin not stated."
+
+  - doc_id: doc_b3_02
+    url: "http://www.sicad.gov.tn/Fr/Prestation_Obtention-dun-Bulletin-n-3-pour-les-Tunisiens-residents-a-letranger-et-les-etrangers-qui-ont-reside-sur-le-territoire-Tunisien-une-periode-determinee_57_7_D1702"
+    procedure: criminal_record
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Tunisians abroad + foreigners who lived in Tunisia. Validity of the bulletin not stated."
