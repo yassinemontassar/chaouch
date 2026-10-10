@@ -1,0 +1,55 @@
+# ── Private planning files ──────────────────────────
+CLAUDE.md
+PROJECT_SPEC.md
+
+# ── Secrets ─────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Python ──────────────────────────────────────────
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ── Jupyter / Kaggle notebooks ──────────────────────
+.ipynb_checkpoints/
+
+# ── Models and training outputs (too big for GitHub) ─
+models/
+checkpoints/
+*.gguf
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# ── Data that shouldn't be pushed ───────────────────
+data/documents/raw/
+data/third_party/*
+!data/third_party/*.py
+!data/third_party/*.md
+*.parquet
+*.zip
+
+# ── Logs and local tool files ───────────────────────
+logs/
+*.log
+.claude/
+.langfuse/
+.phoenix/
+
+# ── Editors and OS ──────────────────────────────────
+.vscode/
+.idea/
+.cursor/
+Thumbs.db
+Desktop.ini
+.DS_Store
