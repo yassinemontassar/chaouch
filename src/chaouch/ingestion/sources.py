@@ -16,6 +16,7 @@ class Source(StrictModel):
     procedure: str = Field(pattern=r"^[a-z0-9_]+$")
     language: Literal["fr", "ar"]
     license_note: str = Field(min_length=1)
+    notes: str | None = None  # owner caveats, e.g. "may predate the 2024 CIN law"
 
 
 class SourcesFile(StrictModel):

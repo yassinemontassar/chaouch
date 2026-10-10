@@ -1,13 +1,69 @@
 # [HUMAN] Official sources for the 5 procedures. Written and verified by the owner.
 # doc_id is stable: gold questions reference it in `gold_doc_ids`. Never reuse an id.
-#
-# Fields (one entry per page or PDF):
-#   - doc_id: passport_renewal_01        # lowercase letters, digits, underscores
-#     url: https://...                    # the official page or PDF
-#     procedure: passport_renewal         # lowercase, underscores
-#     language: fr                        # fr | ar
-#     license_note: "Public government page; terms checked on YYYY-MM-DD"
+# All links checked by the owner on 2026-10-11.
 #
 # Validate with: uv run tasks.py validate-evals
 
-sources: []
+sources:
+  - doc_id: doc_passport_01
+    url: "http://www.sicad.gov.tn/Fr/Prestation_Obtention-dun-passeport-pour-la-premiere-fois-ou-son-renouvellement-pour-les-Tunisiens-residents-sur-le-territoire-tunisien_57_3_D1618"
+    procedure: passport_renewal
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Current machine-readable passport, not the upcoming biometric one. Fees cite a 2013 order."
+
+  - doc_id: doc_passport_02
+    url: "http://www.sicad.gov.tn/Fr/upload/1428663339.pdf"
+    procedure: passport_renewal
+    language: ar
+    license_note: "Official Ministry of Interior application form (ref. IL.02-12/2013) hosted on SICAD. No licence notice in the PDF."
+    notes: "Pre-biometric application form (2013)."
+
+  - doc_id: doc_birth_01
+    url: "http://www.sicad.gov.tn/Ar/_57_3_D2093"
+    procedure: birth_certificate
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "Fee not stated. Predates the e-Bawaba online extract."
+
+  - doc_id: doc_birth_02
+    url: "http://www.sicad.gov.tn/Ar/%D8%A5%D8%B9%D9%84%D8%A7%D9%86%D8%A7%D8%AA-%D9%88%D8%A8%D9%84%D8%A7%D8%BA%D8%A7%D8%AA_6_12_D806"
+    procedure: birth_certificate
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "2024 notice about the online extract, not a full procedure sheet."
+
+  - doc_id: doc_cin_01
+    url: "http://www.sicad.gov.tn/Fr/Prestation_Renouvellement-de-la-carte-didentite-par-une-carte-didentite-nationale_57_3_D1310"
+    procedure: cin
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "May predate the 2024 CIN law; age and validity rules possibly outdated."
+
+  - doc_id: doc_cin_02
+    url: "http://www.sicad.gov.tn/Fr/Prestation_Obtention-de-la-carte-didentite-nationale-pour-la-premiere-fois_57_3_D1309"
+    procedure: cin
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "May predate the 2024 CIN law; age rule (18) possibly outdated."
+
+  - doc_id: doc_cnss_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D717"
+    procedure: cnss_registration
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Self-employed registration only. Mentions the old CNSS domain (cnss.nat.tn)."
+
+  - doc_id: doc_tax_01
+    url: "https://jibaya.tn/formulaires-a-telecharger/"
+    procedure: tax_declaration
+    language: fr
+    license_note: "Footer: 'Copyright © 2026 JIBAYA'. No terms-of-use page found."
+    notes: "Index page of forms; no deadline information."
+
+  - doc_id: doc_tax_02
+    url: "https://jibaya.tn/wp-content/uploads/2025/09/%D8%A7%D9%84%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD-%D8%A8%D8%A7%D9%84%D8%B6%D8%B1%D9%8A%D8%A8%D8%A9-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D8%AF%D8%AE%D9%84-2025.pdf"
+    procedure: tax_declaration
+    language: ar
+    license_note: "Official tax administration form PDF hosted on jibaya.tn (site footer 'Copyright © 2026 JIBAYA'). No licence notice in the PDF."
+    notes: "Tax-year 2025 form for all income types; no filing deadline."
