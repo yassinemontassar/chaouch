@@ -17,6 +17,7 @@ TASKS: dict[str, list[list[str]]] = {
     "typecheck": [[PY, "-m", "mypy"]],
     "test": [[PY, "-m", "pytest"]],
     "test-live": [[PY, "-m", "pytest", "-m", "live"]],
+    "validate-evals": [[PY, "-m", "evals.gold"]],
 }
 TASKS["check"] = TASKS["lint"] + TASKS["typecheck"] + TASKS["test"]
 

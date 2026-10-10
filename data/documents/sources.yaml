@@ -1,0 +1,13 @@
+# [HUMAN] Official sources for the 5 procedures. Written and verified by the owner.
+# doc_id is stable: gold questions reference it in `gold_doc_ids`. Never reuse an id.
+#
+# Fields (one entry per page or PDF):
+#   - doc_id: passport_renewal_01        # lowercase letters, digits, underscores
+#     url: https://...                    # the official page or PDF
+#     procedure: passport_renewal         # lowercase, underscores
+#     language: fr                        # fr | ar
+#     license_note: "Public government page; terms checked on YYYY-MM-DD"
+#
+# Validate with: uv run tasks.py validate-evals
+
+sources: []

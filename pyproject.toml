@@ -36,7 +36,7 @@ select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "PTH"]
 
 [tool.mypy]
 strict = true
-files = ["src", "tasks.py"]
+files = ["src", "evals", "tasks.py"]
 plugins = ["pydantic.mypy"]
 
 [tool.pytest.ini_options]

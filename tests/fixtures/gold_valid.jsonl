@@ -1,0 +1,4 @@
+{"id": "t-001", "procedure": "proc_a", "question": "PLACEHOLDER Q1", "script": "arabic", "code_switching": false, "category": "in_scope", "difficulty": "easy", "expected_answer": "PLACEHOLDER A1", "required_facts": ["FACT A1"], "gold_doc_ids": ["proc_a_01"], "notes": ""}
+{"id": "t-002", "procedure": "proc_b", "question": "PLACEHOLDER Q2", "script": "arabizi", "code_switching": false, "category": "in_scope", "difficulty": "medium", "expected_answer": "PLACEHOLDER A2", "required_facts": ["FACT B1", "FACT B2"], "gold_doc_ids": ["proc_b_01"], "notes": ""}
+
+{"id": "t-003", "procedure": null, "question": "PLACEHOLDER Q3", "script": "mixed_fr", "code_switching": true, "category": "out_of_scope", "difficulty": "easy", "expected_answer": "PLACEHOLDER REFUSAL", "required_facts": [], "gold_doc_ids": [], "notes": ""}

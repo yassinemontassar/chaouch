@@ -1,0 +1,9 @@
+# Evaluation settings.
+
+# Gold-set distribution checks (spec 7.2). Out-of-range values only warn.
+gold:
+  min_questions: 50            # Phase 0 target
+  script_share_min: 0.20       # aim for roughly a third each of arabic / arabizi / mixed_fr
+  script_share_max: 0.47
+  not_in_scope_share_min: 0.10 # out_of_scope + adversarial: aim for about 15%
+  not_in_scope_share_max: 0.25
