@@ -22,6 +22,8 @@ TASKS: dict[str, list[list[str]]] = {
     "clean": [[PY, "-m", "chaouch.ingestion", "clean"]],
     "chunk": [[PY, "-m", "chaouch.ingestion", "chunk"]],
     "ingest": [[PY, "-m", "chaouch.ingestion", "all"]],
+    "eval-smoke": [[PY, "-m", "evals.runners.baseline", "--suite", "smoke"]],
+    "eval-full": [[PY, "-m", "evals.runners.baseline", "--suite", "full"]],
 }
 TASKS["check"] = TASKS["lint"] + TASKS["typecheck"] + TASKS["test"]
 
