@@ -17,6 +17,8 @@ class Source(StrictModel):
     language: Literal["fr", "ar"]
     license_note: str = Field(min_length=1)
     notes: str | None = None  # owner caveats, e.g. "may predate the 2024 CIN law"
+    # HTML only. precision = trafilatura's default; recall keeps short blocks it would drop.
+    extract_mode: Literal["precision", "recall"] = "precision"
 
 
 class SourcesFile(StrictModel):

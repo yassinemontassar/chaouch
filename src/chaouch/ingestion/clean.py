@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from pathlib import Path
 
 import pymupdf4llm
@@ -22,9 +23,10 @@ def first_heading(markdown: str) -> str | None:
     return match.group(1).strip("* ") if match else None
 
 
-def html_to_markdown(html: bytes) -> tuple[str, str | None]:
+def html_to_markdown(html: bytes, *, recall: bool = False) -> tuple[str, str | None]:
     markdown = trafilatura.extract(
         html,
+        favor_recall=recall,
         output_format="markdown",
         include_tables=True,
         include_links=False,
@@ -40,7 +42,12 @@ def clean_document(source: Source, raw_dir: Path, processed_dir: Path) -> Path:
     if raw_file.suffix == ".pdf":
         markdown, title = pymupdf4llm.to_markdown(str(raw_file)), None
     else:
-        markdown, title = html_to_markdown(raw_file.read_bytes())
+        markdown, title = html_to_markdown(
+            raw_file.read_bytes(), recall=source.extract_mode == "recall"
+        )
+    # NFKC folds Arabic presentation forms (U+FB50-U+FEFF, pasted from PDFs) into normal letters.
+    markdown = unicodedata.normalize("NFKC", markdown)
+    title = title and unicodedata.normalize("NFKC", title)
     if not markdown.strip():
         raise CleanError(f"{source.doc_id}: no text extracted from {raw_file.name}")
 

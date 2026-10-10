@@ -12,19 +12,13 @@ sources:
     license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
     notes: "Current machine-readable passport, not the upcoming biometric one. Fees cite a 2013 order."
 
-  - doc_id: doc_passport_02
-    url: "http://www.sicad.gov.tn/Fr/upload/1428663339.pdf"
-    procedure: passport_renewal
-    language: ar
-    license_note: "Official Ministry of Interior application form (ref. IL.02-12/2013) hosted on SICAD. No licence notice in the PDF."
-    notes: "Pre-biometric application form (2013)."
-
   - doc_id: doc_birth_01
     url: "http://www.sicad.gov.tn/Ar/_57_3_D2093"
     procedure: birth_certificate
     language: ar
     license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
     notes: "Fee not stated. Predates the e-Bawaba online extract."
+    extract_mode: recall  # the default drops the conditions and required documents
 
   - doc_id: doc_birth_02
     url: "http://www.sicad.gov.tn/Ar/%D8%A5%D8%B9%D9%84%D8%A7%D9%86%D8%A7%D8%AA-%D9%88%D8%A8%D9%84%D8%A7%D8%BA%D8%A7%D8%AA_6_12_D806"
@@ -60,10 +54,3 @@ sources:
     language: fr
     license_note: "Footer: 'Copyright © 2026 JIBAYA'. No terms-of-use page found."
     notes: "Index page of forms; no deadline information."
-
-  - doc_id: doc_tax_02
-    url: "https://jibaya.tn/wp-content/uploads/2025/09/%D8%A7%D9%84%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD-%D8%A8%D8%A7%D9%84%D8%B6%D8%B1%D9%8A%D8%A8%D8%A9-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D8%AF%D8%AE%D9%84-2025.pdf"
-    procedure: tax_declaration
-    language: ar
-    license_note: "Official tax administration form PDF hosted on jibaya.tn (site footer 'Copyright © 2026 JIBAYA'). No licence notice in the PDF."
-    notes: "Tax-year 2025 form for all income types; no filing deadline."

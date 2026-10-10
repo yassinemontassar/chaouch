@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from typing import Any
 
 import pymupdf
 import pytest
@@ -59,6 +60,32 @@ def test_pdf_title_is_first_heading(tmp_path: Path) -> None:
     assert "Synthetic body line one" in out.read_text(encoding="utf-8")
     meta = json.loads((tmp_path / "processed" / "doc_a.json").read_text(encoding="utf-8"))
     assert meta["title"] == "PLACEHOLDER PDF HEADING"
+
+
+def test_arabic_presentation_forms_are_normalized(tmp_path: Path) -> None:
+    page = (FIXTURES / "page.html").read_text(encoding="utf-8")
+    page = page.replace("فقرة", "ﻓﻘﺮة")  # same word in PDF-style glyph forms
+    put_raw(tmp_path / "raw", "doc_a.html", page.encode("utf-8"))
+    markdown = clean_document(SOURCE, tmp_path / "raw", tmp_path / "processed").read_text("utf-8")
+    assert "فقرة تجريبية" in markdown
+    assert not any(0xFB50 <= ord(ch) <= 0xFEFF for ch in markdown)
+
+
+@pytest.mark.parametrize(("mode", "recall"), [("precision", False), ("recall", True)])
+def test_extract_mode_sets_favor_recall(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, mode: str, recall: bool
+) -> None:
+    seen: dict[str, Any] = {}
+
+    def extract(html: bytes, **kwargs: Any) -> str:
+        seen.update(kwargs)
+        return "some text"
+
+    monkeypatch.setattr("chaouch.ingestion.clean.trafilatura.extract", extract)
+    put_raw(tmp_path / "raw", "doc_a.html", b"<html></html>")
+    source = SOURCE.model_copy(update={"extract_mode": mode})
+    clean_document(source, tmp_path / "raw", tmp_path / "processed")
+    assert seen["favor_recall"] is recall
 
 
 def test_empty_html_raises(tmp_path: Path) -> None:

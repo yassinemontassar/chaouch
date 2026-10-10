@@ -42,6 +42,7 @@ def test_loads_entries(tmp_path: Path) -> None:
         entry(doc_id="Has Spaces"),
         entry(url="not-a-url"),
         entry(language="en"),
+        entry() + "    extract_mode: fuzzy\n",
     ],
 )
 def test_invalid_entry(tmp_path: Path, bad: str) -> None:
@@ -58,4 +59,5 @@ def test_notes_are_optional(tmp_path: Path) -> None:
     with_notes = entry(doc_id="proc_a_02") + '    notes: "Fee not stated."\n'
     plain, noted = load_sources(write(tmp_path, entry(), with_notes))
     assert plain.notes is None
+    assert plain.extract_mode == "precision"
     assert noted.notes == "Fee not stated."
