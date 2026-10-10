@@ -28,7 +28,6 @@ from chaouch.config import (
 )
 from chaouch.ingestion.tokens import TokenCounter, hf_token_counter
 from chaouch.llm import LLMClient, QuotaExhausted, SQLiteCache
-from chaouch.log import setup_logging
 from evals.config import EvalConfig, SystemConfig, load_eval_config
 from evals.gold import GoldQuestion, load_gold
 from evals.judge.judge import Judge, JudgeError
@@ -280,7 +279,6 @@ def main() -> int:
     parser.add_argument("--suite", choices=["full", "smoke"], default="full")
     parser.add_argument("--systems", help="comma-separated, e.g. B0,B1 (default: per suite)")
     args = parser.parse_args()
-    setup_logging()
 
     cfg = load_eval_config()
     models = load_models_config()

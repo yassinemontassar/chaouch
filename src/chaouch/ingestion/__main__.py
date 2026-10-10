@@ -13,7 +13,6 @@ from chaouch.ingestion.clean import CleanError, clean_document
 from chaouch.ingestion.fetch import Fetcher
 from chaouch.ingestion.sources import load_sources
 from chaouch.ingestion.tokens import hf_token_counter
-from chaouch.log import setup_logging
 
 RAW_DIR = ROOT / "data" / "documents" / "raw"
 PROCESSED_DIR = ROOT / "data" / "documents" / "processed"
@@ -24,7 +23,6 @@ def main() -> int:
     parser.add_argument("stage", choices=["fetch", "clean", "chunk", "all"])
     parser.add_argument("--force", action="store_true", help="re-download existing files")
     args = parser.parse_args()
-    setup_logging()
 
     cfg = load_retrieval_config()
     sources = load_sources()
