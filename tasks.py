@@ -18,6 +18,10 @@ TASKS: dict[str, list[list[str]]] = {
     "test": [[PY, "-m", "pytest"]],
     "test-live": [[PY, "-m", "pytest", "-m", "live"]],
     "validate-evals": [[PY, "-m", "evals.gold"]],
+    "fetch": [[PY, "-m", "chaouch.ingestion", "fetch"]],
+    "clean": [[PY, "-m", "chaouch.ingestion", "clean"]],
+    "chunk": [[PY, "-m", "chaouch.ingestion", "chunk"]],
+    "ingest": [[PY, "-m", "chaouch.ingestion", "all"]],
 }
 TASKS["check"] = TASKS["lint"] + TASKS["typecheck"] + TASKS["test"]
 

@@ -47,6 +47,30 @@ class ModelsConfig(_Strict):
         return self
 
 
+class IngestionConfig(_Strict):
+    user_agent: str = Field(min_length=1)
+    request_delay_s: float = Field(ge=0)
+    timeout_s: float = Field(gt=0)
+
+
+class ChunkingConfig(_Strict):
+    tokenizer: str
+    target_tokens: int = Field(gt=0)
+    max_tokens: int = Field(gt=0)
+    overlap_tokens: int = Field(ge=0)
+
+    @model_validator(mode="after")
+    def _sizes_are_consistent(self) -> ChunkingConfig:
+        if not self.overlap_tokens < self.target_tokens <= self.max_tokens:
+            raise ValueError("need overlap_tokens < target_tokens <= max_tokens")
+        return self
+
+
+class RetrievalConfig(_Strict):
+    ingestion: IngestionConfig
+    chunking: ChunkingConfig
+
+
 class Settings(BaseSettings):
     """Secrets, read from the environment or `.env`."""
 
@@ -77,3 +101,7 @@ def load_yaml[T: BaseModel](path: Path, model: type[T]) -> T:
 
 def load_models_config(path: Path = CONFIG_DIR / "models.yaml") -> ModelsConfig:
     return load_yaml(path, ModelsConfig)
+
+
+def load_retrieval_config(path: Path = CONFIG_DIR / "retrieval.yaml") -> RetrievalConfig:
+    return load_yaml(path, RetrievalConfig)
