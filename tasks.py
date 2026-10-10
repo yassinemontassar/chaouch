@@ -13,7 +13,7 @@ PY = sys.executable
 
 TASKS: dict[str, list[list[str]]] = {
     "lint": [[PY, "-m", "ruff", "check", "."], [PY, "-m", "ruff", "format", "--check", "."]],
-    "format": [[PY, "-m", "ruff", "check", "--fix", "."], [PY, "-m", "ruff", "format", "."]],
+    "format": [[PY, "-m", "ruff", "format", "."], [PY, "-m", "ruff", "check", "--fix", "."]],
     "typecheck": [[PY, "-m", "mypy"]],
     "test": [[PY, "-m", "pytest"]],
     "test-live": [[PY, "-m", "pytest", "-m", "live"]],

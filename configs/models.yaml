@@ -39,4 +39,4 @@ models:
     name: gemini-2.5-flash
   groq_judge:
     provider: groq
-    name: llama-3.3-70b-versatile
+    name: openai/gpt-oss-120b  # a different family from the local model (Qwen) and B2 (Gemini)
