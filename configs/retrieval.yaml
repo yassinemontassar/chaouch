@@ -1,0 +1,12 @@
+# Ingestion and chunking. (Retrieval settings such as k and fusion weights come in Phase 1.)
+
+ingestion:
+  user_agent: "ChaouchBot/0.1 (non-commercial research project; polite crawler)"
+  request_delay_s: 3.0   # minimum gap between two requests to the same host
+  timeout_s: 30
+
+chunking:
+  tokenizer: BAAI/bge-m3  # token counts match the Phase 1 embedding model
+  target_tokens: 400
+  max_tokens: 500
+  overlap_tokens: 50

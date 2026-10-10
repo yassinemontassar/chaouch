@@ -1,0 +1,46 @@
+# Evaluation settings.
+
+# Gold-set distribution checks (spec 7.2). Out-of-range values only warn.
+gold:
+  min_questions: 50            # Phase 0 target
+  script_share_min: 0.20       # aim for roughly a third each of arabic / arabizi / mixed_fr
+  script_share_max: 0.47
+  not_in_scope_share_min: 0.10 # out_of_scope + adversarial: aim for about 15%
+  not_in_scope_share_max: 0.25
+
+# Every eval-time LLM call (answers and judge) is cached here, outside OneDrive.
+# Re-runs are free and a run stopped by a quota resumes where it left off.
+cache_path: C:\dev\cache\chaouch\eval_cache.sqlite
+
+# Judge: a different family from every evaluated system (the runner flags self-judging).
+judge_model: groq_judge
+
+# Oracle context for B1/B2/B3, in bge-m3 tokens (an approximation of the LLM's tokenizer).
+# Leaves room for the prompt, question and answer inside OLLAMA_CONTEXT_LENGTH=4096.
+oracle_token_budget: 2500
+
+# eval-smoke: the first N in-scope questions (by id) on these systems.
+smoke_size: 20
+smoke_systems: [B2]
+
+# Baselines (spec 8.3). Model keys refer to configs/models.yaml.
+# B0 and B1 run once per local model, as separate rows.
+systems:
+  B0_qwen:  # local model, question only
+    model: qwen3_5_2b
+    use_oracle: false
+  B0_falcon:
+    model: falcon_h1_3b
+    use_oracle: false
+  B1_qwen:  # local model + gold documents
+    model: qwen3_5_2b
+    use_oracle: true
+  B1_falcon:
+    model: falcon_h1_3b
+    use_oracle: true
+  B2:  # Gemini Flash + gold documents
+    model: gemini_flash
+    use_oracle: true
+  B3:  # ALLaM 2 7B on Groq + gold documents
+    model: allam_2_7b
+    use_oracle: true

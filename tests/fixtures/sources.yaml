@@ -1,0 +1,12 @@
+# Synthetic test fixture. Not real sources.
+sources:
+  - doc_id: proc_a_01
+    url: https://example.org/proc-a
+    procedure: proc_a
+    language: fr
+    license_note: test fixture
+  - doc_id: proc_b_01
+    url: https://example.org/proc-b.pdf
+    procedure: proc_b
+    language: ar
+    license_note: test fixture
