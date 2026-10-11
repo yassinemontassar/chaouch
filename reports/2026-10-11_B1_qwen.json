@@ -1,7 +1,7 @@
 {
   "system": "B1_qwen",
   "suite": "full",
-  "created_at": "2026-10-11T16:05:55+00:00",
+  "created_at": "2026-10-11T19:42:35+00:00",
   "model": {
     "provider": "ollama",
     "name": "qwen3.5:2b",
@@ -33,11 +33,26 @@
     "correctness": 0.463953488372093,
     "faithfulness": 0.7153662134339289,
     "dialect": 1.0232558139534884,
+    "trustworthy_rate": 0.18604651162790697,
     "latency_p50_ms": 4281.417700025486,
     "latency_p95_ms": 11049.853500007885,
     "prompt_tokens": 1233.7441860465117,
     "completion_tokens": 158.06976744186048,
     "oracle_truncation_rate": 0.0
+  },
+  "ci95": {
+    "correctness": [
+      0.347,
+      0.581
+    ],
+    "dialect": [
+      1.0,
+      1.07
+    ],
+    "trustworthy_rate": [
+      0.07,
+      0.302
+    ]
   },
   "breakdowns": {
     "script": {
@@ -49,6 +64,7 @@
         "correctness": 0.621875,
         "faithfulness": 0.6790178571428571,
         "dialect": 1.0625,
+        "trustworthy_rate": 0.3125,
         "latency_p50_ms": 4760.726100008469,
         "latency_p95_ms": 14903.772599995136,
         "prompt_tokens": 1294.125,
@@ -63,6 +79,7 @@
         "correctness": 0.3,
         "faithfulness": 0.7080312933254109,
         "dialect": 1.0,
+        "trustworthy_rate": 0.13333333333333333,
         "latency_p50_ms": 3410.989999974845,
         "latency_p95_ms": 13790.28520002612,
         "prompt_tokens": 1242.6666666666667,
@@ -77,6 +94,7 @@
         "correctness": 0.4583333333333333,
         "faithfulness": 0.7729993386243387,
         "dialect": 1.0,
+        "trustworthy_rate": 0.08333333333333333,
         "latency_p50_ms": 4161.829699994996,
         "latency_p95_ms": 10903.248999995412,
         "prompt_tokens": 1142.0833333333333,
@@ -93,6 +111,7 @@
         "correctness": 0.463953488372093,
         "faithfulness": 0.7153662134339289,
         "dialect": 1.0232558139534884,
+        "trustworthy_rate": 0.18604651162790697,
         "latency_p50_ms": 4281.417700025486,
         "latency_p95_ms": 11049.853500007885,
         "prompt_tokens": 1233.7441860465117,
@@ -109,6 +128,7 @@
         "correctness": 0.5316666666666666,
         "faithfulness": 0.7949322001527884,
         "dialect": 1.0,
+        "trustworthy_rate": 0.25,
         "latency_p50_ms": 3080.4101999965496,
         "latency_p95_ms": 13790.28520002612,
         "prompt_tokens": 1247.75,
@@ -123,6 +143,7 @@
         "correctness": 0.25,
         "faithfulness": 0.6732804232804233,
         "dialect": 1.0,
+        "trustworthy_rate": 0.16666666666666666,
         "latency_p50_ms": 4058.6491000140086,
         "latency_p95_ms": 6553.705300000729,
         "prompt_tokens": 1324.5,
@@ -137,6 +158,7 @@
         "correctness": 0.4598039215686274,
         "faithfulness": 0.6366129785247432,
         "dialect": 1.0588235294117647,
+        "trustworthy_rate": 0.11764705882352941,
         "latency_p50_ms": 5330.103999993298,
         "latency_p95_ms": 11049.853500007885,
         "prompt_tokens": 1185.235294117647,

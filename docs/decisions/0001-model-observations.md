@@ -1,6 +1,7 @@
 # 0001: Model observations (Phase 0)
 
-> **AI draft — owner to review.** Written by Claude from the 2026-10-11 baseline reports
+> **AI draft — owner to review** (sections 1–6; the last section is the owner's own). Written by
+> Claude from the 2026-10-11 baseline reports
 > (`reports/2026-10-11_*.json`), at the owner's request. Spec Phase 0 asks for the owner's own notes from
 > talking to the models by hand; correct, cut or add to this before relying on it. Quotes are copied from
 > the reports as-is.
@@ -68,6 +69,52 @@ details slip: B3 pass-001 asks for 2 photos instead of 4.
 Arabizi questions are the hardest for every system with documents except Gemini (B1 Falcon 0.53 vs 0.82
 on Arabic script; B1 Qwen 0.30 vs 0.62).
 
+## 6. Falcon-H1 3B with documents (B1), the main local model
+Observations from the owner, counts checked against `reports/2026-10-11_B1_falcon.json`.
+
+- **The passport is called an ID card.** 10 of 12 passport answers call it "بطاقة هوية" ("نموذج طلب الحصول
+  على بطاقة هوية", pass-001), not counting the real ID-card copy the procedure asks for. The judge is
+  inconsistent: it zeroed pass-001, pass-003 and pass-004 for it ("provides requirements for an ID card,
+  not a passport") and gave full marks to pass-002, 005, 008, 010 and 011.
+- **Contradictions still score as correct.**
+  - pass-002 starts "للمرة الأولى: 25 دينار / للحالة الثانية أو إعادة الصلاحية: 80 دينار" (the two fees are
+    swapped onto the wrong cases), then states the right rule further down: correctness 1.0.
+  - b3-003 describes the bulletin n°3 "للجزائريين والمولودين في الجزائر والمقيمين بها" (Algerians, born in
+    and living in Algeria) instead of Tunisians: 1.0.
+- **Arabizi misread.**
+  - cin-005 "ana 3omri 17 sna" becomes "أنا 30 سنة" ("you are past the legal age of 18"); still 1.0,
+    because the listed documents are right.
+  - b3-009 copies the Arabizi untranslated ("bulletin n° 3 sal7 9addech") and answers a different
+    question: 0.
+- **Foreign-script fragments.** CJK in 5 answers (署名的، 法定، 一周، 登録: cin-004, cin-005, cnss-001,
+  cnss-002, pass-010), a Persian word in b3-003 ("زیر"), and Arabic glued to Latin fragments in about 10
+  more ("الجendarmerie" three times in pass-001, "لأطفالolat" in pass-002).
+- **Fully in French.** 3 answers: birth-004, cin-003, cin-006.
+- **Long answers.** 341 completion tokens on average (Qwen 158, Gemini 90), mostly numbered lists in
+  formal Arabic: this explains most of the 9.2 s p50 latency (ADR 0011).
+
+Prompt-side fixes for Phase 2 are proposed in ADR 0012.
+
 ## Owner's notes
-_To add: the owner's own conversations with the models, and anything above that a native speaker reads
-differently._
+
+Written by the owner (native Tunisian speaker) while grading the dialect check on 2026-10-11.
+
+- **A correct answer is not a Derja answer.** Gemini's B2 answer on the bulletin n°3 fee is right and short,
+  but it's formal Arabic: "حق الطابع الجبائي يكلّف 3 دينارات بالنسبة للمقيمين في تونس…". A Tunisian would say
+  "الطابع الجبائي بـ3 دينارات كان ساكن في تونس، و3 دينارات و300 مليم كان ساكن برّا." Correctness and dialect
+  have to be measured separately, as they are.
+- **Digits.** Tunisians write Western digits (3, 15, 80), not Eastern Arabic ones (٣). B1_qwen wrote
+  "٣ دينار": a sign the answer isn't Tunisian style. Chaouch should always use Western digits, and the dialect
+  judge should treat ٣-style digits as a non-Tunisian marker.
+- **Full diacritics** ("تُفْرِغُ البطاقَة") are never used in everyday Tunisian writing; they signal formal
+  or textbook Arabic.
+- **Answering with a question.** To an Arabizi question about bulletin n°3, B0_falcon replied
+  "الوظيفة الثالثة من النشرة 3 متى هي؟": it didn't understand, and translated the question into formal Arabic.
+  The echo rule (ADR 0009) misses this kind of *translated* echo.
+- **Copied words don't make Derja.** B1_falcon b3-009 repeats "sal7 9addech" from the question inside a
+  formal-Arabic answer, without understanding it. Only the model's own words should count.
+- **Arabizi is misread as names.** B0_falcon read "mta3" as an office ("أقرب مكتب MTA3"), and B1_falcon
+  turned "17 sna" into "30 سنة" (cin-005).
+- **Gemini sometimes mirrors Arabizi** ("tkhalles les frais mta3 el passeport fel… W ya3touni quittance"),
+  which reads naturally to a Tunisian, but it copies "ya3touni" (should be "ya3tiwek") and garbles some
+  words. Whether Chaouch should mirror the user's script is still open (ADR 0007).

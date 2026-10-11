@@ -27,11 +27,11 @@ from chaouch.config import (
     load_retrieval_config,
 )
 from chaouch.ingestion.tokens import TokenCounter, hf_token_counter
-from chaouch.llm import LLMClient, QuotaExhausted, SQLiteCache
+from chaouch.llm import CacheMiss, LLMClient, QuotaExhausted, SQLiteCache
 from evals.config import EvalConfig, SystemConfig, load_eval_config
 from evals.gold import GoldQuestion, load_gold
 from evals.judge.judge import Judge, JudgeError, is_echo
-from evals.metrics.aggregate import aggregate, breakdown
+from evals.metrics.aggregate import aggregate, breakdown, confidence_intervals
 from evals.prompts import Prompt, load_prompt
 
 PROMPTS_DIR = Path(__file__).parent / "prompts"
@@ -165,7 +165,7 @@ async def evaluate(
             result.faithfulness = await run.judge.faithfulness(context, answer.text)
     except QuotaExhausted as exc:
         result.error = f"quota: {exc}"
-    except (JudgeError, openai.APIError) as exc:
+    except (JudgeError, CacheMiss, openai.APIError) as exc:
         result.error = f"{type(exc).__name__}: {exc}"
     return result
 
@@ -194,6 +194,7 @@ def system_report(
         "incomplete": any((r.error or "").startswith("quota") for r in results),
         "not_scored_in_phase0": not_scored,  # out_of_scope / adversarial: refusal metrics in P3
         "metrics": aggregate(rows),
+        "ci95": confidence_intervals(rows),  # bootstrap by question
         "breakdowns": {f: breakdown(rows, f) for f in ("script", "category", "difficulty")},
         "results": rows,
     }
@@ -205,19 +206,39 @@ def fmt(value: Any, digits: int = 2) -> str:
     return f"{value:.{digits}f}" if isinstance(value, float) else str(value)
 
 
+def fmt_ci(ci: list[float] | None) -> str:
+    return "–" if ci is None else f"{ci[0]:.2f}–{ci[1]:.2f}"
+
+
 def markdown_table(reports: list[dict[str, Any]]) -> str:
     lines = [
-        "| System | Model | n | Correctness | Faithfulness | Dialect (1–5) "
+        "| System | Model | n | Correctness | Faithfulness | Dialect (1–5) | Trustworthy "
         "| p50 ms | p95 ms | Oracle truncated | Errors |",
-        "|---|---|---|---|---|---|---|---|---|---|",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     for r in reports:
         m = r["metrics"]
         lines.append(
             f"| {r['system']} | {r['model']['name']} | {m['n']} | {fmt(m['correctness'])} "
-            f"| {fmt(m['faithfulness'])} | {fmt(m['dialect'])} | {fmt(m['latency_p50_ms'], 0)} "
+            f"| {fmt(m['faithfulness'])} | {fmt(m['dialect'])} | {fmt(m['trustworthy_rate'])} "
+            f"| {fmt(m['latency_p50_ms'], 0)} "
             f"| {fmt(m['latency_p95_ms'], 0)} | {fmt(m['oracle_truncation_rate'])} "
             f"| {m['n_errors']} |"
+        )
+    lines += [
+        "",
+        "Trustworthy = correctness 1.0 and faithfulness ≥ 0.9 (systems with documents).",
+        "",
+        "95% confidence intervals (bootstrap over questions, 2000 resamples):",
+        "",
+        "| System | Correctness | Dialect | Trustworthy |",
+        "|---|---|---|---|",
+    ]
+    for r in reports:
+        ci = r["ci95"]
+        lines.append(
+            f"| {r['system']} | {fmt_ci(ci['correctness'])} | {fmt_ci(ci['dialect'])} "
+            f"| {fmt_ci(ci['trustworthy_rate'])} |"
         )
     lines += [
         "",
@@ -296,6 +317,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run baseline evals.")
     parser.add_argument("--suite", choices=["full", "smoke"], default="full")
     parser.add_argument("--systems", help="comma-separated, e.g. B0,B1 (default: per suite)")
+    parser.add_argument("--cached", action="store_true", help="rebuild reports from the cache only")
     args = parser.parse_args()
 
     cfg = load_eval_config()
@@ -322,7 +344,7 @@ def main() -> int:
         else {}
     )
     cache = SQLiteCache(cfg.cache_path)
-    llm = LLMClient(models, Settings())
+    llm = LLMClient(models, Settings(), cache_only=args.cached)
     run = Run(
         llm=llm,
         judge=Judge(llm, cfg.judge_model, cache),

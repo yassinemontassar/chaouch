@@ -1,8 +1,8 @@
-# ADR 0010: Judge switch to Gemma 4 31B
+# 0010: Judge switch to Gemma 4 31B
 
-- Status: accepted
-- Date: 2026-10-11
-- Related: ADR 0002 (first judge), ADR 0009 (calibration v1, v2 prompts)
+- **Status:** accepted
+- **Date:** 2026-10-11
+- **Related:** ADR 0002 (first judge), ADR 0009 (calibration v1, v2 prompts)
 
 ## Context
 
@@ -59,6 +59,31 @@ dialect; sample B incomplete at the daily cap (26/29 facts, 8/9 dialect).
 No fact bias. On dialect, Gemma scores B2 slightly higher than the grader while it does not for
 other systems: a possible mild leniency of ~0.3 points, on 14 answers only.
 
+### Native-speaker check (sample C, dialect only)
+
+`data/evals/calibration/dialect_check_v1.xlsx`: 20 answers from the 2026-10-11 reports that are in
+neither calibration sample (6 B1_falcon, 6 B2, 4 B1_qwen, 2 B0_falcon, 2 B0_qwen; 7 Arabic, 7 Arabizi,
+6 mixed), graded 1–5 against the judge's stored `dialect_v2` scores. No new judge calls.
+
+**How it was graded.** The owner, a native Tunisian speaker, graded 5 answers alone. The other 15 were
+pre-filled by Claude and then reviewed and adjusted by the owner. So only 5 grades are fully independent
+of an AI; the sheet doesn't record which 5, so the numbers below can't be split by who graded.
+
+| Check | Result | Target |
+|---|---|---|
+| Dialect within ±1 | 20/20 (exact on 14) | ≥ 80% |
+| Mean absolute gap | 0.30 | ≤ 1.0 |
+| Spearman | 0.76 | |
+| Judge − owner, B2 answers | +0.17 (higher on 2, lower on 1, n = 6) | |
+| Judge − owner, other answers | +0.21 (higher on 3, lower on 0, n = 14) | |
+
+The judge agrees with the owner within one point everywhere and is slightly generous (~+0.2) on all
+systems alike. The B2-specific leniency seen on the calibration answers (+0.2 to +0.5) does not show up
+here. The six one-point gaps: the judge scored higher on cin-008 B2, pass-009 B2 (Arabizi mirroring with
+copied and garbled words), cnss-001 B1_falcon (Moroccan ديالو), cnss-003 B1_qwen (Egyptian "دي") and
+pass-009 B0_falcon, and lower on cnss-002 B2 (a short neutral phrase). The owner's notes on what makes an
+answer Tunisian are in ADR 0001.
+
 ## Decision
 
 - Default judge: `gemma_judge` (`gemma-4-31b-it`, provider `gemini_gemma` in `configs/models.yaml`):
@@ -80,3 +105,10 @@ other systems: a possible mild leniency of ~0.3 points, on 14 answers only.
 - Earlier gpt-oss judgments stay in the cache; reports name the judge and prompt versions.
 - Judge and B2 share one Google key but not their limits (limits are per model).
 - Judge latency is high (~30 s, thinking); runs are slow but unattended.
+- Rules for a future `dialect_v3`, from the owner's check (not implemented; changing the prompt needs
+  re-calibration):
+  - Eastern Arabic digits (٣، ١٥، ٨٠) are a non-Tunisian marker: Tunisians write 3, 15, 80. Seen in 3
+    answers (B1_qwen b3-002 "٣ دينار", B0_qwen pass-005 and b3-004).
+  - Full diacritics ("تُفْرِغُ البطاقَة") mark formal or textbook Arabic.
+  - A question translated into formal Arabic and asked back is an echo; the code echo rule misses it
+    (B0_falcon b3-001 "الوظيفة الثالثة من النشرة 3 متى هي؟").

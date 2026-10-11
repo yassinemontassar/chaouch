@@ -5,6 +5,7 @@ from openpyxl import Workbook
 
 from scripts.calibration_report import (
     cohen_kappa,
+    read_dialect_sheet,
     read_sheet,
     read_sheet_b,
     report,
@@ -139,3 +140,22 @@ def test_subset_keeps_only_the_given_systems(tmp_path: Path) -> None:
     assert list(only.facts) == [("q1", "B2", 1)]
     assert list(only.dialect) == [("q1", "B2")]
     assert "Agreement: 100% (1/1)" in report(only, sample.judge, "v1")[0]
+
+
+def test_native_dialect_sheet(tmp_path: Path) -> None:
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Dialect"
+    ws.append(
+        ["id", "system", "script", "question", "model answer", "owner_dialect", "owner_notes"]
+    )
+    ws.append(["q1", "B2", "arabic", "Q?", "answer", 2, "Moroccan"])
+    ws.append(["q2", "B3", "arabic", "Q?", "answer", None, None])  # not graded yet
+    path = tmp_path / "c.xlsx"
+    wb.save(path)
+    sample = read_dialect_sheet(path, JUDGE)
+    assert sample.dialect == {("q1", "B2"): 2}
+    text = report(sample, sample.judge, "native")[0]
+    assert "## Facts" not in text
+    assert "Within ±1: 0% (0/1)" in text
+    assert "| q1 | B2 | dialect | 2 | 4 (derja) | Moroccan |" in text

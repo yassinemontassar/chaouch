@@ -1,6 +1,6 @@
 # 0007: Open items from the first smoke run
 
-- **Status:** open (not decided yet)
+- **Status:** partly open: Arabizi reply script (item 1). Items 2 and 3 are resolved.
 - **Date:** 2026-10-11
 
 ## Context
@@ -24,6 +24,9 @@ Correctness was 0 on answers that seem to contain the required facts:
 Plan: run the judge calibration of spec 8.2 (owner hand-labels 50 answers; Spearman and Cohen's kappa
 against the judge) right after the full baseline, and before trusting its numbers. If agreement is weak,
 revise `correctness_v1.md` and re-judge from the cache.
+**Resolved:** confirmed by calibration, the v1 judge was too strict on short correct answers (both items
+are in sample A). Fixed by `correctness_v2` (ADR 0009) and the switch to Gemma 4 31B (ADR 0010), which
+agrees with the second grader on all 116 calibration facts.
 
 ## 3. Gemini free tier is 20 requests per day
 The 429s on 2026-10-11 show `GenerateRequestsPerDayPerProjectPerModel` = 20 for gemini-2.5-flash (and 5
@@ -34,4 +37,5 @@ To decide: accept the multi-day B2 run, or move B2 to another free model with a 
 **Resolved:** B2 moved to Gemini 3.5 Flash-Lite (ADR 0008).
 
 ## Consequences
-- Baseline correctness may be underestimated until calibration is done; say so wherever the numbers appear.
+- Item 1 is still open; decide it with the Phase 4 normalizer work (Arabizi is the weakest script).
+- Answer-prompt changes for Phase 2 are tracked in ADR 0012.

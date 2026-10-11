@@ -1,0 +1,162 @@
+[
+ {
+  "id": "b3-001",
+  "system": "B0_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B0_falcon.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "b3-002",
+  "system": "B1_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B1_falcon.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "b3-002",
+  "system": "B1_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B1_qwen.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "b3-002",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "dialect_score": 2,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "b3-009",
+  "system": "B1_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B1_falcon.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "b3-009",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "dialect_score": 5,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "birth-002",
+  "system": "B0_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B0_qwen.json",
+  "dialect_score": 2,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "birth-004",
+  "system": "B1_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B1_qwen.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "birth-007",
+  "system": "B0_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B0_qwen.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "cin-003",
+  "system": "B1_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B1_falcon.json",
+  "dialect_score": 1,
+  "dialect_label": "french"
+ },
+ {
+  "id": "cin-006",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "dialect_score": 4,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "cin-008",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "dialect_score": 5,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "cnss-001",
+  "system": "B1_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B1_falcon.json",
+  "dialect_score": 2,
+  "dialect_label": "other"
+ },
+ {
+  "id": "cnss-002",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "cnss-003",
+  "system": "B1_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B1_qwen.json",
+  "dialect_score": 2,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "cnss-005",
+  "system": "B1_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B1_qwen.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "cnss-006",
+  "system": "B1_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B1_falcon.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "pass-004",
+  "system": "B1_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B1_falcon.json",
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "pass-009",
+  "system": "B0_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B0_falcon.json",
+  "dialect_score": 2,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "pass-009",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "dialect_score": 5,
+  "dialect_label": "derja"
+ }
+]

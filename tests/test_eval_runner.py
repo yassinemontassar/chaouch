@@ -190,6 +190,10 @@ async def test_end_to_end_baselines(tmp_path: Path) -> None:
         assert m["latency_p50_ms"] is not None
         assert set(reports[sid]["breakdowns"]["script"]) == {"arabic", "arabizi"}
     assert reports["B0"]["metrics"]["faithfulness"] is None  # no context to be faithful to
+    assert reports["B0"]["metrics"]["trustworthy_rate"] is None  # needs documents
+    assert reports["B1"]["metrics"]["trustworthy_rate"] == 0.0  # faithfulness 0.5 < 0.9
+    assert reports["B1"]["ci95"]["correctness"] == [1.0, 1.0]
+    assert reports["B0"]["ci95"]["trustworthy_rate"] is None
     assert reports["B0"]["metrics"]["oracle_truncation_rate"] is None
     assert reports["B1"]["metrics"]["faithfulness"] == 0.5
     assert reports["B2"]["metrics"]["oracle_truncation_rate"] == 0.0

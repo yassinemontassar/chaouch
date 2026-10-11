@@ -18,7 +18,7 @@ from evals.judge.judge import (
     is_echo,
     parse_json,
 )
-from evals.metrics.aggregate import percentile
+from evals.metrics.aggregate import bootstrap_ci, percentile, trustworthy
 from evals.prompts import Prompt
 
 
@@ -131,3 +131,26 @@ async def test_echo_is_scored_without_judge_calls() -> None:
         0.0, ["absent", "absent"], [ECHO_REASON, ECHO_REASON],
     )  # fmt: skip
     assert await judge.dialect(question, answer) == (1, "echo")
+
+
+def row(correctness: float | None, faithfulness: float | None = None) -> dict[str, object]:
+    return {"correctness": correctness, "faithfulness": faithfulness}
+
+
+def test_trustworthy_needs_all_facts_and_faithfulness() -> None:
+    assert trustworthy(row(1.0, 0.9)) == 1.0
+    assert trustworthy(row(1.0, 0.8)) == 0.0
+    assert trustworthy(row(0.5, 1.0)) == 0.0
+    assert trustworthy(row(1.0, None)) == 0.0  # missing faithfulness is not trusted
+
+
+def test_bootstrap_ci() -> None:
+    def metric(r: dict[str, object]) -> float | None:
+        return r["correctness"]  # type: ignore[return-value]
+
+    rows = [row(float(i % 2)) for i in range(40)]
+    low, high = bootstrap_ci(rows, metric) or [0, 0]
+    assert 0.3 < low < 0.5 < high < 0.7
+    assert bootstrap_ci(rows, metric) == [low, high]  # fixed seed
+    assert bootstrap_ci([row(1.0)] * 5, metric) == [1.0, 1.0]
+    assert bootstrap_ci([row(None)] * 5, metric) is None

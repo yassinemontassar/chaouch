@@ -30,6 +30,8 @@ DIR = Path(__file__).resolve().parents[1] / "data" / "evals" / "calibration"
 SHEET_A = DIR / "judge_calibration_v1.xlsx"
 JUDGE_A = DIR / "judge_calibration_v1_judge.json"
 SHEET_B = DIR / "judge_calibration_v1b.xlsx"
+SHEET_C = DIR / "dialect_check_v1.xlsx"  # native speaker, dialect only (ADR 0010)
+JUDGE_C = DIR / "dialect_check_v1_judge.json"
 PASS = 0.8  # facts agreement and dialect within ±1, on each sample (ADR 0009)
 GEMINI = {"B2", "B2_smoke"}  # Google answers, judged by Gemma (Google): reported apart (ADR 0010)
 
@@ -163,6 +165,27 @@ def subset(sample: Sample, systems: set[str]) -> Sample:
     )
 
 
+def read_dialect_sheet(path: Path, judge: list[dict[str, Any]]) -> Sample:
+    """Sample C: tab "Dialect", the owner's 1-5 score per answer; the judge's scores in a file."""
+    dialect: dict[Key, int] = {}
+    notes: dict[Key, str] = {}
+    answers: dict[Key, str] = {}
+    problems = []
+    for number, row in rows(load_workbook(path, read_only=True)["Dialect"]):
+        key = (str(row["id"]), str(row["system"]))
+        answers[key] = str(row["model answer"])
+        if row.get("owner_dialect") is not None:
+            if (s := score(row["owner_dialect"])) is None:
+                problems.append(f"row {number}: owner_dialect must be 1-5")
+            else:
+                dialect[key] = s
+        add_note(notes, key, row.get("owner_notes"))
+    if problems:
+        raise SystemExit(f"Fix {path.name} first:\n" + "\n".join(problems))
+    by_key = {(j["id"], j["system"]): j for j in judge}
+    return Sample("C (native speaker, dialect only)", {}, dialect, notes, answers, by_key)
+
+
 def cohen_kappa(pairs: list[tuple[bool, bool]]) -> float | None:
     """Cohen's kappa for two raters giving yes/no labels; None when chance agreement is total."""
     n = len(pairs)
@@ -223,15 +246,16 @@ def report(sample: Sample, judge: Judged, title: str) -> tuple[str, bool]:
     agree = sum(o == j for o, j in pairs)
     stricter = [r for r in fact_rows if r[2] and r[3] != "present"]
     looser = [r for r in fact_rows if not r[2] and r[3] == "present"]
-    lines += [
-        f"## Facts ({len(pairs)} graded)",
-        "",
-        f"- Agreement: {pct(agree, len(pairs))} ({agree}/{len(pairs)})",
-        f"- Cohen's kappa: {fmt(cohen_kappa(pairs))}",
-        f"- Judge stricter (grader Y, judge N): {len(stricter)}",
-        f"- Judge looser (grader N, judge Y): {len(looser)}",
-        "",
-    ]
+    if sample.facts:
+        lines += [
+            f"## Facts ({len(pairs)} graded)",
+            "",
+            f"- Agreement: {pct(agree, len(pairs))} ({agree}/{len(pairs)})",
+            f"- Cohen's kappa: {fmt(cohen_kappa(pairs))}",
+            f"- Judge stricter (grader Y, judge N): {len(stricter)}",
+            f"- Judge looser (grader N, judge Y): {len(looser)}",
+            "",
+        ]
 
     dialect = [
         (k, s, judge[k]["dialect_score"])
@@ -323,6 +347,12 @@ def main() -> int:
     if not args.rejudge:
         for s in samples:
             print(report(s, s.judge, "Judge calibration v1")[0])
+        native = read_dialect_sheet(SHEET_C, json.loads(JUDGE_C.read_text(encoding="utf-8")))
+        if native.dialect:
+            title = "Native-speaker check of the 2026-10-11 judge (gemma-4-31b-it, dialect_v2)"
+            print(report(native, native.judge, title)[0])
+        else:
+            print(f"Sample C ({SHEET_C.name}): not graded yet.")
         return 0
 
     judged, versions = asyncio.run(rejudge(samples, args.cached))

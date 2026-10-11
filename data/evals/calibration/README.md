@@ -11,6 +11,8 @@ switched to Gemma 4 31B).
 | `judge_calibration_v1.xlsx` | sample A: 20 answers, 54 facts, one row per fact (tab "Grade", rules in "Guide") |
 | `judge_calibration_v1_judge.json` | the v1 judge's (gpt-oss-120b) verdicts for sample A |
 | `judge_calibration_v1b.xlsx` | sample B: 20 answers, 62 facts; tabs "Facts" and "Dialect", Claude's and the v1 judge's grades side by side |
+| `dialect_check_v1.xlsx` | sample C: 20 other answers, dialect only, graded by the native-speaker owner (5 alone, 15 pre-filled by Claude and reviewed by the owner; tab "Dialect") |
+| `dialect_check_v1_judge.json` | the 2026-10-11 judge's (Gemma 4 31B, `dialect_v2`) dialect scores for sample C; don't open it before grading |
 
 Second grader: Claude, reviewed by the owner (not fully blind, see ADR 0009). In sample B the `owner`
 column overrides Claude: blank or `claude` keeps Claude's grade, `judge` takes the judge's, and `Y`/`N`
@@ -32,7 +34,9 @@ Two answers are in both samples (B3 pass-001, B0_qwen cnss-001): 38 distinct ans
 
 ## Commands
 
-- `uv run tasks.py calibrate-report`: the stored v1 judge results vs the grader, per sample.
+- `uv run tasks.py calibrate-report`: the stored v1 judge results vs the grader, per sample, and sample C
+  (owner vs the Gemma judge on dialect) once it is graded. Rebuild sample C with
+  `uv run python -m scripts.dialect_sample` (overwrites the sheet).
 - `uv run tasks.py calibrate`: re-judges the 38 answers with the current judge and prompts (answers come
   from the sheets, judge calls are cached), prints a report per sample and a same-family check on the B2
   (Gemini) answers. Exit code 0 = pass: on each sample, fact agreement ≥ 80% and dialect within ±1 ≥ 80%.

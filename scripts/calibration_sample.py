@@ -66,9 +66,15 @@ def scored(report: Path) -> list[dict[str, Any]]:
     ]
 
 
-def spread(pool: list[dict[str, Any]], k: int, offset: int) -> list[dict[str, Any]]:
+def by_scores(r: dict[str, Any]) -> tuple[Any, ...]:
+    return (r["correctness"], r["dialect_score"], r["id"])
+
+
+def spread(
+    pool: list[dict[str, Any]], k: int, offset: int, key: Any = by_scores
+) -> list[dict[str, Any]]:
     """k items, cycling through the scripts and spaced over each script's score range."""
-    ranked = sorted(pool, key=lambda r: (r["correctness"], r["dialect_score"], r["id"]))
+    ranked = sorted(pool, key=key)
     picks: list[dict[str, Any]] = []
     for j in range(k):
         script = SCRIPTS[(j + offset) % len(SCRIPTS)]

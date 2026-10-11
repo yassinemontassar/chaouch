@@ -1,8 +1,8 @@
-# ADR 0009: Judge calibration v1
+# 0009: Judge calibration v1
 
-- Status: accepted, pending the owner's review of the disagreements
-- Date: 2026-10-11
-- Related: PROJECT_SPEC §8.2, ADR 0002 (judge choice), ADR 0007 (open items)
+- **Status:** accepted (the owner's native-speaker dialect check is in ADR 0010)
+- **Date:** 2026-10-11
+- **Related:** PROJECT_SPEC §8.2, ADR 0002 (judge choice), ADR 0007 (open items)
 
 ## Context
 
@@ -10,7 +10,13 @@ All Phase 0 scores come from an LLM judge: `openai/gpt-oss-120b` on Groq, with p
 `correctness_v1` and `dialect_v1`. Before spending ~3 more days of the judge's
 free daily quota, we checked whether its grades can be trusted.
 
-## Method
+## Options
+
+1. Keep the v1 judge and its prompts.
+2. Revise the prompts (`v2`) and re-validate on the same answers.
+3. Change the judge model.
+
+## Experiment
 
 Two samples, 40 answers, 116 required facts, all already graded by the judge (no new
 judge calls). Second grader: Claude (Anthropic), a different model family from the
@@ -45,7 +51,7 @@ day: those rows are graded Y again, and the sheets are back to the second grader
 The targets are rules of thumb chosen for this project, not an external standard.
 The table is the v1 judge against the second grader, core-claim rule.
 
-## Findings
+### Findings
 
 1. **The judge is too strict on correct, short answers.** All 7 disagreements in
    sample A go the same way. Clearest case: B2_smoke b3-005 answered
@@ -119,7 +125,7 @@ The table is the v1 judge against the second grader, core-claim rule.
   of the disagreement rows is what makes this calibration count.
 - Still open (ADR 0007): Arabizi script mirroring and a script-match metric.
 
-## Known limitations
+### Known limitations
 
 - **Negative facts.** On B2 birth-005 fact 2 ("a sibling is not allowed"), gpt-oss with
   `correctness_v2` says absent ("does not mention that a sibling is not listed") although the

@@ -25,7 +25,8 @@ Failures seen in the Phase 0 baseline ([model observations](docs/decisions/0001-
 
 ## Baseline
 
-Gold set v1: 51 questions written and reviewed by a native speaker, 43 of them in scope and scored here.
+Gold set v1: 51 questions, drafted with AI from the official sources, then reviewed and edited by a native
+speaker; 43 of them are in scope and scored here.
 B0 and B1 run once per local model (Q4 GGUF via Ollama):
 
 | ID | System |
@@ -37,14 +38,17 @@ B0 and B1 run once per local model (Q4 GGUF via Ollama):
 
 Results of 2026-10-11 ([full table](reports/2026-10-11_baseline.md), per-question JSON in `reports/`):
 
-| System | Model | Correctness | Faithfulness | Dialect (1–5) | p50 latency |
-|---|---|---|---|---|---|
-| B0 | Qwen3.5 2B | 0.07 | – | 1.12 | 3.3 s |
-| B0 | Falcon-H1 3B | 0.09 | – | 1.33 | 2.7 s |
-| B1 | Qwen3.5 2B | 0.46 | 0.72 | 1.02 | 4.3 s |
-| B1 | Falcon-H1 3B | 0.67 | 0.83 | 1.16 | 9.2 s |
-| B2 | Gemini 3.5 Flash-Lite | **0.84** | **0.99** | **3.77** | 0.8 s |
-| B3 | ALLaM 2 7B | 0.31 | 0.71 | 1.14 | 0.6 s |
+| System | Model | Correctness | Faithfulness | Dialect (1–5) | Trustworthy | p50 latency |
+|---|---|---|---|---|---|---|
+| B0 | Qwen3.5 2B | 0.07 (0.01–0.14) | – | 1.12 (1.02–1.23) | – | 3.3 s |
+| B0 | Falcon-H1 3B | 0.09 (0.04–0.16) | – | 1.33 (1.14–1.56) | – | 2.7 s |
+| B1 | Qwen3.5 2B | 0.46 (0.35–0.58) | 0.72 | 1.02 (1.00–1.07) | 0.19 (0.07–0.30) | 4.3 s |
+| B1 | Falcon-H1 3B | 0.67 (0.54–0.79) | 0.83 | 1.16 (1.02–1.37) | 0.35 (0.21–0.49) | 9.2 s |
+| B2 | Gemini 3.5 Flash-Lite | **0.84** (0.77–0.91) | **0.99** | **3.77** (3.30–4.19) | **0.63** (0.49–0.77) | 0.8 s |
+| B3 | ALLaM 2 7B | 0.31 (0.19–0.42) | 0.71 | 1.14 (1.02–1.30) | 0.07 (0.00–0.16) | 0.6 s |
+
+In brackets: 95% bootstrap confidence intervals over the 43 questions. **Trustworthy** = the share of
+answers that could be shown as is: every required fact present (correctness 1.0) and faithfulness ≥ 0.9.
 
 Correctness on B1 by script of the question:
 
@@ -63,20 +67,39 @@ What it shows:
    both local models (B1 Falcon 0.53 vs 0.82, B1 Qwen 0.30 vs 0.62).
 
 Falcon-H1 3B is the main local model from here on ([ADR 0011](docs/decisions/0011-main-local-model.md)).
+Its intervals overlap Qwen's on every metric; a paired comparison on the same questions shows Falcon
+ahead on correctness (+0.21, 95% CI +0.07 to +0.35), borderline on the trustworthy rate (+0.16, 0.00 to
++0.33), and no different on dialect.
 
 Caveats:
 
 - Scores come from an LLM judge, Gemma 4 31B on Google AI Studio, with prompts `correctness_v2` and
   `dialect_v2`. It was calibrated against a second grader on 40 answers and 116 graded facts (fact
-  agreement 100%, dialect within ±1 on 40/40); the second grader is also an AI, reviewed by the owner
+  agreement 100%, dialect within ±1 on 40/40). That second grader is also an AI (Claude), reviewed by
+  the owner. The owner, a native speaker, then checked dialect on 20 more answers: within ±1 on 20/20,
+  mean gap 0.30. Only 5 of those were graded by the owner alone; the other 15 were pre-filled by Claude
+  and reviewed and adjusted by the owner
   ([ADR 0009](docs/decisions/0009-judge-calibration-v1.md), [ADR 0010](docs/decisions/0010-judge-gemma-4-31b.md)).
-- The judge and B2 are both Google models. On the calibration answers the judge scored B2's dialect ~0.3
-  points higher than the second grader did, and not the others: B2's 3.77 may be a little generous.
+- The judge and B2 are both Google models. On the calibration answers it scored B2's dialect ~0.3 points
+  higher than the second grader; on the owner's check it was ~0.2 points generous on every system alike.
+  Read dialect gaps under ~0.3 as ties.
 - Gold set v1 has 43 scored questions and each system ran once: differences of a few points are noise.
 - 3 B1 Falcon faithfulness scores are missing (the judge API kept failing on them); its 0.83 is over 40.
 - Answers that only repeat the question are scored 0 without the judge (3 for B0 Falcon, 1 for B3).
 
 Hardware for all local numbers: RTX 3050 Laptop GPU (6 GB VRAM), 16 GB RAM, Windows 11.
+
+## Roadmap
+
+Each phase targets a weakness the baseline found.
+
+| Phase | Work | Weakness it targets |
+|---|---|---|
+| 1 | Retrieval: Arabic normalization, BM25, bge-m3 embeddings, fusion, reranker | The documents do most of the work, but B1 had them pasted in; the real system must find them |
+| 2 | API, generation, observability | Falcon's 9.2 s latency and ~340-token answers; wrong terms and added wrong facts ([ADR 0012](docs/decisions/0012-answer-prompt-phase-2.md)) |
+| 3 | Agent and tools | Out-of-scope and adversarial questions (not scored yet) |
+| 4 | Arabizi normalizer; Derja style with QLoRA (optional) | Arabizi is ~30 points behind Arabic script; local models answer in formal Arabic (dialect ~1.2) |
+
 
 ## Running it locally (Windows, native)
 

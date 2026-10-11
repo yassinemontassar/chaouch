@@ -1,7 +1,7 @@
 {
   "system": "B0_qwen",
   "suite": "full",
-  "created_at": "2026-10-11T16:05:55+00:00",
+  "created_at": "2026-10-11T19:42:35+00:00",
   "model": {
     "provider": "ollama",
     "name": "qwen3.5:2b",
@@ -33,11 +33,23 @@
     "correctness": 0.07441860465116279,
     "faithfulness": null,
     "dialect": 1.119047619047619,
+    "trustworthy_rate": null,
     "latency_p50_ms": 3315.5002000276,
     "latency_p95_ms": 9084.010999999009,
     "prompt_tokens": 84.61904761904762,
     "completion_tokens": 80.07142857142857,
     "oracle_truncation_rate": null
+  },
+  "ci95": {
+    "correctness": [
+      0.012,
+      0.144
+    ],
+    "dialect": [
+      1.025,
+      1.233
+    ],
+    "trustworthy_rate": null
   },
   "breakdowns": {
     "script": {
@@ -49,6 +61,7 @@
         "correctness": 0.15625,
         "faithfulness": null,
         "dialect": 1.1875,
+        "trustworthy_rate": null,
         "latency_p50_ms": 3872.0993000024464,
         "latency_p95_ms": 9084.010999999009,
         "prompt_tokens": 82.8125,
@@ -63,6 +76,7 @@
         "correctness": 0.0,
         "faithfulness": null,
         "dialect": 1.0714285714285714,
+        "trustworthy_rate": null,
         "latency_p50_ms": 3015.201200003503,
         "latency_p95_ms": 59915.20019999007,
         "prompt_tokens": 86.71428571428571,
@@ -77,6 +91,7 @@
         "correctness": 0.05833333333333333,
         "faithfulness": null,
         "dialect": 1.0833333333333333,
+        "trustworthy_rate": null,
         "latency_p50_ms": 3117.3885999887716,
         "latency_p95_ms": 5485.160699987318,
         "prompt_tokens": 84.58333333333333,
@@ -93,6 +108,7 @@
         "correctness": 0.07441860465116279,
         "faithfulness": null,
         "dialect": 1.119047619047619,
+        "trustworthy_rate": null,
         "latency_p50_ms": 3315.5002000276,
         "latency_p95_ms": 9084.010999999009,
         "prompt_tokens": 84.61904761904762,
@@ -109,6 +125,7 @@
         "correctness": 0.034999999999999996,
         "faithfulness": null,
         "dialect": 1.263157894736842,
+        "trustworthy_rate": null,
         "latency_p50_ms": 3129.7252999793272,
         "latency_p95_ms": 13581.814900011523,
         "prompt_tokens": 80.3157894736842,
@@ -123,6 +140,7 @@
         "correctness": 0.0,
         "faithfulness": null,
         "dialect": 1.0,
+        "trustworthy_rate": null,
         "latency_p50_ms": 3148.0313000211027,
         "latency_p95_ms": 9084.010999999009,
         "prompt_tokens": 89.5,
@@ -137,6 +155,7 @@
         "correctness": 0.14705882352941177,
         "faithfulness": null,
         "dialect": 1.0,
+        "trustworthy_rate": null,
         "latency_p50_ms": 3315.5002000276,
         "latency_p95_ms": 7056.28949997481,
         "prompt_tokens": 87.70588235294117,
