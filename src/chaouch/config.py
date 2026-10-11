@@ -111,6 +111,7 @@ class Settings(BaseSettings):
     gemini_api_key: SecretStr | None = None
     groq_api_key: SecretStr | None = None
     database_url: SecretStr | None = None
+    hf_token: SecretStr | None = None  # optional; faster, less throttled model downloads
 
     def _keys(self) -> dict[str, SecretStr | None]:
         return {"GEMINI_API_KEY": self.gemini_api_key, "GROQ_API_KEY": self.groq_api_key}

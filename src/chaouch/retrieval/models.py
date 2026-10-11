@@ -11,7 +11,7 @@ import numpy as np
 from numpy.typing import NDArray
 from sentence_transformers import CrossEncoder, SentenceTransformer
 
-from chaouch.config import SearchConfig
+from chaouch.config import SearchConfig, Settings
 
 Vectors = NDArray[np.float32]
 Rerank = Callable[[str, list[str]], list[float]]
@@ -23,14 +23,24 @@ class Embedder:
     embed_queries: Callable[[list[str]], Vectors]
 
 
+def _hf_token() -> str | None:
+    """HF_TOKEN from .env (the Hugging Face library only reads the process environment)."""
+    token = Settings().hf_token
+    if token is None or not token.get_secret_value():
+        return None
+    return token.get_secret_value()
+
+
 @functools.cache
 def _sentence_transformer(name: str, device: str) -> SentenceTransformer:
-    return SentenceTransformer(name, device=device)
+    return SentenceTransformer(name, device=device, token=_hf_token())
 
 
 @functools.cache
 def _cross_encoder(name: str, device: str, max_length: int) -> CrossEncoder:
-    model: CrossEncoder = CrossEncoder(name, device=device, max_length=max_length)  # stub: Any
+    model: CrossEncoder = CrossEncoder(  # stub: Any
+        name, device=device, max_length=max_length, token=_hf_token()
+    )
     return model
 
 

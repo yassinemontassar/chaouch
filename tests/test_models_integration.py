@@ -9,7 +9,10 @@ from chaouch.retrieval.models import load_embedder, load_reranker, release_model
 pytestmark = pytest.mark.integration
 
 CFG = load_retrieval_config().retrieval
-QUERY = "قدّاش يكلّف الباسبور؟"  # how much does the passport cost?
+# A sanity check that each model loads and matches across languages, in MSA ("how much does the
+# passport cost?"). Derja quality is measured by eval-retrieval, not here: bge-m3 ranks the Derja
+# "قدّاش يكلّف الباسبور؟" closer to UNRELATED than to RELEVANT (ADR 0013).
+QUERY = "كم تبلغ تكلفة جواز السفر؟"
 RELEVANT = "Passeport : timbre fiscal de 80 dinars pour la délivrance ou le renouvellement."
 UNRELATED = "Le compteur d'eau est déplacé à la demande de l'abonné."
 
