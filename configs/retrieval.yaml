@@ -1,4 +1,4 @@
-# Ingestion and chunking. (Retrieval settings such as k and fusion weights come in Phase 1.)
+# Ingestion, chunking and retrieval settings.
 
 ingestion:
   user_agent: "ChaouchBot/0.1 (non-commercial research project; polite crawler)"
@@ -10,3 +10,29 @@ chunking:
   target_tokens: 400
   max_tokens: 500
   overlap_tokens: 50
+
+# Hybrid retrieval (spec 9.2). Models run on CPU; only the LLM uses the GPU (spec 3.1.2).
+retrieval:
+  # Dense models compared in ADR 0013. query_prompt_name is the model's own built-in query prompt
+  # (from its model card), applied to queries only, so no instruction is tuned on the gold set.
+  embedders:
+    bge_m3:
+      name: BAAI/bge-m3
+      dim: 1024
+      query_prompt_name: null
+    qwen3_emb_0_6b:
+      name: Qwen/Qwen3-Embedding-0.6B
+      dim: 1024
+      query_prompt_name: query
+  default_embedder: bge_m3
+  reranker_model: BAAI/bge-reranker-v2-m3
+  device: cpu
+  embed_batch_size: 8
+  rerank_max_length: 512
+  bm25:
+    k1: 1.2
+    b: 0.75
+  rrf_k: 60               # Reciprocal Rank Fusion constant
+  candidates: 20          # chunks taken from each retriever before fusion
+  rerank_candidates: 20   # fused chunks scored by the reranker
+  top_k: 5                # chunks returned (fits the 4096-token context, spec 3.1.2)

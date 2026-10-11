@@ -2,7 +2,13 @@ from pathlib import Path
 
 import pytest
 
-from chaouch.config import ConfigError, Settings, load_models_config
+from chaouch.config import (
+    CONFIG_DIR,
+    ConfigError,
+    Settings,
+    load_models_config,
+    load_retrieval_config,
+)
 
 VALID = """
 providers:
@@ -73,3 +79,33 @@ def test_missing_api_key_raises(monkeypatch: pytest.MonkeyPatch, value: str | No
 def test_unknown_api_key_name_raises() -> None:
     with pytest.raises(ConfigError, match="unknown API key"):
         Settings(_env_file=None).api_key("NOPE_API_KEY")
+
+
+def test_repo_retrieval_config_is_valid() -> None:
+    cfg = load_retrieval_config().retrieval
+    assert cfg.top_k <= cfg.rerank_candidates <= cfg.candidates
+    assert cfg.default_embedder in cfg.embedders
+
+
+@pytest.mark.parametrize(
+    ("old", "new"),
+    [
+        ("top_k: 5", "top_k: 50"),  # top_k > rerank_candidates
+        ("default_embedder: bge_m3", "default_embedder: nope"),
+    ],
+)
+def test_invalid_retrieval_config_raises(tmp_path: Path, old: str, new: str) -> None:
+    text = (CONFIG_DIR / "retrieval.yaml").read_text(encoding="utf-8")
+    assert old in text
+    path = tmp_path / "retrieval.yaml"
+    path.write_text(text.replace(old, new), encoding="utf-8")
+    with pytest.raises(ConfigError):
+        load_retrieval_config(path)
+
+
+def test_database_dsn(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("DATABASE_URL", "postgresql://u:p@localhost/db")
+    assert Settings(_env_file=None).database_dsn() == "postgresql://u:p@localhost/db"
+    monkeypatch.delenv("DATABASE_URL")
+    with pytest.raises(ConfigError, match="DATABASE_URL is not set"):
+        Settings(_env_file=None).database_dsn()
