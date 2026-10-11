@@ -31,6 +31,7 @@ per minute), not the 250/day assumed earlier. One smoke run (20 questions) uses 
 in-scope questions takes 3 days, resuming from the eval cache each day.
 
 To decide: accept the multi-day B2 run, or move B2 to another free model with a larger daily quota.
+**Resolved:** B2 moved to Gemini 3.5 Flash-Lite (ADR 0008).
 
 ## Consequences
 - Baseline correctness may be underestimated until calibration is done; say so wherever the numbers appear.

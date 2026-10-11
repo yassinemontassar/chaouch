@@ -38,8 +38,8 @@ systems:
   B1_falcon:
     model: falcon_h1_3b
     use_oracle: true
-  B2:  # Gemini Flash + gold documents
-    model: gemini_flash
+  B2:  # Gemini 3.5 Flash-Lite + gold documents
+    model: gemini_flash_lite
     use_oracle: true
   B3:  # ALLaM 2 7B on Groq + gold documents
     model: allam_2_7b

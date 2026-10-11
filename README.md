@@ -26,7 +26,7 @@ Baselines on the gold set, written by a native speaker. B0 and B1 run once per l
 |---|---|
 | B0 | Local model, question only |
 | B1 | Local model + the official documents pasted into the prompt |
-| B2 | Gemini Flash (free API) + the same documents |
+| B2 | Gemini 3.5 Flash-Lite (free API) + the same documents |
 | B3 | ALLaM 2 7B on Groq (Arabic specialist) + the same documents |
 
 Answers are graded by an LLM judge from a different model family (correctness against the required facts,
@@ -66,7 +66,7 @@ uv run pre-commit install
 | `validate-evals` | checks `data/evals/gold/questions.jsonl` |
 | `ingest` | `fetch` + `clean` + `chunk` the sources in `data/documents/sources.yaml` |
 | `eval-smoke` | B2 on 20 gold questions |
-| `eval-full` | B0, B1, B2 on the whole gold set |
+| `eval-full` | B0, B1, B2, B3 on the whole gold set |
 
 ## Data and licenses
 
