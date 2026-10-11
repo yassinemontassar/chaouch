@@ -68,6 +68,8 @@ uv run pre-commit install
 | `eval-smoke` | B2 on 20 gold questions |
 | `eval-full` | B0, B1, B2, B3 on the whole gold set |
 
+How to add documents and gold questions, and run evals on free tiers: [docs/workflows.md](docs/workflows.md).
+
 ## Data and licenses
 
 PDF conversion uses PyMuPDF / pymupdf4llm (AGPL-3.0).
