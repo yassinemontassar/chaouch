@@ -118,3 +118,14 @@ Written by the owner (native Tunisian speaker) while grading the dialect check o
 - **Gemini sometimes mirrors Arabizi** ("tkhalles les frais mta3 el passeport fel… W ya3touni quittance"),
   which reads naturally to a Tunisian, but it copies "ya3touni" (should be "ya3tiwek") and garbles some
   words. Whether Chaouch should mirror the user's script is still open (ADR 0007).
+
+### Hand test (owner, raw `ollama run`, no documents, default Ollama settings)
+
+1. "9addech ywalli el passport?" → answered entirely in Somali, about a "+992 Afghanistan" passport /
+   phone code (+992 is Tajikistan's code).
+2. "قدّاش يولّي الباسبور؟", no system prompt → only a greeting, no answer.
+3. The same question with the system prompt "Always answer in Tunisian Derja" → read الباسبور as
+   البسبوسة and gave a basbousa recipe, in formal Arabic, ending in English.
+
+**Takeaway:** without documents and help, the base model is unusable. This motivates retrieval
+(Phase 1), the answer prompt (Phase 2), and the Arabizi normalizer and Derja training (Phase 4).
