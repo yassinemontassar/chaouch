@@ -1,6 +1,7 @@
 # LLM providers and models. All three expose OpenAI-compatible endpoints.
 # Free-tier limits change often: check the provider's limits page before a big run
-# and update rpm/rpd here (never in code). Values below are conservative placeholders.
+# and update rpm/rpd here (never in code). Checked 2026-10-11 from 429 messages and Groq's
+# x-ratelimit-* headers.
 
 providers:
   ollama:
@@ -14,19 +15,29 @@ providers:
   gemini:
     base_url: https://generativelanguage.googleapis.com/v1beta/openai/
     api_key_env: GEMINI_API_KEY
-    rpm: 10
-    rpd: 250
+    rpm: 5  # free tier for gemini-2.5-flash, per model
+    rpd: 20  # was 250 in earlier docs; the 429 on 2026-10-11 says 20
     timeout_s: 60
     max_retries: 4
     concurrency: 2
-  groq:
+  # Groq limits are per model, so each Groq model gets its own entry (and its own limiter).
+  # Tokens per minute is the binding limit; rpm is derived from it.
+  groq:  # judge: openai/gpt-oss-120b, 8000 tokens/min at ~2100 tokens per judge call
     base_url: https://api.groq.com/openai/v1
     api_key_env: GROQ_API_KEY
-    rpm: 30
+    rpm: 3
     rpd: 1000
     timeout_s: 60
     max_retries: 4
-    concurrency: 2
+    concurrency: 1
+  groq_allam:  # allam-2-7b, 6000 tokens/min with ~2500-token oracle prompts
+    base_url: https://api.groq.com/openai/v1
+    api_key_env: GROQ_API_KEY
+    rpm: 2
+    rpd: 7000
+    timeout_s: 60
+    max_retries: 4
+    concurrency: 1
 
 # Keys are referenced from configs/eval.yaml (spec 3.1.2 and 5.1).
 # `params` are extra request fields sent with every call to that model.
@@ -43,7 +54,7 @@ models:
     provider: gemini
     name: gemini-2.5-flash
   allam_2_7b:
-    provider: groq
+    provider: groq_allam
     name: allam-2-7b  # 4096-token context on Groq
   groq_judge:
     provider: groq
