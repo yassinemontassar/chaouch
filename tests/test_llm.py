@@ -6,7 +6,7 @@ import openai
 import pytest
 
 from chaouch.config import ConfigError, ModelsConfig, Settings
-from chaouch.llm import LLMClient, QuotaExhausted, RateLimiter, SQLiteCache
+from chaouch.llm import CacheMiss, LLMClient, QuotaExhausted, RateLimiter, SQLiteCache
 
 CONFIG = ModelsConfig.model_validate(
     {
@@ -230,3 +230,48 @@ async def test_model_params_are_sent() -> None:
     sent = json.loads(handler.requests[0].content)
     assert sent["reasoning_effort"] == "none"
     assert sent["model"] == "thinker"
+
+
+def server_error(message: str) -> httpx2.Response:
+    return httpx2.Response(500, json={"error": {"message": message}})
+
+
+async def test_generation_failure_is_returned_and_cached(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("GROQ_API_KEY", "k")
+    handler = Recorder(server_error("prediction aborted, token repeat limit reached"))
+    llm, cache = make_client(handler), SQLiteCache(tmp_path / "c.sqlite")
+    first = await llm.complete(MESSAGES, "c", cache=cache)
+    again = await llm.complete(MESSAGES, "c", cache=cache)
+    assert first.text == ""
+    assert first.failure is not None and "token repeat limit" in first.failure
+    assert again == first
+    assert len(handler.requests) == 1  # the failure is cached, not retried on the next run
+
+
+async def test_other_server_errors_still_raise(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("GROQ_API_KEY", "k")
+    with pytest.raises(openai.InternalServerError):
+        await make_client(Recorder(server_error("backend down"))).complete(MESSAGES, "c")
+
+
+async def test_content_filter_is_a_failure() -> None:
+    body = ok_body("")
+    body["choices"][0]["finish_reason"] = "content_filter"  # type: ignore[index]
+    result = await make_client(Recorder(httpx2.Response(200, json=body))).complete(MESSAGES, "m")
+    assert result.failure == "content_filter"
+
+
+async def test_cache_only_serves_hits_and_never_calls(tmp_path: Path) -> None:
+    cache = SQLiteCache(tmp_path / "c.sqlite")
+    await make_client(Recorder(httpx2.Response(200, json=ok_body("cached")))).complete(
+        MESSAGES, "m", cache=cache
+    )
+    handler = Recorder()
+    http = httpx2.AsyncClient(transport=httpx2.MockTransport(handler))
+    llm = LLMClient(CONFIG, Settings(_env_file=None), http_client=http, cache_only=True)
+    assert (await llm.complete(MESSAGES, "m", cache=cache)).text == "cached"
+    with pytest.raises(CacheMiss):
+        await llm.complete([{"role": "user", "content": "new"}], "m", cache=cache)
+    assert handler.requests == []

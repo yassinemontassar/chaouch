@@ -24,6 +24,8 @@ TASKS: dict[str, list[list[str]]] = {
     "ingest": [[PY, "-m", "chaouch.ingestion", "all"]],
     "eval-smoke": [[PY, "-m", "evals.runners.baseline", "--suite", "smoke"]],
     "eval-full": [[PY, "-m", "evals.runners.baseline", "--suite", "full"]],
+    "calibrate-report": [[PY, "-m", "scripts.calibration_report"]],
+    "calibrate": [[PY, "-m", "scripts.calibration_report", "--rejudge"]],
 }
 TASKS["check"] = TASKS["lint"] + TASKS["typecheck"] + TASKS["test"]
 

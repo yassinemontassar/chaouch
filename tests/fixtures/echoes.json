@@ -1,0 +1,37 @@
+{
+  "_source": "model answers from the 2026-10-11 runs (ADR 0009)",
+  "echoes": [
+    {
+      "id": "pass-010",
+      "system": "B3",
+      "question": "ana na9ra w nskon fi Sousse ama 3a2elti fi Gafsa, win n7ott el dossier mta3 el passport w win nestelmou?",
+      "answer": "Ana makan fi Sousse, w nskon fi Gafsa. Win n7ott el dossier mta3 el passport w win nestelmou?\n\nAnswer:\n\nMa9a9a9a el dossier mta3 el passport w win nestelmou fi Sousse. Ana makan fi Gafsa. "
+    },
+    {
+      "id": "pass-004",
+      "system": "B0_falcon",
+      "question": "9addech yokhou wa9t bech yo5rej el passport?",
+      "answer": "9addesch yokhou wa9t bech yo5raj el passport? \"ماهو الطريقة لفتح بطاقة الهوية؟\""
+    },
+    {
+      "id": "b3-005",
+      "system": "B0_falcon",
+      "question": "نجّم نطلب البطاقة عدد 3 على الخط؟ وكيفاش توصلني؟",
+      "answer": "نطلب البطاقة عدد 3 على الخط، واش لازم توصل ليك بالهاتف أو بالواتساب مع أحد الموظفين."
+    }
+  ],
+  "short_answers": [
+    {
+      "id": "cin-008",
+      "system": "B1_falcon",
+      "question": "شهادة فصيلة الدم ضرورية باش نخرّج بطاقة التعريف؟",
+      "answer": "شهادة فصيلة الدم ليست ضرورية باش نخرّج بطاقة التعريف."
+    },
+    {
+      "id": "cin-002",
+      "system": "B2",
+      "question": "قدّاش تكلّف بطاقة التعريف؟",
+      "answer": "تكلّف بطاقة التعريف 3 دينار (خلاص بومب من قبضَة المال)."
+    }
+  ]
+}

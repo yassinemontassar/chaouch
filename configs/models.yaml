@@ -32,6 +32,16 @@ providers:
     timeout_s: 60
     max_retries: 4
     concurrency: 1
+  gemini_gemma:  # judge: gemma-4-31b-it (ADR 0010). Same key as gemini, its own per-model limits.
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai/
+    api_key_env: GEMINI_API_KEY
+    # Owner's AI Studio console on 2026-10-11: 14.4K requests/day, 16K tokens/min. Every call also
+    # spends ~350+ thinking tokens, so ~2000 tokens per judge call: 6/min stays under 16K.
+    rpm: 6
+    rpd: 14000
+    timeout_s: 120  # ~30 s per call measured, slower when the model is busy (503 then retry)
+    max_retries: 4
+    concurrency: 4
   groq_allam:  # allam-2-7b, 6000 tokens/min with ~2500-token oracle prompts
     base_url: https://api.groq.com/openai/v1
     api_key_env: GROQ_API_KEY
@@ -58,6 +68,9 @@ models:
   allam_2_7b:
     provider: groq_allam
     name: allam-2-7b  # 4096-token context on Groq
-  groq_judge:
+  groq_judge:  # the judge until 2026-10-11; kept for re-runs (ADR 0002, 0010)
     provider: groq
     name: openai/gpt-oss-120b  # a different family from every evaluated model (ADR 0002)
+  gemma_judge:
+    provider: gemini_gemma
+    name: gemma-4-31b-it  # Google, like B2 (Gemini): check B2 separately (ADR 0010)

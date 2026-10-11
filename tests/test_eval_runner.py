@@ -18,6 +18,7 @@ from evals.runners.baseline import (
     build_oracle,
     is_self_judged,
     load_docs,
+    markdown_table,
     model_family,
     run_suite,
     select_questions,
@@ -69,8 +70,15 @@ CFG = load_eval_config().model_copy(
 class FakeServer:
     """Answers chat requests like the real providers would, by prompt type."""
 
-    def __init__(self, failing_hosts: tuple[str, ...] = ()) -> None:
+    def __init__(
+        self,
+        failing_hosts: tuple[str, ...] = (),
+        degenerate_hosts: tuple[str, ...] = (),
+        echo: bool = False,
+    ) -> None:
         self.failing_hosts = failing_hosts
+        self.degenerate_hosts = degenerate_hosts  # answers fail with a token repeat limit
+        self.echo = echo  # answers repeat the question
         self.requests: list[str] = []
 
     def __call__(self, request: httpx2.Request) -> httpx2.Response:
@@ -90,8 +98,13 @@ class FakeServer:
             text = json.dumps({"claims": claims})
         elif "Rate the DIALECT" in content:
             text = '```json\n{"score": 4, "label": "derja"}\n```'
+        elif request.url.host in self.degenerate_hosts:
+            message = "prediction aborted, token repeat limit reached"
+            return httpx2.Response(500, json={"error": {"message": message}})
+        elif self.echo:
+            text = content.split("Question:")[-1].strip()
         else:
-            text = "PLACEHOLDER ANSWER"
+            text = "FAKE REPLY TEXT"
         return httpx2.Response(
             200,
             json={
@@ -209,6 +222,18 @@ async def test_quota_marks_report_incomplete(tmp_path: Path) -> None:
     assert reports["B1"]["metrics"]["correctness"] == 1.0
 
 
+async def test_generation_failure_is_scored_not_retried(tmp_path: Path) -> None:
+    server = FakeServer(degenerate_hosts=("local.test",))
+    by_system = await run_suite(make_run(server, tmp_path), QUESTIONS, ["B0"], CFG)
+    [report] = reports_for(by_system)
+    m = report["metrics"]
+    assert (m["n_errors"], m["n_generation_failures"], m["correctness"]) == (0, 2, 0.0)
+    assert m["dialect"] is None
+    assert server.requests == ["local.test", "local.test"]  # no judge calls on a failed answer
+    assert not report["incomplete"]
+    assert "failed to generate 2 answer(s)" in markdown_table([report])
+
+
 def doc(markdown: str) -> OracleDoc:
     return OracleDoc("d", "T", "https://example.org/d", "2026-10-10", markdown)
 
@@ -282,3 +307,14 @@ def test_smoke_selects_first_in_scope_by_id() -> None:
     questions = load_gold(FIXTURES / "gold_valid.jsonl")
     small = CFG.model_copy(update={"smoke_size": 1})
     assert [q.id for q in select_questions(questions, "smoke", small)] == ["t-001"]
+
+
+async def test_echo_is_scored_without_the_judge(tmp_path: Path) -> None:
+    server = FakeServer(echo=True)
+    by_system = await run_suite(make_run(server, tmp_path), QUESTIONS, ["B0"], CFG)
+    [report] = reports_for(by_system)
+    m = report["metrics"]
+    assert (m["n_errors"], m["n_echoes"], m["correctness"], m["dialect"]) == (0, 2, 0.0, 1)
+    assert server.requests == ["local.test", "local.test"]  # answers only, no judge calls
+    assert report["results"][0]["fact_reasons"] == ["echo of the question"]
+    assert "only echoed the question in 2 answer(s)" in markdown_table([report])

@@ -30,7 +30,7 @@ from chaouch.ingestion.tokens import TokenCounter, hf_token_counter
 from chaouch.llm import LLMClient, QuotaExhausted, SQLiteCache
 from evals.config import EvalConfig, SystemConfig, load_eval_config
 from evals.gold import GoldQuestion, load_gold
-from evals.judge.judge import Judge, JudgeError
+from evals.judge.judge import Judge, JudgeError, is_echo
 from evals.metrics.aggregate import aggregate, breakdown
 from evals.prompts import Prompt, load_prompt
 
@@ -63,9 +63,12 @@ class QuestionResult:
     oracle_truncated: bool | None = None
     correctness: float | None = None
     fact_verdicts: list[str] | None = None
+    fact_reasons: list[str] | None = None
     faithfulness: float | None = None
     dialect_score: int | None = None
     dialect_label: str | None = None
+    generation_failure: str | None = None  # scored as correctness 0, not an error
+    echo: bool = False  # only repeats the question: scored without the judge (ADR 0009)
     error: str | None = None
 
 
@@ -143,17 +146,22 @@ async def evaluate(
         result.latency_ms = answer.latency_ms
         result.prompt_tokens = answer.prompt_tokens
         result.completion_tokens = answer.completion_tokens
+        if answer.failure:  # e.g. Ollama's token repeat limit: a wrong answer, not an infra error
+            result.generation_failure = answer.failure
+            result.correctness = 0.0
+            return result
 
         correctness = run.judge.correctness(
             q.question, q.expected_answer, q.required_facts, answer.text
         )
-        dialect = run.judge.dialect(answer.text)
+        dialect = run.judge.dialect(q.question, answer.text)
         (
-            (result.correctness, verdicts),
+            (result.correctness, verdicts, result.fact_reasons),
             (result.dialect_score, result.dialect_label),
         ) = await asyncio.gather(correctness, dialect)
         result.fact_verdicts = list(verdicts)
-        if context is not None:
+        result.echo = is_echo(q.question, answer.text)
+        if context is not None and not result.echo:
             result.faithfulness = await run.judge.faithfulness(context, answer.text)
     except QuotaExhausted as exc:
         result.error = f"quota: {exc}"
@@ -235,6 +243,16 @@ def markdown_table(reports: list[dict[str, Any]]) -> str:
             lines.append(f"Warning: {r['system']} is judged by its own model family.")
         if r["incomplete"]:
             lines.append(f"Warning: {r['system']} is incomplete (quota hit); re-run to resume.")
+        if n := r["metrics"]["n_generation_failures"]:
+            lines.append(
+                f"Note: {r['system']} failed to generate {n} answer(s) (e.g. token repeat limit), "
+                "scored as correctness 0."
+            )
+        if n := r["metrics"]["n_echoes"]:
+            lines.append(
+                f"Note: {r['system']} only echoed the question in {n} answer(s), "
+                "scored without the judge (facts absent, dialect 1)."
+            )
     lines.append(
         f"Out-of-scope / adversarial questions not scored in Phase 0: "
         f"{reports[0]['not_scored_in_phase0']}."

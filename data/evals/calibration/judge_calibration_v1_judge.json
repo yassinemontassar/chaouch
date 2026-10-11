@@ -1,0 +1,276 @@
+[
+ {
+  "id": "b3-002",
+  "system": "B0_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B0_falcon.json",
+  "correctness": 0.0,
+  "fact_verdicts": [
+   "contradicted",
+   "contradicted"
+  ],
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "b3-002",
+  "system": "B0_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B0_qwen.json",
+  "correctness": 0.0,
+  "fact_verdicts": [
+   "absent",
+   "absent"
+  ],
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "b3-005",
+  "system": "B2_smoke",
+  "model": "gemini-2.5-flash",
+  "report": "2026-10-11_smoke_B2.json",
+  "correctness": 0.0,
+  "fact_verdicts": [
+   "absent",
+   "absent"
+  ],
+  "dialect_score": 4,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "birth-003",
+  "system": "B2_smoke",
+  "model": "gemini-2.5-flash",
+  "report": "2026-10-11_smoke_B2.json",
+  "correctness": 0.0,
+  "fact_verdicts": [
+   "absent",
+   "absent",
+   "absent"
+  ],
+  "dialect_score": 5,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "birth-005",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "correctness": 0.5,
+  "fact_verdicts": [
+   "present",
+   "absent"
+  ],
+  "dialect_score": 3,
+  "dialect_label": "mixed"
+ },
+ {
+  "id": "cin-002",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "correctness": 1.0,
+  "fact_verdicts": [
+   "present",
+   "present"
+  ],
+  "dialect_score": 2,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "cin-003",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "correctness": 0.5,
+  "fact_verdicts": [
+   "present",
+   "absent"
+  ],
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "cin-005",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "correctness": 1.0,
+  "fact_verdicts": [
+   "present",
+   "present"
+  ],
+  "dialect_score": 4,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "cnss-001",
+  "system": "B0_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B0_qwen.json",
+  "correctness": 0.2,
+  "fact_verdicts": [
+   "absent",
+   "absent",
+   "absent",
+   "present",
+   "absent"
+  ],
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "pass-001",
+  "system": "B3",
+  "model": "allam-2-7b",
+  "report": "2026-10-11_B3.json",
+  "correctness": 0.0,
+  "fact_verdicts": [
+   "absent",
+   "absent",
+   "absent",
+   "absent",
+   "absent"
+  ],
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "pass-004",
+  "system": "B0_falcon",
+  "model": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
+  "report": "2026-10-11_B0_falcon.json",
+  "correctness": 0.0,
+  "fact_verdicts": [
+   "absent",
+   "absent"
+  ],
+  "dialect_score": 3,
+  "dialect_label": "mixed"
+ },
+ {
+  "id": "pass-004",
+  "system": "B3",
+  "model": "allam-2-7b",
+  "report": "2026-10-11_B3.json",
+  "correctness": 0.5,
+  "fact_verdicts": [
+   "present",
+   "absent"
+  ],
+  "dialect_score": 2,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "pass-005",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "correctness": 1.0,
+  "fact_verdicts": [
+   "present",
+   "present",
+   "present",
+   "present"
+  ],
+  "dialect_score": 5,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "pass-006",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "correctness": 1.0,
+  "fact_verdicts": [
+   "present",
+   "present"
+  ],
+  "dialect_score": 4,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "pass-006",
+  "system": "B3",
+  "model": "allam-2-7b",
+  "report": "2026-10-11_B3.json",
+  "correctness": 0.5,
+  "fact_verdicts": [
+   "absent",
+   "present"
+  ],
+  "dialect_score": 2,
+  "dialect_label": "mixed"
+ },
+ {
+  "id": "pass-008",
+  "system": "B3",
+  "model": "allam-2-7b",
+  "report": "2026-10-11_B3.json",
+  "correctness": 0.3333333333333333,
+  "fact_verdicts": [
+   "contradicted",
+   "absent",
+   "present"
+  ],
+  "dialect_score": 2,
+  "dialect_label": "mixed"
+ },
+ {
+  "id": "pass-009",
+  "system": "B3",
+  "model": "allam-2-7b",
+  "report": "2026-10-11_B3.json",
+  "correctness": 0.0,
+  "fact_verdicts": [
+   "absent",
+   "absent",
+   "absent"
+  ],
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "pass-010",
+  "system": "B0_qwen",
+  "model": "qwen3.5:2b",
+  "report": "2026-10-11_B0_qwen.json",
+  "correctness": 0.0,
+  "fact_verdicts": [
+   "absent",
+   "absent",
+   "absent"
+  ],
+  "dialect_score": 1,
+  "dialect_label": "msa"
+ },
+ {
+  "id": "pass-010",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "correctness": 0.6666666666666666,
+  "fact_verdicts": [
+   "present",
+   "present",
+   "absent"
+  ],
+  "dialect_score": 4,
+  "dialect_label": "derja"
+ },
+ {
+  "id": "pass-012",
+  "system": "B2",
+  "model": "gemini-3.5-flash-lite",
+  "report": "2026-10-11_B2.json",
+  "correctness": 0.6666666666666666,
+  "fact_verdicts": [
+   "present",
+   "present",
+   "absent"
+  ],
+  "dialect_score": 4,
+  "dialect_label": "derja"
+ }
+]

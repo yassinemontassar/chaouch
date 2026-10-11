@@ -26,6 +26,8 @@ def aggregate(results: Sequence[dict[str, Any]]) -> dict[str, Any]:
     return {
         "n": len(results),
         "n_errors": sum(r["error"] is not None for r in results),
+        "n_generation_failures": sum(r["generation_failure"] is not None for r in results),
+        "n_echoes": sum(r["echo"] for r in results),
         "correctness": mean([r["correctness"] for r in results]),
         "faithfulness": mean([r["faithfulness"] for r in results]),
         "dialect": mean([r["dialect_score"] for r in results]),

@@ -12,8 +12,10 @@ gold:
 # Re-runs are free and a run stopped by a quota resumes where it left off.
 cache_path: C:\dev\cache\chaouch\eval_cache.sqlite
 
-# Judge: a different family from every evaluated system (the runner flags self-judging).
-judge_model: groq_judge
+# Judge: a different model family from every evaluated system (the runner flags self-judging).
+# Gemma 4 31B since 2026-10-11 (Groq's daily cap, ADR 0010). It is from Google like B2 (Gemini),
+# so B2's scores are checked separately in calibration.
+judge_model: gemma_judge
 
 # Oracle context for B1/B2/B3, in bge-m3 tokens (an approximation of the LLM's tokenizer).
 # Leaves room for the prompt, question and answer inside OLLAMA_CONTEXT_LENGTH=4096.

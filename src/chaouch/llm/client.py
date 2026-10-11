@@ -18,6 +18,14 @@ from chaouch.llm.rate_limit import QuotaExhausted, RateLimiter
 Message = dict[str, str]
 
 
+class CacheMiss(LookupError):
+    """A cache-only client was asked for a call it has not cached."""
+
+
+# The model ran but produced no usable answer: scored as a failed answer, not retried later.
+GENERATION_FAILURES = ("token repeat limit", "prediction aborted")
+
+
 @dataclass(frozen=True)
 class Completion:
     text: str
@@ -26,6 +34,7 @@ class Completion:
     prompt_tokens: int | None
     completion_tokens: int | None
     latency_ms: float
+    failure: str | None = None  # generation failure or content filter; text is then ""
 
 
 class LLMClient:
@@ -39,8 +48,10 @@ class LLMClient:
         http_client: httpx2.AsyncClient | None = None,
         clock: Callable[[], float] = time.monotonic,
         sleep: Callable[[float], Awaitable[None]] = asyncio.sleep,
+        cache_only: bool = False,  # re-render results from the cache, never call a provider
     ) -> None:
         self._config = config
+        self._cache_only = cache_only
         self._settings = settings
         self._http_client = http_client
         self._clients: dict[str, AsyncOpenAI] = {}
@@ -91,6 +102,8 @@ class LLMClient:
         key = SQLiteCache.key(provider, request) if cache else None
         if cache and key and (hit := cache.get(key)) is not None:
             return Completion(**hit)
+        if self._cache_only:
+            raise CacheMiss(f"{model.name}: not in the cache")
 
         async with self._semaphores[provider]:
             await self._limiters[provider].acquire()
@@ -99,17 +112,26 @@ class LLMClient:
                 response = await self.openai(provider).chat.completions.create(**request)
             except openai.RateLimitError as exc:  # still 429 after the SDK's retries
                 raise QuotaExhausted(f"{provider}: {exc}") from exc
+            except openai.InternalServerError as exc:
+                if not any(marker in str(exc) for marker in GENERATION_FAILURES):
+                    raise
+                failed = str(exc)
+                response = None
             latency_ms = (time.perf_counter() - start) * 1000
 
-        usage = response.usage
-        completion = Completion(
-            text=response.choices[0].message.content or "",
-            provider=provider,
-            model=model.name,
-            prompt_tokens=usage.prompt_tokens if usage else None,
-            completion_tokens=usage.completion_tokens if usage else None,
-            latency_ms=latency_ms,
-        )
+        if response is None:
+            completion = Completion("", provider, model.name, None, None, latency_ms, failed)
+        else:
+            choice, usage = response.choices[0], response.usage
+            completion = Completion(
+                text=choice.message.content or "",
+                provider=provider,
+                model=model.name,
+                prompt_tokens=usage.prompt_tokens if usage else None,
+                completion_tokens=usage.completion_tokens if usage else None,
+                latency_ms=latency_ms,
+                failure="content_filter" if choice.finish_reason == "content_filter" else None,
+            )
         if cache and key:
             cache.put(key, dataclasses.asdict(completion))
         return completion

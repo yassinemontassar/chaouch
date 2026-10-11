@@ -1,6 +1,7 @@
 # 0002: Judge model is openai/gpt-oss-120b on Groq
 
-- **Status:** accepted
+- **Status:** superseded by ADR 0010 (Gemma 4 31B, 2026-10-11): Groq's 200K tokens/day cap
+  is too small for `eval-full`. `groq_judge` stays configured for re-runs.
 - **Date:** 2026-10-10
 
 ## Context
@@ -33,4 +34,4 @@ Use `openai/gpt-oss-120b` (`groq_judge` in `configs/models.yaml`). The runner st
 
 ## Consequences
 - Judge calls and B3 (ALLaM, also on Groq) share the Groq free-tier quota. The eval cache makes re-runs free.
-- These are sanity checks, not calibration. Calibrating against 50 human labels (spec 8.2) is still to do.
+- These are sanity checks, not calibration. Calibration was done in ADR 0009 (v1 prompts) and ADR 0010.
