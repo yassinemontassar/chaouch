@@ -96,7 +96,10 @@ class DialectOut(BaseModel):
 
 def parse_json[T: BaseModel](text: str, model: type[T]) -> T:
     try:
-        return model.model_validate(json.loads(FENCE.sub("", THOUGHT.sub("", text).strip())))
+        data = json.loads(FENCE.sub("", THOUGHT.sub("", text).strip()))
+        if isinstance(data, list) and len(model.model_fields) == 1:  # Gemma may drop the wrapper
+            data = {next(iter(model.model_fields)): data}
+        return model.model_validate(data)
     except (json.JSONDecodeError, ValidationError) as exc:
         raise JudgeError(f"bad {model.__name__}: {text[:200]!r}") from exc
 

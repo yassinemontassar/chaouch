@@ -1,7 +1,7 @@
 {
   "system": "B0_qwen",
   "suite": "full",
-  "created_at": "2026-10-11T03:49:11+00:00",
+  "created_at": "2026-10-11T16:05:55+00:00",
   "model": {
     "provider": "ollama",
     "name": "qwen3.5:2b",
@@ -11,28 +11,30 @@
   },
   "use_oracle": false,
   "judge": {
-    "provider": "groq",
-    "name": "openai/gpt-oss-120b",
+    "provider": "gemini_gemma",
+    "name": "gemma-4-31b-it",
     "params": {}
   },
   "self_judged": false,
   "prompt_versions": [
     "answer_closed_v1",
     "answer_oracle_v1",
-    "correctness_v1",
+    "correctness_v2",
     "faithfulness_v1",
-    "dialect_v1"
+    "dialect_v2"
   ],
   "incomplete": false,
   "not_scored_in_phase0": 8,
   "metrics": {
     "n": 43,
-    "n_errors": 1,
-    "correctness": 0.0365079365079365,
+    "n_errors": 0,
+    "n_generation_failures": 1,
+    "n_echoes": 0,
+    "correctness": 0.07441860465116279,
     "faithfulness": null,
-    "dialect": 2.119047619047619,
-    "latency_p50_ms": 3148.0313000211027,
-    "latency_p95_ms": 8397.783199994592,
+    "dialect": 1.119047619047619,
+    "latency_p50_ms": 3315.5002000276,
+    "latency_p95_ms": 9084.010999999009,
     "prompt_tokens": 84.61904761904762,
     "completion_tokens": 80.07142857142857,
     "oracle_truncation_rate": null
@@ -42,9 +44,11 @@
       "arabic": {
         "n": 16,
         "n_errors": 0,
-        "correctness": 0.0625,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.15625,
         "faithfulness": null,
-        "dialect": 2.4375,
+        "dialect": 1.1875,
         "latency_p50_ms": 3872.0993000024464,
         "latency_p95_ms": 9084.010999999009,
         "prompt_tokens": 82.8125,
@@ -53,12 +57,14 @@
       },
       "arabizi": {
         "n": 15,
-        "n_errors": 1,
-        "correctness": 0.023809523809523808,
+        "n_errors": 0,
+        "n_generation_failures": 1,
+        "n_echoes": 0,
+        "correctness": 0.0,
         "faithfulness": null,
-        "dialect": 2.357142857142857,
-        "latency_p50_ms": 2940.938899992034,
-        "latency_p95_ms": 13581.814900011523,
+        "dialect": 1.0714285714285714,
+        "latency_p50_ms": 3015.201200003503,
+        "latency_p95_ms": 59915.20019999007,
         "prompt_tokens": 86.71428571428571,
         "completion_tokens": 65.64285714285714,
         "oracle_truncation_rate": null
@@ -66,9 +72,11 @@
       "mixed_fr": {
         "n": 12,
         "n_errors": 0,
-        "correctness": 0.016666666666666666,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.05833333333333333,
         "faithfulness": null,
-        "dialect": 1.4166666666666667,
+        "dialect": 1.0833333333333333,
         "latency_p50_ms": 3117.3885999887716,
         "latency_p95_ms": 5485.160699987318,
         "prompt_tokens": 84.58333333333333,
@@ -79,12 +87,14 @@
     "category": {
       "in_scope": {
         "n": 43,
-        "n_errors": 1,
-        "correctness": 0.0365079365079365,
+        "n_errors": 0,
+        "n_generation_failures": 1,
+        "n_echoes": 0,
+        "correctness": 0.07441860465116279,
         "faithfulness": null,
-        "dialect": 2.119047619047619,
-        "latency_p50_ms": 3148.0313000211027,
-        "latency_p95_ms": 8397.783199994592,
+        "dialect": 1.119047619047619,
+        "latency_p50_ms": 3315.5002000276,
+        "latency_p95_ms": 9084.010999999009,
         "prompt_tokens": 84.61904761904762,
         "completion_tokens": 80.07142857142857,
         "oracle_truncation_rate": null
@@ -93,10 +103,12 @@
     "difficulty": {
       "easy": {
         "n": 20,
-        "n_errors": 1,
-        "correctness": 0.010526315789473684,
+        "n_errors": 0,
+        "n_generation_failures": 1,
+        "n_echoes": 0,
+        "correctness": 0.034999999999999996,
         "faithfulness": null,
-        "dialect": 2.1578947368421053,
+        "dialect": 1.263157894736842,
         "latency_p50_ms": 3129.7252999793272,
         "latency_p95_ms": 13581.814900011523,
         "prompt_tokens": 80.3157894736842,
@@ -106,9 +118,11 @@
       "hard": {
         "n": 6,
         "n_errors": 0,
-        "correctness": 0.05555555555555555,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.0,
         "faithfulness": null,
-        "dialect": 2.8333333333333335,
+        "dialect": 1.0,
         "latency_p50_ms": 3148.0313000211027,
         "latency_p95_ms": 9084.010999999009,
         "prompt_tokens": 89.5,
@@ -118,9 +132,11 @@
       "medium": {
         "n": 17,
         "n_errors": 0,
-        "correctness": 0.058823529411764705,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.14705882352941177,
         "faithfulness": null,
-        "dialect": 1.8235294117647058,
+        "dialect": 1.0,
         "latency_p50_ms": 3315.5002000276,
         "latency_p95_ms": 7056.28949997481,
         "prompt_tokens": 87.70588235294117,
@@ -150,9 +166,18 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "the application form is not mentioned",
+        "the CIN copy and original are not mentioned",
+        "photos are not mentioned",
+        "the old passport is not listed as a required document",
+        "the payment receipt is not mentioned"
+      ],
       "faithfulness": null,
-      "dialect_score": 4,
-      "dialect_label": "mixed",
+      "dialect_score": 1,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -173,9 +198,16 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The candidate states 100 TND instead of 80 TND.",
+        "Not mentioned.",
+        "Not mentioned."
+      ],
       "faithfulness": null,
-      "dialect_score": 2,
+      "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -192,12 +224,18 @@
       "oracle_truncated": null,
       "correctness": 0.0,
       "fact_verdicts": [
-        "absent",
+        "contradicted",
         "absent"
       ],
+      "fact_reasons": [
+        "The candidate mentions the immigration office instead of the police or national guard post.",
+        "The candidate does not mention that it must be the place of residence."
+      ],
       "faithfulness": null,
-      "dialect_score": 3,
-      "dialect_label": "mixed",
+      "dialect_score": 2,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -206,18 +244,21 @@
       "script": "arabizi",
       "category": "in_scope",
       "difficulty": "easy",
-      "answer": null,
-      "latency_ms": null,
+      "answer": "",
+      "latency_ms": 59915.20019999007,
       "prompt_tokens": null,
       "completion_tokens": null,
       "oracle_tokens": null,
       "oracle_truncated": null,
-      "correctness": null,
+      "correctness": 0.0,
       "fact_verdicts": null,
+      "fact_reasons": null,
       "faithfulness": null,
       "dialect_score": null,
       "dialect_label": null,
-      "error": "InternalServerError: Error code: 500 - {'error': {'message': 'prediction aborted, token repeat limit reached', 'type': 'api_error', 'param': None, 'code': None}}"
+      "generation_failure": "Error code: 500 - {'error': {'message': 'prediction aborted, token repeat limit reached', 'type': 'api_error', 'param': None, 'code': None}}",
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-005",
@@ -238,9 +279,17 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer discusses birth registration, not passport requirements.",
+        "Not mentioned.",
+        "Not mentioned.",
+        "Not mentioned."
+      ],
       "faithfulness": null,
-      "dialect_score": 4,
-      "dialect_label": "derja",
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -260,9 +309,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the price for students.",
+        "The answer does not mention the required proof of enrollment."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -279,12 +334,18 @@
       "oracle_truncated": null,
       "correctness": 0.0,
       "fact_verdicts": [
-        "absent",
+        "contradicted",
         "absent"
       ],
+      "fact_reasons": [
+        "the candidate asks for a copy of the old passport instead of the passport itself",
+        "no mention of a written request on plain paper"
+      ],
       "faithfulness": null,
-      "dialect_score": 3,
-      "dialect_label": "mixed",
+      "dialect_score": 1,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -305,9 +366,16 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the number of photos.",
+        "The answer does not mention the background color.",
+        "The answer does not mention the dimensions of the photos."
+      ],
       "faithfulness": null,
       "dialect_score": 2,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -328,9 +396,16 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer discusses the national identity card and mentions a website or authentication office instead of the recette des finances.",
+        "No mention of receiving a receipt or quittance.",
+        "No mention of the payment amounts."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -351,9 +426,16 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer refuses to help and directs the user to a website instead.",
+        "The answer does not mention where to collect the passport.",
+        "The answer does not mention the source's limitation regarding two addresses."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -372,9 +454,14 @@
       "fact_verdicts": [
         "absent"
       ],
+      "fact_reasons": [
+        "The answer suggests French administrative services instead of the Tunisian consulate."
+      ],
       "faithfulness": null,
-      "dialect_score": 3,
-      "dialect_label": "mixed",
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -392,12 +479,19 @@
       "correctness": 0.0,
       "fact_verdicts": [
         "absent",
-        "absent",
+        "contradicted",
         "absent"
+      ],
+      "fact_reasons": [
+        "The answer does not mention whether the passport can be lent or not.",
+        "The answer starts with 'Yes' (نعم) in response to the question about sending the passport by post.",
+        "The answer does not mention who is allowed to carry the passport."
       ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -419,9 +513,17 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the form.",
+        "The answer does not mention the CIN or its copy.",
+        "The answer does not mention the tax stamp receipt.",
+        "The answer does not mention the birth extract for minors."
+      ],
       "faithfulness": null,
-      "dialect_score": 2,
+      "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -441,9 +543,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the cost of 3 TND for residents of Tunisia.",
+        "The answer does not mention the cost for residents abroad."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -463,9 +571,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the police or national guard.",
+        "The answer does not mention the form."
+      ],
       "faithfulness": null,
-      "dialect_score": 2,
+      "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -485,9 +599,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the processing time for Tunisia.",
+        "The answer does not mention the processing time for abroad."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -502,14 +622,20 @@
       "completion_tokens": 49,
       "oracle_tokens": null,
       "oracle_truncated": null,
-      "correctness": 0.0,
+      "correctness": 0.5,
       "fact_verdicts": [
-        "absent",
+        "present",
         "contradicted"
+      ],
+      "fact_reasons": [
+        "The candidate confirms that the card can be requested online.",
+        "The candidate claims delivery via phone or email instead of Rapid-Poste."
       ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -527,14 +653,23 @@
       "correctness": 0.0,
       "fact_verdicts": [
         "contradicted",
-        "contradicted",
-        "contradicted",
-        "contradicted",
-        "contradicted"
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "says you do not need to request the bulletin",
+        "not mentioned",
+        "not mentioned",
+        "not mentioned",
+        "not mentioned"
       ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -555,9 +690,16 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the birth extract.",
+        "The answer does not mention the form.",
+        "The answer does not mention the stamp receipt."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -577,12 +719,21 @@
         "absent",
         "absent",
         "absent",
-        "absent",
-        "absent"
+        "contradicted",
+        "contradicted"
+      ],
+      "fact_reasons": [
+        "does not explicitly confirm that foreigners are eligible",
+        "no mention of a filled and signed form",
+        "no mention of a residence certificate",
+        "claims the document is free instead of requiring a 3 TND stamp",
+        "directs the user to a civil services office instead of the police or national guard"
       ],
       "faithfulness": null,
-      "dialect_score": 4,
-      "dialect_label": "derja",
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -597,15 +748,22 @@
       "completion_tokens": 110,
       "oracle_tokens": null,
       "oracle_truncated": null,
-      "correctness": 0.3333333333333333,
+      "correctness": 0.0,
       "fact_verdicts": [
         "absent",
-        "present",
+        "contradicted",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention that the source is silent on the validity period.",
+        "The answer explicitly says 'Yes, this is correct' in response to the user's question about the 3-month validity.",
+        "The answer does not suggest asking the requesting administration."
+      ],
       "faithfulness": null,
-      "dialect_score": 5,
-      "dialect_label": "derja",
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -626,9 +784,16 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer says to go to the hospital or health center instead of the municipality.",
+        "The answer asks for personal data (name, ID) but not the act number, year, day, or civil-status document.",
+        "The answer does not mention the timeframe of immediately or within 24 hours."
+      ],
       "faithfulness": null,
-      "dialect_score": 5,
-      "dialect_label": "derja",
+      "dialect_score": 2,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -647,9 +812,14 @@
       "fact_verdicts": [
         "absent"
       ],
+      "fact_reasons": [
+        "The answer is a generic greeting and does not provide any information about the time frame."
+      ],
       "faithfulness": null,
-      "dialect_score": 5,
-      "dialect_label": "derja",
+      "dialect_score": 2,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -670,9 +840,16 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer discusses ID cards instead of birth certificates and mentions the nearest office instead of the Municipality of Tunis.",
+        "Not mentioned.",
+        "Not mentioned."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -692,9 +869,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer discusses job applications and does not mention postal money orders.",
+        "The answer does not mention a stamped envelope."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -714,9 +897,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer provides a fake online procedure and does not mention the authorized persons.",
+        "The answer does not mention that siblings are excluded from the list."
+      ],
       "faithfulness": null,
-      "dialect_score": 5,
-      "dialect_label": "derja",
+      "dialect_score": 1,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -731,14 +920,20 @@
       "completion_tokens": 72,
       "oracle_tokens": null,
       "oracle_truncated": null,
-      "correctness": 0.0,
+      "correctness": 0.5,
       "fact_verdicts": [
-        "absent",
+        "present",
         "absent"
       ],
+      "fact_reasons": [
+        "The candidate starts with 'نعم' (Yes) in response to the question about acceptance.",
+        "The candidate does not mention the communiqué date of 28/03/2024."
+      ],
       "faithfulness": null,
-      "dialect_score": 2,
+      "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -758,9 +953,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer discusses pregnancy calculations instead of the cost of the document.",
+        "The answer does not mention payment methods or the municipality."
+      ],
       "faithfulness": null,
-      "dialect_score": 2,
+      "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -784,9 +985,19 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the form.",
+        "The answer does not mention the birth extract.",
+        "The answer does not mention photos.",
+        "The answer mentions documents generally but not the copy or original of the old card.",
+        "The answer does not mention the receipt.",
+        "The answer does not mention proof of change in status, address, or job."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -804,11 +1015,17 @@
       "correctness": 0.0,
       "fact_verdicts": [
         "contradicted",
-        "absent"
+        "contradicted"
+      ],
+      "fact_reasons": [
+        "says about 100 TND instead of 3 TND",
+        "says registration office or bank instead of recette des finances"
       ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -828,9 +1045,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the timeframe for receiving the card.",
+        "The answer does not mention where to collect the card."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -849,9 +1072,14 @@
       "fact_verdicts": [
         "present"
       ],
+      "fact_reasons": [
+        "The candidate mentions attaching a copy of the new residence card (بطاقة السكن الجديدة)."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -871,9 +1099,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the guardian authorization.",
+        "The answer does not list any of the required documents or the fee."
+      ],
       "faithfulness": null,
-      "dialect_score": 3,
-      "dialect_label": "mixed",
+      "dialect_score": 1,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -891,11 +1125,17 @@
       "correctness": 0.0,
       "fact_verdicts": [
         "absent",
-        "absent"
+        "contradicted"
+      ],
+      "fact_reasons": [
+        "Only mentions birth certificate and photo, missing the majority of the required documents (nationality, residence, work/school, form, fee).",
+        "Explicitly states that no additional documents are needed."
       ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -915,9 +1155,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer discusses ID series numbers instead of validity.",
+        "The answer does not mention the source's reliability or age."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -936,9 +1182,14 @@
       "fact_verdicts": [
         "contradicted"
       ],
+      "fact_reasons": [
+        "The candidate states that the blood group certificate is very necessary, while the fact is that it is optional."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -961,9 +1212,18 @@
         "present",
         "absent"
       ],
+      "fact_reasons": [
+        "mentions a social services office in Tunis instead of the competent regional or local CNSS office",
+        "no mention of the affiliation form",
+        "no mention of the birth extract",
+        "mentions the national card (البطاقة الوطنية)",
+        "no mention of documents depending on the activity"
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -983,9 +1243,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention the specific time frame of one week.",
+        "The answer does not mention delivery by post or the specific documents sent."
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -1008,9 +1274,18 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "not mentioned",
+        "not mentioned",
+        "not mentioned",
+        "not mentioned",
+        "not mentioned"
+      ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -1030,9 +1305,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer does not mention any documents, only refers the user to a website or phone number.",
+        "The answer does not mention any agricultural-specific documents."
+      ],
       "faithfulness": null,
-      "dialect_score": 4,
-      "dialect_label": "derja",
+      "dialect_score": 1,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -1051,9 +1332,14 @@
       "fact_verdicts": [
         "absent"
       ],
+      "fact_reasons": [
+        "The answer is nonsensical and does not address the question or the exemption."
+      ],
       "faithfulness": null,
-      "dialect_score": 2,
-      "dialect_label": "msa",
+      "dialect_score": 1,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -1068,13 +1354,18 @@
       "completion_tokens": 74,
       "oracle_tokens": null,
       "oracle_truncated": null,
-      "correctness": 0.0,
+      "correctness": 1.0,
       "fact_verdicts": [
-        "absent"
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer confirms that a person with a professional card can register."
       ],
       "faithfulness": null,
       "dialect_score": 1,
       "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     },
     {
@@ -1094,9 +1385,15 @@
         "absent",
         "absent"
       ],
+      "fact_reasons": [
+        "The answer discusses conditions for affiliation instead of what is sent after acceptance.",
+        "The answer does not mention a rejection notice."
+      ],
       "faithfulness": null,
-      "dialect_score": 5,
-      "dialect_label": "derja",
+      "dialect_score": 2,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
       "error": null
     }
   ]

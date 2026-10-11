@@ -24,6 +24,8 @@ NVIDIA and Cerebras free tiers aren't available to the owner.
 - JSON mode works, but Gemma 4 always prints a `<thought>…</thought>` block before the JSON, and
   thinking can't be turned off (`reasoning_effort` none/low → 400 "not supported for this model").
   The judge parser now strips a leading thought block.
+- Gemma sometimes returns the bare list (`[{"claim": ...}]`) instead of `{"claims": [...]}`; the
+  parser accepts it for outputs with a single list field (seen twice in the first `eval-full`).
 - ~30 s per call; the API sometimes answers 503 "high demand", which the SDK retries.
 - `uv run tasks.py calibrate`: the v2 prompts (ADR 0009) and the code echo rule, fresh Gemma calls on
   all 38 calibration answers (40 sample rows), against the second grader with the owner's strict
@@ -61,8 +63,9 @@ other systems: a possible mild leniency of ~0.3 points, on 14 answers only.
 ## Decision
 
 - Default judge: `gemma_judge` (`gemma-4-31b-it`, provider `gemini_gemma` in `configs/models.yaml`):
-  6 requests/min (16K tokens/min at ~2000 tokens per call with thinking), 14,000/day,
-  concurrency 4, timeout 120 s.
+  3 requests/min, 14,000/day, concurrency 4, timeout 120 s. The binding limit is 16K *input*
+  tokens/min (`GenerateContentInputTokensPerModelPerMinute-FreeTier`): at 6/min the ~3-4K-token
+  faithfulness prompts hit it at 6 and 4/min. Measured throughput is ~3 calls/min anyway (~30 s per call).
 - Keep `groq_judge` (gpt-oss-120b) configured for re-runs; it is no longer the default.
 - The self-judging check compares model families (`gemma` vs `gemini`) and doesn't flag B2. The
   caveat is recorded here instead: B2's dialect score may be ~0.3 points generous. Read B2 vs B3
@@ -70,7 +73,11 @@ other systems: a possible mild leniency of ~0.3 points, on 14 answers only.
 
 ## Consequences
 
-- `eval-full` fits in a day: ~690 judge calls at 6/min ≈ 2 hours.
+- `eval-full` fits in a day: ~690 judge calls took ~3 hours.
+- Gemma's API returns transient 500/503 errors (~45 of ~690 calls in the first run, after the SDK's
+  retries). They are not cached, so re-running `eval-full` resumes and retries only those. The
+  2026-10-11 baseline took five runs; 3 B1_falcon faithfulness calls (pass-007, pass-008, cin-007)
+  failed on four runs in a row and are left unscored (their correctness and dialect are scored).
 - Earlier gpt-oss judgments stay in the cache; reports name the judge and prompt versions.
 - Judge and B2 share one Google key but not their limits (limits are per model).
 - Judge latency is high (~30 s, thinking); runs are slow but unattended.

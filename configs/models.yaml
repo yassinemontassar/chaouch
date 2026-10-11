@@ -35,9 +35,9 @@ providers:
   gemini_gemma:  # judge: gemma-4-31b-it (ADR 0010). Same key as gemini, its own per-model limits.
     base_url: https://generativelanguage.googleapis.com/v1beta/openai/
     api_key_env: GEMINI_API_KEY
-    # Owner's AI Studio console on 2026-10-11: 14.4K requests/day, 16K tokens/min. Every call also
-    # spends ~350+ thinking tokens, so ~2000 tokens per judge call: 6/min stays under 16K.
-    rpm: 6
+    # Owner's AI Studio console on 2026-10-11: 14.4K requests/day, 16K tokens/min. The binding limit
+    # is 16K *input* tokens/min: 429s at 6 and 4/min with ~4K-token faithfulness prompts.
+    rpm: 3
     rpd: 14000
     timeout_s: 120  # ~30 s per call measured, slower when the model is busy (503 then retry)
     max_retries: 4

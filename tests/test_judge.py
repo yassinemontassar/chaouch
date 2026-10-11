@@ -27,6 +27,13 @@ def test_parse_json_strips_code_fence() -> None:
     assert (out.score, out.label) == (3, "mixed")
 
 
+def test_parse_json_accepts_a_bare_list() -> None:
+    text = '<thought>x</thought>[{"claim": "a", "supported": true}]'
+    assert parse_json(text, FaithfulnessOut).claims[0].supported
+    with pytest.raises(JudgeError):
+        parse_json("[5]", DialectOut)  # two fields: no guessing
+
+
 def test_parse_json_strips_leading_thought() -> None:
     text = '<thought>*  "لازمك": {"score": 1}?\n</thought>{"score": 5, "label": "derja"}'
     assert parse_json(text, DialectOut).score == 5

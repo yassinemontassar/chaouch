@@ -1,7 +1,7 @@
 {
   "system": "B1_falcon",
   "suite": "full",
-  "created_at": "2026-10-11T03:49:11+00:00",
+  "created_at": "2026-10-11T16:05:55+00:00",
   "model": {
     "provider": "ollama",
     "name": "hf.co/tiiuae/Falcon-H1-3B-Instruct-GGUF:Q4_K_M",
@@ -9,26 +9,28 @@
   },
   "use_oracle": true,
   "judge": {
-    "provider": "groq",
-    "name": "openai/gpt-oss-120b",
+    "provider": "gemini_gemma",
+    "name": "gemma-4-31b-it",
     "params": {}
   },
   "self_judged": false,
   "prompt_versions": [
     "answer_closed_v1",
     "answer_oracle_v1",
-    "correctness_v1",
+    "correctness_v2",
     "faithfulness_v1",
-    "dialect_v1"
+    "dialect_v2"
   ],
-  "incomplete": true,
+  "incomplete": false,
   "not_scored_in_phase0": 8,
   "metrics": {
     "n": 43,
-    "n_errors": 43,
-    "correctness": null,
-    "faithfulness": null,
-    "dialect": null,
+    "n_errors": 3,
+    "n_generation_failures": 0,
+    "n_echoes": 0,
+    "correctness": 0.6720930232558139,
+    "faithfulness": 0.8266706699733015,
+    "dialect": 1.1627906976744187,
     "latency_p50_ms": 9219.272900023498,
     "latency_p95_ms": 15437.031000008574,
     "prompt_tokens": 1523.139534883721,
@@ -39,10 +41,12 @@
     "script": {
       "arabic": {
         "n": 16,
-        "n_errors": 16,
-        "correctness": null,
-        "faithfulness": null,
-        "dialect": null,
+        "n_errors": 1,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.81875,
+        "faithfulness": 0.8707692307692307,
+        "dialect": 1.3125,
         "latency_p50_ms": 8751.757100020768,
         "latency_p95_ms": 12115.403000003425,
         "prompt_tokens": 1592.3125,
@@ -51,10 +55,12 @@
       },
       "arabizi": {
         "n": 15,
-        "n_errors": 15,
-        "correctness": null,
-        "faithfulness": null,
-        "dialect": null,
+        "n_errors": 2,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.5333333333333333,
+        "faithfulness": 0.8040928302466764,
+        "dialect": 1.0666666666666667,
         "latency_p50_ms": 10825.929799990263,
         "latency_p95_ms": 18951.66180000524,
         "prompt_tokens": 1535.4666666666667,
@@ -63,10 +69,12 @@
       },
       "mixed_fr": {
         "n": 12,
-        "n_errors": 12,
-        "correctness": null,
-        "faithfulness": null,
-        "dialect": null,
+        "n_errors": 0,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.65,
+        "faithfulness": 0.7960067953489006,
+        "dialect": 1.0833333333333333,
         "latency_p50_ms": 8616.118100006133,
         "latency_p95_ms": 15437.031000008574,
         "prompt_tokens": 1415.5,
@@ -77,10 +85,12 @@
     "category": {
       "in_scope": {
         "n": 43,
-        "n_errors": 43,
-        "correctness": null,
-        "faithfulness": null,
-        "dialect": null,
+        "n_errors": 3,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.6720930232558139,
+        "faithfulness": 0.8266706699733015,
+        "dialect": 1.1627906976744187,
         "latency_p50_ms": 9219.272900023498,
         "latency_p95_ms": 15437.031000008574,
         "prompt_tokens": 1523.139534883721,
@@ -91,10 +101,12 @@
     "difficulty": {
       "easy": {
         "n": 20,
-        "n_errors": 20,
-        "correctness": null,
-        "faithfulness": null,
-        "dialect": null,
+        "n_errors": 1,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.6316666666666666,
+        "faithfulness": 0.7767214656688342,
+        "dialect": 1.3,
         "latency_p50_ms": 8987.441600009333,
         "latency_p95_ms": 15437.031000008574,
         "prompt_tokens": 1547.9,
@@ -103,10 +115,12 @@
       },
       "hard": {
         "n": 6,
-        "n_errors": 6,
-        "correctness": null,
-        "faithfulness": null,
-        "dialect": null,
+        "n_errors": 1,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.5833333333333334,
+        "faithfulness": 0.8533333333333333,
+        "dialect": 1.0,
         "latency_p50_ms": 3850.581000006059,
         "latency_p95_ms": 14463.858999981312,
         "prompt_tokens": 1626.3333333333333,
@@ -115,10 +129,12 @@
       },
       "medium": {
         "n": 17,
-        "n_errors": 17,
-        "correctness": null,
-        "faithfulness": null,
-        "dialect": null,
+        "n_errors": 1,
+        "n_generation_failures": 0,
+        "n_echoes": 0,
+        "correctness": 0.7509803921568627,
+        "faithfulness": 0.8776532677848468,
+        "dialect": 1.0588235294117647,
         "latency_p50_ms": 9332.61979999952,
         "latency_p95_ms": 16757.55670000217,
         "prompt_tokens": 1457.5882352941176,
@@ -140,12 +156,27 @@
       "completion_tokens": 603,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199629, Requested 1121. Please try again in 5m24s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer provides requirements for an ID card (بطاقة هوية), not a passport.",
+        "The answer provides requirements for an ID card (بطاقة هوية), not a passport.",
+        "The answer provides requirements for an ID card (بطاقة هوية), not a passport.",
+        "The answer provides requirements for an ID card (بطاقة هوية), not a passport.",
+        "The answer provides requirements for an ID card (بطاقة هوية), not a passport."
+      ],
+      "faithfulness": 0.56,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-002",
@@ -159,12 +190,23 @@
       "completion_tokens": 419,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199537, Requested 887. Please try again in 3m3.168s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer states 80 TND for the rest (البقية).",
+        "The answer states 25 TND for students with proof of eligibility.",
+        "The answer states 25 TND for children under 7 years."
+      ],
+      "faithfulness": 0.45,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-003",
@@ -178,12 +220,21 @@
       "completion_tokens": 359,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199444, Requested 940. Please try again in 2m45.888s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer provides instructions for an ID card (بطاقة هوية) instead of a passport.",
+        "The answer provides instructions for an ID card (بطاقة هوية) instead of a passport."
+      ],
+      "faithfulness": 0.7272727272727273,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-004",
@@ -197,12 +248,21 @@
       "completion_tokens": 378,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 200000, Requested 901. Please try again in 6m29.232s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer provides information about an ID card (بطاقة هوية) instead of a passport.",
+        "The answer provides information about an ID card (بطاقة هوية) instead of a passport."
+      ],
+      "faithfulness": 0.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-005",
@@ -216,12 +276,25 @@
       "completion_tokens": 405,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199814, Requested 1036. Please try again in 6m7.2s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "mentions birth certificate for children in point 3",
+        "mentions guardian's permission and copy of ID in point 6",
+        "mentions 4 colored photos on white background in point 4",
+        "mentions 80 TND and 25 TND for students/pupils"
+      ],
+      "faithfulness": 0.7692307692307693,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-006",
@@ -235,12 +308,21 @@
       "completion_tokens": 304,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199722, Requested 870. Please try again in 4m15.744s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer does not mention the specific price or the discount for students.",
+        "The answer does not mention the requirement for a proof of enrollment or student certificate."
+      ],
+      "faithfulness": 0.6,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-007",
@@ -254,12 +336,21 @@
       "completion_tokens": 482,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
+      "correctness": 0.5,
+      "fact_verdicts": [
+        "present",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer states 'في حالة التجديد، تقديم البطاقة القديمة' (In case of renewal, provide the old card).",
+        "The answer does not mention the possibility of keeping the old passport or the need for a written request."
+      ],
       "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199629, Requested 946. Please try again in 4m8.4s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": "InternalServerError: Error code: 503 - [{'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}]"
     },
     {
       "id": "pass-008",
@@ -273,12 +364,23 @@
       "completion_tokens": 359,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "mentions 4 colored photos",
+        "mentions white background",
+        "mentions size 3.5 x 4.5 cm"
+      ],
       "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199444, Requested 903. Please try again in 2m29.904s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": "InternalServerError: Error code: 503 - [{'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}]"
     },
     {
       "id": "pass-009",
@@ -292,12 +394,23 @@
       "completion_tokens": 451,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199351, Requested 1044. Please try again in 2m50.64s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.6666666666666666,
+      "fact_verdicts": [
+        "absent",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer does not mention the recette des finances.",
+        "Mentions 'تذكرة سداد مصروفات' (payment ticket/receipt) as a required document.",
+        "Correctly states 25 TND for students/pupils/under 7 and 80 TND for others."
+      ],
+      "faithfulness": 0.6842105263157895,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-010",
@@ -311,12 +424,23 @@
       "completion_tokens": 608,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199902, Requested 1182. Please try again in 7m48.288s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer states that the application is submitted to the police or gendarmerie of the place of residence.",
+        "The answer states that the location to obtain the service is the local police or national gendarmerie station.",
+        "The answer notes that the guide does not contain specific details about the procedures in Sousse or Gafsa."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-011",
@@ -330,12 +454,19 @@
       "completion_tokens": 501,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199810, Requested 950. Please try again in 5m28.32s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer states that in case of loss, the Tunisian embassy in France must be notified."
+      ],
+      "faithfulness": 0.875,
+      "dialect_score": 2,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "pass-012",
@@ -349,12 +480,23 @@
       "completion_tokens": 7,
       "oracle_tokens": 942,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199717, Requested 606. Please try again in 2m19.536s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.3333333333333333,
+      "fact_verdicts": [
+        "absent",
+        "present",
+        "absent"
+      ],
+      "fact_reasons": [
+        "not mentioned",
+        "says 'لا' (no) to sending by post",
+        "not mentioned"
+      ],
+      "faithfulness": 0.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-001",
@@ -368,12 +510,25 @@
       "completion_tokens": 484,
       "oracle_tokens": 699,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199624, Requested 1022. Please try again in 4m39.072s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer mentions a request form to be filled and signed (نموذج طلب ملء وتوقيع).",
+        "The answer mentions the national ID card and a copy of it (بطاقة الهوية الوطنية ونسخة منها).",
+        "The answer mentions the tax payment invoice of 3 dinars (فاتورة دفع رسم التوقيع الضريبي 3 دينار).",
+        "The answer mentions the birth record for minors (سجل الميلاد للمراهقين)."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-002",
@@ -387,12 +542,21 @@
       "completion_tokens": 334,
       "oracle_tokens": 1397,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199921, Requested 842. Please try again in 5m29.616s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer states 3 dinars for those in Tunisia.",
+        "The answer states 3 dinars 300 millimes for those outside the country."
+      ],
+      "faithfulness": 0.7692307692307693,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-003",
@@ -406,12 +570,21 @@
       "completion_tokens": 441,
       "oracle_tokens": 699,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199829, Requested 1040. Please try again in 6m15.408s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer mentions going to the police headquarters or the competent local guard unit.",
+        "The answer mentions going to the police or guard unit to receive the special form."
+      ],
+      "faithfulness": 0.8461538461538461,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-004",
@@ -425,12 +598,21 @@
       "completion_tokens": 408,
       "oracle_tokens": 1397,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199736, Requested 910. Please try again in 4m39.072s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "contradicted",
+        "absent"
+      ],
+      "fact_reasons": [
+        "States 15 days for residents in Tunisia instead of 8.",
+        "Does not mention the timeframe for requests filed from abroad."
+      ],
+      "faithfulness": 0.7272727272727273,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-005",
@@ -444,12 +626,21 @@
       "completion_tokens": 240,
       "oracle_tokens": 699,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199551, Requested 710. Please try again in 1m52.752s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The candidate states it is possible to request the card online via the internet.",
+        "The candidate mentions delivery via Rapid-Poste and receiving it directly in hand."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-006",
@@ -463,12 +654,27 @@
       "completion_tokens": 522,
       "oracle_tokens": 698,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199459, Requested 1262. Please try again in 5m11.472s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer states 'تقديم الطلب في قنصليات تونس بالخارج' (submit the request at Tunisian consulates abroad).",
+        "The answer mentions obtaining the card ('الحصول على البطاقة') following the application at the consulate.",
+        "The answer states 'في غضون 15 يومًا' (within 15 days).",
+        "The answer specifies '3 دينار و300 مليم للمقيمين بالخارج' (3 dinars and 300 millimes for residents abroad).",
+        "The answer mentions requesting it via a secure website ('عبر موقع إلكتروني آمن') and delivery via 'Rapid-Poste'."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-007",
@@ -482,12 +688,23 @@
       "completion_tokens": 242,
       "oracle_tokens": 698,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199366, Requested 811. Please try again in 1m16.464s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "mentions birth certificate for Tunisians abroad without an ID card",
+        "mentions a filled and signed form",
+        "mentions 3.300 TND for those living abroad"
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-008",
@@ -501,12 +718,27 @@
       "completion_tokens": 382,
       "oracle_tokens": 699,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199842, Requested 1005. Please try again in 6m5.904s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer explicitly addresses foreign nationals residing in Tunisia.",
+        "Mentions filling and signing the application form.",
+        "Mentions providing a residence certificate.",
+        "Mentions a tax fee of 3 dinars for residents.",
+        "Mentions visiting the police department or local guard unit."
+      ],
+      "faithfulness": 0.9230769230769231,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "b3-009",
@@ -520,12 +752,23 @@
       "completion_tokens": 63,
       "oracle_tokens": 699,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199750, Requested 664. Please try again in 2m58.848s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer discusses obtaining the document rather than the source's lack of information on validity.",
+        "The answer does not address the 3-month validity period; it is a non-answer.",
+        "The answer suggests reviewing an attached document, not asking the requesting administration."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "birth-001",
@@ -539,12 +782,23 @@
       "completion_tokens": 384,
       "oracle_tokens": 813,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199657, Requested 867. Please try again in 3m46.368s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer mentions the civil status office at the municipality or delegation.",
+        "The answer mentions providing the civil status document with the act number, year, and day.",
+        "The answer explicitly states the service is obtained immediately or within 24 hours."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "birth-002",
@@ -558,12 +812,19 @@
       "completion_tokens": 428,
       "oracle_tokens": 813,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199565, Requested 872. Please try again in 3m8.784s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer explicitly states 'حيثيًا أو خلال 24 ساعة' (immediately or within 24 hours) under the 'الأجل' section."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "birth-003",
@@ -577,12 +838,23 @@
       "completion_tokens": 385,
       "oracle_tokens": 813,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199380, Requested 1018. Please try again in 2m51.936s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer states that upon returning to Tunisia, documents are obtained from the Municipality of Tunis.",
+        "The answer mentions the exception for documents registered in the same year as the request.",
+        "The answer states that if the person is abroad, they can get the documents from the consulate or embassy."
+      ],
+      "faithfulness": 0.75,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "birth-004",
@@ -596,12 +868,21 @@
       "completion_tokens": 705,
       "oracle_tokens": 813,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199287, Requested 1056. Please try again in 2m28.176s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer does not mention paying by postal money order to the municipal receiver.",
+        "The answer does not mention including a stamped envelope with the address."
+      ],
+      "faithfulness": 0.6428571428571429,
+      "dialect_score": 1,
+      "dialect_label": "french",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "birth-005",
@@ -615,12 +896,21 @@
       "completion_tokens": 128,
       "oracle_tokens": 813,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199956, Requested 756. Please try again in 5m7.584s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.5,
+      "fact_verdicts": [
+        "present",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer lists the person, parents, guardian, spouse, and a representative.",
+        "The answer does not mention siblings or state that they are excluded."
+      ],
+      "faithfulness": 0.4,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "birth-006",
@@ -634,12 +924,21 @@
       "completion_tokens": 175,
       "oracle_tokens": 269,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199910, Requested 873. Please try again in 5m38.256s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer states that there is no specific information available and suggests checking the portal.",
+        "The answer does not mention the notice or the date 28/03/2024."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "birth-007",
@@ -653,12 +952,21 @@
       "completion_tokens": 72,
       "oracle_tokens": 813,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199725, Requested 624. Please try again in 2m30.768s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.5,
+      "fact_verdicts": [
+        "present",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The candidate explicitly states that the documents do not specify the cost of the birth certificate.",
+        "The candidate does not mention the payment methods (cash at the municipality or postal money order)."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cin-001",
@@ -672,12 +980,29 @@
       "completion_tokens": 268,
       "oracle_tokens": 775,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199632, Requested 947. Please try again in 4m10.128s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer mentions the filled and signed entry form.",
+        "The answer mentions a birth document less than 3 months old.",
+        "The answer mentions 3 photos with a white/colorless background.",
+        "The answer mentions a copy of the old card and providing the original.",
+        "The answer mentions the 3 dinar fee and the tax payment ticket.",
+        "The answer mentions providing confirming documents for changes in civil status, residence, or profession."
+      ],
+      "faithfulness": 0.9,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cin-002",
@@ -691,12 +1016,21 @@
       "completion_tokens": 4,
       "oracle_tokens": 1595,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199540, Requested 690. Please try again in 1m39.36s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.5,
+      "fact_verdicts": [
+        "present",
+        "absent"
+      ],
+      "fact_reasons": [
+        "states 3 dinars",
+        "does not mention the recette des finances or the receipt"
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 5,
+      "dialect_label": "derja",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cin-003",
@@ -710,12 +1044,21 @@
       "completion_tokens": 113,
       "oracle_tokens": 775,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199986, Requested 583. Please try again in 4m5.808s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer states the process takes place within 15 days following the filing date.",
+        "The answer specifies collecting it from the police or national guard post of the residence."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "french",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cin-004",
@@ -729,12 +1072,19 @@
       "completion_tokens": 329,
       "oracle_tokens": 775,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199893, Requested 868. Please try again in 5m28.752s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer explicitly states that if the residence has changed, evidence proving this change must be provided."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cin-005",
@@ -748,12 +1098,21 @@
       "completion_tokens": 418,
       "oracle_tokens": 820,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199708, Requested 935. Please try again in 4m37.776s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "mentions that for those under 18, guardian authorization must be certified and justified",
+        "lists the form, birth extract, nationality certificate, residence certificate, school attendance certificate, 3 photos, and 3 TND"
+      ],
+      "faithfulness": 0.8666666666666667,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cin-006",
@@ -767,12 +1126,21 @@
       "completion_tokens": 346,
       "oracle_tokens": 820,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199615, Requested 756. Please try again in 2m40.272s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "The candidate lists all the standard documents: form, birth extract, nationality, residence, work/school, photos, and receipt.",
+        "The candidate mentions two copies of the residence card and the consular card."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "french",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cin-007",
@@ -786,12 +1154,21 @@
       "completion_tokens": 406,
       "oracle_tokens": 1595,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer provides replacement procedures but does not mention the validity period of the ID card.",
+        "The answer does not mention that the source may be outdated."
+      ],
       "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199523, Requested 851. Please try again in 2m41.567999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": "InternalServerError: Error code: 500 - [{'error': {'code': 500, 'message': 'Internal error encountered.', 'status': 'INTERNAL'}}]"
     },
     {
       "id": "cin-008",
@@ -805,12 +1182,19 @@
       "completion_tokens": 20,
       "oracle_tokens": 820,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199788, Requested 362. Please try again in 1m4.8s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present"
+      ],
+      "fact_reasons": [
+        "The candidate states that the blood group certificate is not necessary."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cnss-001",
@@ -824,12 +1208,27 @@
       "completion_tokens": 574,
       "oracle_tokens": 1691,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199649, Requested 981. Please try again in 4m32.16s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.8,
+      "fact_verdicts": [
+        "present",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "Mentions filing at the regional or local office (المكتب الإقليمي أو المحلي).",
+        "Mentions the affiliation request form (نموذج طلب الالتحاق).",
+        "No mention of a birth extract.",
+        "Mentions a copy of the national identity card (نسخة من بطاقة الهوية الوطنية).",
+        "Mentions checking documents based on the specific activity (تتوافق مع نشاطك المحدد)."
+      ],
+      "faithfulness": 0.9444444444444444,
+      "dialect_score": 2,
+      "dialect_label": "other",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cnss-002",
@@ -843,12 +1242,21 @@
       "completion_tokens": 381,
       "oracle_tokens": 1691,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199556, Requested 781. Please try again in 2m25.584s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present",
+        "present"
+      ],
+      "fact_reasons": [
+        "states it takes between one to two weeks from the date of submitting the complete application",
+        "mentions sending the social security card, health services card, affiliation certificate, or rejection decision"
+      ],
+      "faithfulness": 0.8333333333333334,
+      "dialect_score": 2,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cnss-003",
@@ -862,12 +1270,27 @@
       "completion_tokens": 249,
       "oracle_tokens": 1691,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199464, Requested 760. Please try again in 1m36.767999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.6,
+      "fact_verdicts": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "fact_reasons": [
+        "mentions 'نموذج طلب الاشتراك'",
+        "mentions a ledger extract ('دفتر الأستاذ') instead of a birth extract",
+        "mentions 'نسخة طبق الأصل من بطاقة الهوية الوطنية'",
+        "trade register extract is not mentioned",
+        "mentions 'الوحدة الإدارية الجهوية أو المحلية'"
+      ],
+      "faithfulness": 0.875,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cnss-004",
@@ -881,12 +1304,21 @@
       "completion_tokens": 444,
       "oracle_tokens": 1691,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199907, Requested 1068. Please try again in 7m1.2s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.5,
+      "fact_verdicts": [
+        "present",
+        "absent"
+      ],
+      "fact_reasons": [
+        "mentions the registration form and CIN copy",
+        "does not mention property certificates, leases, or farmers' union certificates"
+      ],
+      "faithfulness": 0.9230769230769231,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cnss-005",
@@ -900,12 +1332,19 @@
       "completion_tokens": 146,
       "oracle_tokens": 1691,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199815, Requested 641. Please try again in 3m16.992s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer explicitly states that retirees from the social security system (CNSS) are excluded from the registration process."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cnss-006",
@@ -919,12 +1358,19 @@
       "completion_tokens": 365,
       "oracle_tokens": 1691,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199722, Requested 959. Please try again in 4m54.192s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 1.0,
+      "fact_verdicts": [
+        "present"
+      ],
+      "fact_reasons": [
+        "The answer states that a taxi driver with a professional card must register in the fund as a self-employed worker."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     },
     {
       "id": "cnss-007",
@@ -938,12 +1384,21 @@
       "completion_tokens": 350,
       "oracle_tokens": 1691,
       "oracle_truncated": false,
-      "correctness": null,
-      "fact_verdicts": null,
-      "faithfulness": null,
-      "dialect_score": null,
-      "dialect_label": null,
-      "error": "quota: groq: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kzctpa2ne62r3ekkmz339w2e` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199629, Requested 844. Please try again in 3m24.335999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+      "correctness": 0.0,
+      "fact_verdicts": [
+        "absent",
+        "absent"
+      ],
+      "fact_reasons": [
+        "The answer lists application requirements instead of what is sent after acceptance.",
+        "The answer does not mention a rejection notice."
+      ],
+      "faithfulness": 1.0,
+      "dialect_score": 1,
+      "dialect_label": "msa",
+      "generation_failure": null,
+      "echo": false,
+      "error": null
     }
   ]
 }
