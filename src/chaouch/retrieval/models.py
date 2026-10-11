@@ -8,12 +8,16 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 import numpy as np
+import torch
 from numpy.typing import NDArray
 from sentence_transformers import CrossEncoder, SentenceTransformer
 
 from chaouch.config import SearchConfig, Settings
 
 Vectors = NDArray[np.float32]
+# transformers v5 loads a checkpoint in its saved dtype (bfloat16 for Qwen3-Embedding): force
+# float32 on CPU for precision (unit vectors) and speed.
+MODEL_KWARGS = {"dtype": torch.float32}
 Rerank = Callable[[str, list[str]], list[float]]
 
 
@@ -33,13 +37,13 @@ def _hf_token() -> str | None:
 
 @functools.cache
 def _sentence_transformer(name: str, device: str) -> SentenceTransformer:
-    return SentenceTransformer(name, device=device, token=_hf_token())
+    return SentenceTransformer(name, device=device, token=_hf_token(), model_kwargs=MODEL_KWARGS)
 
 
 @functools.cache
 def _cross_encoder(name: str, device: str, max_length: int) -> CrossEncoder:
     model: CrossEncoder = CrossEncoder(  # stub: Any
-        name, device=device, max_length=max_length, token=_hf_token()
+        name, device=device, max_length=max_length, token=_hf_token(), model_kwargs=MODEL_KWARGS
     )
     return model
 
