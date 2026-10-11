@@ -28,11 +28,10 @@ Fact rule used by the second grader: a fact counts as present if its core claim 
 stated correctly. Missing a minor detail is fine; a wrong value (number, place, delay)
 is absent.
 
-**Owner's rubric (2026-10-11): strict reading.** Every part written in a fact must be stated;
-"application form filled and signed" is absent if the answer only mentions the form. The
-owner set the grader's value to N, with the note "owner rubric: strict reading, 2026-10-11", for
-B3 pass-001 facts 1, 2 and 5 (both samples) and B2 pass-005 fact 4 (sample A). In sample B the
-owner's N is in the `owner` column; Claude's original Y is kept next to it.
+**Owner's rubric (2026-10-11): the core-claim rule** above, the same rule as `correctness_v2`.
+The owner first tried a strict reading (every part written in a fact must be stated) on four rows:
+B3 pass-001 facts 1, 2 and 5 (both samples) and B2 pass-005 fact 4. It was reverted the same
+day: those rows are graded Y again, and the sheets are back to the second grader's grades.
 
 ## Results
 
@@ -44,9 +43,7 @@ owner's N is in the `owner` column; Claude's original Y is kept next to it.
 | Dialect mean absolute gap | 0.45 | **1.75** | ≤ 1.0 |
 
 The targets are rules of thumb chosen for this project, not an external standard.
-The table is the v1 judge against the second grader's original grades. With the owner's strict
-rubric, the v1 judge's fact agreement becomes 49/54 = 91% (κ 0.81, stricter 4, looser 1) on
-sample A and 59/62 = 95% (κ 0.88, stricter 1, looser 2) on sample B; dialect is unchanged.
+The table is the v1 judge against the second grader, core-claim rule.
 
 ## Findings
 
@@ -66,7 +63,8 @@ sample A and 59/62 = 95% (κ 0.88, stricter 1, looser 2) on sample B; dialect is
 4. **Echoes get credit.** An answer that only repeated the question (B3 pass-010) had
    one fact marked present and dialect 5; B0_falcon pass-004 (echo) got dialect 3.
 5. **Minor-detail strictness** (B3 pass-001: "filled and signed", "show the original")
-   is a rubric choice. The owner decided on the strict reading (see Method).
+   is a rubric choice. The owner decided on the core-claim rule (see Method), so these are
+   judge errors.
 
 ## Decision
 
@@ -102,15 +100,12 @@ sample A and 59/62 = 95% (κ 0.88, stricter 1, looser 2) on sample B; dialect is
   dialect 1 (label "echo"), no faithfulness, and no judge calls; reports count them
   (`n_echoes`). On the 2026-10-11 runs it flags 4 of 271 answers (B3 pass-010, B0_falcon
   pass-004, b3-005 and birth-002) and none of the 51 gold expected answers (tested).
-- **The v2 prompts stay frozen during this validation.** `correctness_v2` still says a missing
-  minor detail does not make a fact absent, which differs from the owner's strict rubric; on
-  the calibration cases the judge applied the strict reading anyway. Align the prompt when gold
-  set v2 splits compound facts (below).
 - Re-validate `v2` on both samples (40 answers) before the remaining full runs:
   dialect within ±1 ≥ 80% and fact agreement ≥ 80% on each sample.
 - **v2 validation result:** done with the Gemma 4 31B judge after Groq's daily cap stopped the
-  gpt-oss run; both samples pass (facts 93% / 95%, dialect within ±1 20/20 on each). See ADR 0010.
-  gpt-oss with v2 reached sample A 53/54 facts and 19/20 dialect before the cap.
+  gpt-oss run; both samples pass (facts 54/54 and 62/62, dialect within ±1 20/20 on each). See
+  ADR 0010. gpt-oss with v2 and the echo rule: sample A 49/54 facts (still stricter on 5) and 19/20
+  dialect; sample B incomplete at the cap (26/29 facts, 8/9 dialect).
 - Earlier `v1` judgments stay in the cache but are not reported. Reports must list
   the prompt versions (they already do).
 
@@ -126,13 +121,13 @@ sample A and 59/62 = 95% (κ 0.88, stricter 1, looser 2) on sample B; dialect is
 
 ## Known limitations
 
-- **Negative facts.** On B2 birth-005 fact 2 ("a sibling is not allowed"), `correctness_v2`
-  says absent ("does not mention that a sibling is not listed") although the answer starts
-  with "لا، ما تنجمش" and lists only the allowed people. Left as is: the judge can still miss a
-  negative fact that the answer states by leaving it out.
+- **Negative facts.** On B2 birth-005 fact 2 ("a sibling is not allowed"), gpt-oss with
+  `correctness_v2` says absent ("does not mention that a sibling is not listed") although the
+  answer starts with "لا، ما تنجمش" and lists only the allowed people. Gemma 4 31B grades it
+  present (ADR 0010), but a judge can still miss a negative fact stated by leaving it out.
 - **Compound facts.** Facts such as "application form filled and signed" or "copy of CIN +
   show the original" pack several checks into one. Gold set v2 should split them into one
-  check per fact, so a strict reading doesn't zero a fact for one missing part.
+  check per fact, so each part is graded on its own instead of by the core-claim rule.
 - **Echo rule thresholds** were chosen on the 2026-10-11 answers. A model that echoes the
   question and adds a long unrelated text is not flagged (it adds ≥ 50 new 3-grams); the judge
   grades it.

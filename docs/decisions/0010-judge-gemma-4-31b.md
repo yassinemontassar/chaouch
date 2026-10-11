@@ -28,31 +28,30 @@ NVIDIA and Cerebras free tiers aren't available to the owner.
   parser accepts it for outputs with a single list field (seen twice in the first `eval-full`).
 - ~30 s per call; the API sometimes answers 503 "high demand", which the SDK retries.
 - `uv run tasks.py calibrate`: the v2 prompts (ADR 0009) and the code echo rule, fresh Gemma calls on
-  all 38 calibration answers (40 sample rows), against the second grader with the owner's strict
-  rubric.
+  all 38 calibration answers (40 sample rows), against the second grader (core-claim rule, ADR 0009).
 
 ## Results
 
 | Check | Sample A | Sample B | Target |
 |---|---|---|---|
-| Fact agreement | 50/54 = 93% (κ 0.85) | 59/62 = 95% (κ 0.88) | ≥ 80% |
-| Judge stricter / looser | 0 / 4 | 0 / 3 | |
+| Fact agreement | 54/54 = 100% | 62/62 = 100% | ≥ 80% |
+| Judge stricter / looser | 0 / 0 | 0 / 0 | |
 | Dialect within ±1 | 20/20 | 20/20 | ≥ 80% |
 | Dialect mean absolute gap | 0.30 (Spearman 0.95) | 0.40 (Spearman 0.70) | ≤ 1.0 |
 
-Both samples pass. All 7 fact disagreements are the rows the owner set to N under the strict
-rubric (B3 pass-001 facts 1, 2, 5 in both samples; B2 pass-005 fact 4): Gemma follows
-`correctness_v2`'s minor-detail rule, which is looser than the owner's rubric (ADR 0009). The
-dialect problems of v1 (Moroccan and Egyptian answers scored 4–5) are gone.
+Both samples pass with no fact disagreement. (Under the strict reading the owner tried and
+reverted, Gemma disagreed on exactly those 4 rows: 50/54 and 59/62.) The dialect problems of v1
+(Moroccan and Egyptian answers scored 4–5) are gone. Perfect fact agreement against a second grader
+that is itself an AI and was not fully blind is weaker evidence than it looks; ADR 0009 says so.
 
-For comparison, gpt-oss-120b with the same prompts: sample A 53/54 facts, 19/20 dialect; sample B
-incomplete (29/29 facts and 8/9 dialect on the answers it reached before the cap).
+For comparison, gpt-oss-120b with the same prompts: sample A 49/54 facts (stricter on 5), 19/20
+dialect; sample B incomplete at the daily cap (26/29 facts, 8/9 dialect).
 
 ### Same-family check (B2 = Gemini, judged by Gemma, both Google)
 
 | Check | Sample A, B2 answers | Sample B, B2 answers |
 |---|---|---|
-| Fact agreement | 24/25 (the one miss is the rubric row pass-005) | 13/13 |
+| Fact agreement | 25/25 | 13/13 |
 | Dialect within ±1 | 10/10 | 4/4 |
 | Mean dialect gap, judge − grader | +0.2 | +0.5 |
 | Same, all other answers | 0.0 | −0.25 |

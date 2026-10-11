@@ -55,16 +55,23 @@ version in the gold README, the runner warns that the file changed without a ver
 
 | Command | What it runs | Cost |
 |---|---|---|
-| `uv run tasks.py eval-smoke` | B2 on the first 20 in-scope questions | about 20 answers + 60 judge calls |
-| `uv run tasks.py eval-full` | every system in `configs/eval.yaml` on all in-scope questions | about 260 answers + 690 judge calls |
+| `uv run tasks.py eval-smoke` | B2 on the first 20 in-scope questions | about 20 answers + 60 judge calls, ~20 min |
+| `uv run tasks.py eval-full` | every system in `configs/eval.yaml` on all in-scope questions | about 260 answers + 690 judge calls, ~3 h |
 
-Use `--systems B0_qwen,B3` to run only some systems. Ollama must be running for B0/B1.
+Smoke is a quick check that the pipeline works after a change; only full runs give comparable numbers.
+Use `--systems B0_falcon,B3` to run only some systems. Ollama must be running for B0/B1.
 
-**Daily re-runs.** Free tiers have daily limits (the judge's 200K tokens/day on Groq is the tightest).
-When a limit is hit, the run stops those questions with a `quota:` error and marks the report incomplete.
-Run the same command again the next day: everything already done comes from the cache, and only the
-missing calls are made. Repeat until the report shows 0 errors. Limits live in `configs/models.yaml`;
-update them from the providers' consoles when they change.
+**The judge** is Gemma 4 31B on Google AI Studio (`gemma_judge`, ADR 0010), with the same `GEMINI_API_KEY`
+as B2. Free tier: 14.4K requests/day and 16K *input* tokens/min. The tokens/min limit binds: the
+faithfulness prompts carry the documents (~4K tokens), so the judge runs at 3 requests/min. Each call
+takes ~30 s because Gemma always thinks first. `groq_judge` (gpt-oss-120b, 200K tokens/day) is kept for
+re-runs; switch `judge_model` in `configs/eval.yaml` to use it.
+
+**Re-run until 0 errors.** A failed call is never cached, and the run keeps going: the report lists the
+failed questions (`quota:` for a rate limit, or a 500/503 from a busy API) and is marked incomplete. Run the
+same command again: everything already done comes from the cache and only the failed calls are made. The
+2026-10-11 baseline took five runs. If the same few calls keep failing, stop and note them in the ADR.
+Limits live in `configs/models.yaml`; update them from the providers' consoles when they change.
 
 **The eval cache** is a SQLite file at `C:\dev\cache\chaouch\eval_cache.sqlite` (`cache_path` in
 `configs/eval.yaml`), outside the repo and OneDrive. It stores every answer and judge call, keyed by the
@@ -74,17 +81,29 @@ delete, but the next run makes every call again.
 
 **Reports** go to `reports/`: `<date>_<system>.json` (per-question results) and `<date>_baseline.md` (the
 table). Smoke reports are ignored by git. Commit only the reports of a complete full baseline; the date is
-the day of the final, complete run.
+the day of the final, complete run. A changed judge, judge prompt or gold-set version makes numbers
+incomparable with older reports: re-run every system you want to compare.
 
-## 4. Choosing the main local model after the baseline
+## 4. Re-running the judge calibration
 
-Do the judge calibration (spec 8.2, ADR 0007) first, then compare Qwen3.5 2B and Falcon-H1 3B in this order:
+Do this after any change to the judge model or its prompts, before trusting new numbers
+(spec 8.2; details in `data/evals/calibration/README.md`).
 
-1. **B1 correctness and dialect**: the closest to how Chaouch will be used (model + documents).
-2. **Latency** (p50/p95) on the laptop GPU, with a 4096 context.
-3. **Fine-tuning support**: QLoRA with Unsloth/PEFT on Kaggle, and export back to GGUF (spec Phase 4).
-   Falcon-H1's hybrid architecture needs checking.
-4. **B0**: what the model knows without documents; a tie-breaker.
+1. `uv run tasks.py calibrate` re-judges the 38 calibration answers (samples A and B) with the current
+   judge: ~70 calls, ~20 min on Gemma. It prints per-sample agreement, a check on the B2 (Gemini) answers,
+   and every disagreement with the judge's one-line reason.
+2. Pass (exit code 0) = on each sample, fact agreement ≥ 80% and dialect within ±1 ≥ 80%.
+3. Pass: record the numbers in an ADR. Fail: read the disagreements before changing a prompt.
+4. `uv run tasks.py calibrate --cached` re-prints the report from the cache with no judge calls, e.g.
+   after changing a grade in the sheets. `calibrate-report` shows the stored v1 judge results.
 
-Look at the by-script breakdown too: a model that fails on Arabizi is a poor fit even with a good average.
-Record the choice and the numbers in an ADR.
+The grader's values are in the two sheets under `data/evals/calibration/`. The rule is the core-claim rule
+(ADR 0009): a fact is present if its core claim is stated; a missing minor detail is fine, a wrong value is
+not.
+
+## 5. The main local model
+
+Falcon-H1 3B Instruct, with Qwen3.5 2B as fallback ([ADR 0011](decisions/0011-main-local-model.md)). To
+compare a new candidate: add it to `configs/models.yaml` and as `B0_<name>` / `B1_<name>` systems in
+`configs/eval.yaml`, run `eval-full --systems B0_<name>,B1_<name>`, and compare B1 correctness and dialect
+first (overall and by script), then latency, fine-tuning support (Phase 4) and B0.

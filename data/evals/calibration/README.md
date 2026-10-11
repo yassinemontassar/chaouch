@@ -16,7 +16,9 @@ Second grader: Claude, reviewed by the owner (not fully blind, see ADR 0009). In
 column overrides Claude: blank or `claude` keeps Claude's grade, `judge` takes the judge's, and `Y`/`N`
 (Facts tab) or `owner score (optional)` (Dialect tab) is the owner's own grade.
 
-Owner's rubric: strict reading, every part written in a fact must be stated (2026-10-11).
+Owner's rubric: the core-claim rule, the same as `correctness_v2`: a fact is present if its core claim
+is stated; a missing minor detail is fine, a wrong value is not (ADR 0009). Compound facts should be
+split in gold set v2.
 
 ## Samples
 
