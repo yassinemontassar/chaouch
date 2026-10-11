@@ -147,6 +147,7 @@ def chunk_all(
                 "chunk_id": f"{source.doc_id}-{i:04d}",
                 "doc_id": source.doc_id,
                 "procedure": meta["procedure"],
+                "role": source.role,
                 "language": meta["language"],
                 "source_url": meta["source_url"],
                 "title": meta["title"],

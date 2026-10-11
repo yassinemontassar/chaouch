@@ -61,3 +61,160 @@ sources:
     language: fr
     license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
     notes: "Tunisians abroad + foreigners who lived in Tunisia. Validity of the bulletin not stated."
+
+  # ── Distractors (ADR 0013) ─────────────────────────────────────────────
+  # Official pages on other procedures from the same portal, indexed only to make retrieval
+  # harder. They must not answer any gold question (Claude's pre-check; owner approved the
+  # URLs on 2026-10-11). Never use them in gold_doc_ids.
+
+  - doc_id: doc_dist_post_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D1301"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Expédition d'un envoi recommandé destiné à l'étranger"
+    role: distractor
+
+  - doc_id: doc_dist_post_02
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D1305"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Procuration pour retrait d'un envoi recommandé"
+    role: distractor
+
+  - doc_id: doc_dist_cnss_contrib_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D1300"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Encaissement des cotisations des travailleurs non salariés"
+    role: distractor
+
+  - doc_id: doc_dist_family_allowance_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D1710"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Allocations familiales, secteur non agricole"
+    role: distractor
+
+  - doc_id: doc_dist_orphan_pension_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D1613"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Pension temporaire pour les orphelins"
+    role: distractor
+
+  - doc_id: doc_dist_death_capital_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D1614"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Avance sur le capital décès pour le conjoint"
+    role: distractor
+
+  - doc_id: doc_dist_care_card_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D712"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Carte de soins gratuits"
+    role: distractor
+
+  - doc_id: doc_dist_care_card_02
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D713"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Carte de soins à tarif réduit"
+    role: distractor
+
+  - doc_id: doc_dist_abroad_info_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D720"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Informations générales au profit des Tunisiens à l'étranger"
+    role: distractor
+
+  - doc_id: doc_dist_cassation_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D1624"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Attestation de pourvoi ou de non pourvoi en cassation"
+    role: distractor
+
+  - doc_id: doc_dist_birth_fix_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D2094"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Correction d'un acte de naissance (nom de famille)"
+    role: distractor
+
+  - doc_id: doc_dist_marriage_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D2095"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Conclusion d'un contrat de mariage"
+    role: distractor
+
+  - doc_id: doc_dist_vehicle_rental_01
+    url: "http://www.sicad.gov.tn/Fr/Prestations_57_3_D1622"
+    procedure: other
+    language: fr
+    license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
+    notes: "Carte d'exploitation, location de véhicules de marchandises"
+    role: distractor
+
+  - doc_id: doc_dist_birth_fix_02
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D2094"
+    procedure: other
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "إصلاح رسم ولادة (التنصيص على اللقب العائلي)"
+    role: distractor
+
+  - doc_id: doc_dist_marriage_02
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D2095"
+    procedure: other
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "إبرام عقد زواج"
+    role: distractor
+
+  - doc_id: doc_dist_seaman_book_01
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D2084"
+    procedure: other
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "تجديد الدفتر المهني لرجال البحر"
+    role: distractor
+
+  - doc_id: doc_dist_temp_registration_01
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D2104"
+    procedure: other
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "بطاقة تسجيل وقتي"
+    role: distractor
+
+  - doc_id: doc_dist_customs_id_01
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D2087"
+    procedure: other
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "الحصول على رقم تعريف ديواني"
+    role: distractor
+
+  - doc_id: doc_dist_navigation_01
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D2092"
+    procedure: other
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "رخصة للملاحة في المياه الإقليمية التونسية"
+    role: distractor

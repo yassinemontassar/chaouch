@@ -19,6 +19,9 @@ class Source(StrictModel):
     notes: str | None = None  # owner caveats, e.g. "may predate the 2024 CIN law"
     # HTML only. precision = trafilatura's default; recall keeps short blocks it would drop.
     extract_mode: Literal["precision", "recall"] = "precision"
+    # distractor: an official page on another procedure, indexed only to make retrieval harder
+    # (ADR 0013). Never a gold document, never a supported procedure.
+    role: Literal["core", "distractor"] = "core"
 
 
 class SourcesFile(StrictModel):

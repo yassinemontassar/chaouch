@@ -119,3 +119,4 @@ def test_chunk_all_writes_metadata(tmp_path: Path) -> None:
     assert expected_keys <= first.keys()
     assert first["retrieved_at"] == "2026-10-10T12:00:00+00:00"
     assert first["n_tokens"] == count(first["text"])
+    assert first["role"] == "core"

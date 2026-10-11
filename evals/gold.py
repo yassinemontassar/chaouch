@@ -100,11 +100,14 @@ def parse_gold(path: Path) -> GoldReport:
 def validate_gold(path: Path, sources: list[Source], checks: GoldChecks) -> GoldReport:
     report = parse_gold(path)
     doc_ids = {s.doc_id for s in sources}
-    procedures = {s.procedure for s in sources}
+    distractors = {s.doc_id for s in sources if s.role == "distractor"}
+    procedures = {s.procedure for s in sources if s.role == "core"}
     for q in report.questions:
         unknown = [d for d in q.gold_doc_ids if d not in doc_ids]
         if unknown:
             report.errors.append(f"{q.id}: gold_doc_ids not in sources.yaml: {', '.join(unknown)}")
+        if used := [d for d in q.gold_doc_ids if d in distractors]:
+            report.errors.append(f"{q.id}: gold_doc_ids are distractors: {', '.join(used)}")
         if q.category == "in_scope" and q.procedure not in procedures:
             report.errors.append(f"{q.id}: procedure {q.procedure!r} has no source in sources.yaml")
     report.warnings.extend(distribution_warnings(report.questions, checks))
