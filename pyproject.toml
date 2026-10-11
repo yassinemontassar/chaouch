@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "httpx2>=2.13.1",
+    "numpy>=2.5.3",
     "openai>=3.28.0",
     "pgvector>=0.5.1",
     "psycopg[binary]>=3.3.6",
