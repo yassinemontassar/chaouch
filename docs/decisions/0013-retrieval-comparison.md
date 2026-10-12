@@ -1,6 +1,6 @@
 # 0013: Retrieval: dense bge-m3 alone, no BM25 fusion, no reranker
 
-- **Status:** proposed (for the owner to accept)
+- **Status:** accepted (owner, 2026-10-12)
 - **Date:** 2026-10-12
 - **Related:** ADR 0003 (oracle documents), ADR 0006 (sources), ADR 0011 (main local model)
 
@@ -79,12 +79,13 @@ for "قدّاش يكلّف الباسبور؟" Qwen's top 3 are Arabic-script di
 seaman's book, birth-record correction) and the French passport page is 20th. Qwen matches the
 **script** of Derja questions rather than their meaning: on the core corpus the only Arabic-script
 pages are the birth pages (R@1 0.19); the 6 Arabic distractors take it to 0.00. It is the model.
+Reproduce: `uv run python -m scripts.qwen_sanity_check`.
 
 **Arabic diacritics** (all 16 Arabic-script questions carry shadda etc.). Stripping them from the
 query only, full corpus: bge-m3 R@1 0.53 → 0.41, MRR 0.72 → 0.63 (worse); Qwen3 R@1 0.00 → 0.06,
 MRR 0.27 → 0.32. A single spot check had suggested the shadda hurts bge-m3; over the 16 questions,
-keeping the diacritics is better. (One-off check: the same questions embedded with and without
-Unicode combining marks, against the stored chunk vectors.)
+keeping the diacritics is better. Reproduce: `uv run python -m scripts.query_diacritics_check`
+(query side only; the stored chunk vectors are unchanged).
 
 Latency per question on CPU (p50 / p95): embed the question 426 / 653 ms (bge-m3),
 807 / 1248 ms (Qwen3); pgvector search 3 / 4 ms; BM25 < 1 ms; **fusing + reranking 20 candidates
@@ -122,5 +123,9 @@ Latency per question on CPU (p50 / p95): embed the question 426 / 653 ms (bge-m3
   pools overlap heavily on 51 chunks).
 - Translating the query to French (spec 9.2) is not needed for now: French documents are not the
   weak spot (bge-m3 R@1 0.61 on questions with French gold documents vs 0.43 on Arabic ones).
+- **Planned next, before Phase 2: gold set v2** (owner, 2026-10-12). Add the Arabic versions of the
+  four French core pages, which the portal publishes under the same ids (`/Ar/..._D1618` passport,
+  `D1309` CIN, `D1705` bulletin n°3, `D717` CNSS), relabel `gold_doc_ids` accordingly, and add new
+  Derja questions ([HUMAN]). Then re-run `eval-retrieval`: these numbers compare only within gold v1.
 - Spec §10 Phase 1 acceptance: `eval-retrieval` reports Recall@5 and MRR by script and document
   language, and this ADR compares BM25 / dense / hybrid / hybrid + rerank with numbers.
