@@ -104,6 +104,7 @@ def comparison_pairs(configs: Sequence[RunConfig]) -> list[tuple[str, str]]:
     embedders = list(dict.fromkeys(c.embedder for c in configs if c.embedder))
     pairs += [(f"hybrid:{e}", f"dense:{e}") for e in embedders]  # what BM25 adds to dense
     pairs += [(f"hybrid_rerank:{e}", f"hybrid:{e}") for e in embedders]  # what the reranker adds
+    pairs += [(f"hybrid_rerank:{e}", f"dense:{e}") for e in embedders]  # rerank vs the best plain
     for other in embedders[1:]:
         for mode in ("dense", "hybrid", "hybrid_rerank"):
             pairs.append((f"{mode}:{other}", f"{mode}:{embedders[0]}"))

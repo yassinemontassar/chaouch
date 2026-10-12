@@ -131,6 +131,7 @@ def test_configs_and_pairs() -> None:
     assert ("dense:qwen3_emb_0_6b", "dense:bge_m3") in pairs
     assert ("hybrid_rerank:bge_m3", "hybrid:bge_m3") in pairs
     assert ("hybrid:bge_m3", "dense:bge_m3") in pairs
+    assert ("hybrid_rerank:bge_m3", "dense:bge_m3") in pairs
     # only pairs whose two configs were run
     subset = [c for c in configs if c.name in {"bm25", "hybrid:bge_m3", "hybrid_rerank:bge_m3"}]
     assert comparison_pairs(subset) == [

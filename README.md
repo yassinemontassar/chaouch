@@ -2,7 +2,8 @@
 
 A Tunisian Derja assistant for administrative procedures, built and measured as an AI engineering project.
 
-> Work in progress. Phase 0 (setup and baseline) is done: see [Baseline](#baseline).
+> Work in progress. Phase 0 (setup and baseline) is done: see [Baseline](#baseline). Phase 1
+> (retrieval) is measured: see [Retrieval](#retrieval).
 
 ## The problem
 
@@ -89,6 +90,37 @@ Caveats:
 
 Hardware for all local numbers: RTX 3050 Laptop GPU (6 GB VRAM), 16 GB RAM, Windows 11.
 
+## Retrieval
+
+The system has to find the right official page on its own. Measured on the 43 gold questions against
+27 documents: the 8 procedure pages plus 19 official pages on other procedures from the same portal,
+added as distractors so the test isn't trivial ([ADR 0013](docs/decisions/0013-retrieval-comparison.md),
+[full report](reports/2026-10-12_retrieval.md)).
+
+| Retrieval | R@1 | R@5 | MRR | Latency per question (CPU) |
+|---|---|---|---|---|
+| BM25 (keywords) | 0.30 | 0.49 | 0.40 | < 1 ms |
+| **bge-m3 embeddings** | **0.58** | **0.91** | **0.74** | 0.4 s |
+| bge-m3 + BM25 (RRF fusion) | 0.42 | 0.77 | 0.60 | 0.4 s |
+| bge-m3 + BM25 + reranker (bge-reranker-v2-m3) | 0.51 | 0.87 | 0.67 | 80 s |
+| Qwen3-Embedding-0.6B | 0.42 | 0.73 | 0.60 | 0.8 s |
+
+R@k: share of the gold documents in the top k chunks given to the model. MRR: mean of 1 / rank of the
+first right chunk.
+
+What it shows:
+
+1. **Keywords can't bridge Derja and French.** BM25 finds 12% of the right pages first for Arabic-script
+   questions, so fusing it with the embeddings makes them worse (MRR −0.14, paired 95% CI −0.24 to
+   −0.04). The usual "hybrid search" recipe doesn't hold here.
+2. **The reranker doesn't pay for itself.** It doesn't beat bge-m3 alone and takes ~80 s per question on
+   a laptop CPU.
+3. **Qwen3-Embedding matches the script, not the meaning.** For "قدّاش يكلّف الباسبور؟" it ranks
+   Arabic-script pages on fishing cards and seamen's books above the French passport page: R@1 0.00 on Arabic-script
+   questions.
+
+Phase 2 uses bge-m3 alone.
+
 ## Roadmap
 
 Each phase targets a weakness the baseline found.
@@ -131,6 +163,10 @@ uv run pre-commit install
 | `test-live` | one real call per configured model (needs keys / Ollama) |
 | `validate-evals` | checks `data/evals/gold/questions.jsonl` |
 | `ingest` | `fetch` + `clean` + `chunk` the sources in `data/documents/sources.yaml` |
+| `db-up` | Postgres + pgvector in Docker (start Docker Desktop first) |
+| `index` | embed the chunks into pgvector |
+| `eval-retrieval` | Recall@k and MRR on the gold set, no LLM |
+| `test-integration` | tests that need Docker and the retrieval models |
 | `eval-smoke` | B2 on 20 gold questions |
 | `eval-full` | all six systems on the whole gold set |
 | `calibrate-report` / `calibrate` | judge calibration: stored results / re-judge the 40 calibration answers |
