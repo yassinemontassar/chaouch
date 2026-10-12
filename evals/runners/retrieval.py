@@ -8,6 +8,7 @@ Scores every configuration (BM25, then dense / hybrid / hybrid+rerank per embedd
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import sys
@@ -96,13 +97,16 @@ def summarize(rows: Sequence[dict[str, Any]]) -> dict[str, dict[str, Any]]:
 
 
 def comparison_pairs(configs: Sequence[RunConfig]) -> list[tuple[str, str]]:
-    """Each config vs bm25, and each later embedder vs the first one, mode by mode."""
+    """Each config vs bm25, the reranker vs plain hybrid, and each later embedder vs the first
+    one, mode by mode; only pairs whose two configs were run."""
+    names = {c.name for c in configs}
     pairs = [(c.name, "bm25") for c in configs if c.name != "bm25"]
     embedders = list(dict.fromkeys(c.embedder for c in configs if c.embedder))
+    pairs += [(f"hybrid_rerank:{e}", f"hybrid:{e}") for e in embedders]
     for other in embedders[1:]:
         for mode in ("dense", "hybrid", "hybrid_rerank"):
             pairs.append((f"{mode}:{other}", f"{mode}:{embedders[0]}"))
-    return pairs
+    return [(a, b) for a, b in pairs if a in names and b in names]
 
 
 def paired_differences(
@@ -209,16 +213,36 @@ def ms_since(start: float) -> float:
     return (time.perf_counter() - start) * 1000
 
 
+def select[T](available: dict[str, T], wanted: str | None, what: str) -> dict[str, T]:
+    if not wanted:
+        return available
+    names = wanted.split(",")
+    unknown = [n for n in names if n not in available]
+    if unknown:
+        raise SystemExit(
+            f"unknown {what}: {', '.join(unknown)} (available: {', '.join(available)})"
+        )
+    return {n: available[n] for n in names}
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Retrieval eval: Recall@k and MRR, no LLM.")
+    parser.add_argument("--configs", help="comma-separated, e.g. bm25,hybrid:bge_m3 (default: all)")
+    parser.add_argument("--corpora", help="comma-separated: core,full (default: all available)")
+    parser.add_argument("--label", default="", help="report name suffix, e.g. rerank")
+    args = parser.parse_args()
+
     cfg = load_retrieval_config().retrieval
     chunks, chunks_sha = load_chunks()
     questions = [q for q in load_gold() if q.category == "in_scope"]
     chunks_by_id = {c.chunk_id: c for c in chunks}
     language_of = {c.doc_id: c.language for c in chunks}
-    corpora = {"core": [c for c in chunks if c.role == "core"]}
+    available = {"core": [c for c in chunks if c.role == "core"]}
     if any(c.role == "distractor" for c in chunks):
-        corpora["full"] = chunks
-    configs = run_configs(cfg)
+        available["full"] = chunks
+    corpora = select(available, args.corpora, "corpora")
+    configs = list(select({c.name: c for c in run_configs(cfg)}, args.configs, "configs").values())
+    embedders = list(dict.fromkeys(c.embedder for c in configs if c.embedder))
     timings: dict[str, list[float]] = defaultdict(list)
     dense: dict[
         tuple[str, str, str], list[str]
@@ -226,12 +250,12 @@ def main() -> int:
 
     with connect(Settings().database_dsn()) as conn:
         try:
-            for key in cfg.embedders:
+            for key in embedders:
                 assert_fresh(conn, key, chunks_sha)
         except StaleIndexError as exc:
             print(exc)
             return 1
-        for key in cfg.embedders:  # one model in memory at a time
+        for key in embedders:  # one model in memory at a time
             embedder = load_embedder(cfg, key)
             for q in questions:
                 start = time.perf_counter()
@@ -245,7 +269,8 @@ def main() -> int:
                     timings["dense search (pgvector)"].append(ms_since(start))
             release_models()
 
-    rerank = load_reranker(cfg)
+    rerank = load_reranker(cfg) if any(c.mode == "hybrid_rerank" for c in configs) else None
+    run_start = time.perf_counter()
     rows: list[dict[str, Any]] = []
     for corpus_name, corpus_chunks in corpora.items():
         corpus = Corpus.build(corpus_chunks, cfg)
@@ -262,12 +287,13 @@ def main() -> int:
                 rows.append(
                     score_row(q, corpus_name, c.name, ranking, chunks_by_id, language_of, cfg.top_k)
                 )
-            print(f"{corpus_name}: {i}/{len(questions)}", end="\r", flush=True)
-        print()
+            elapsed = (time.perf_counter() - run_start) / 60
+            print(f"{corpus_name}: {i}/{len(questions)} questions, {elapsed:.1f} min", flush=True)
     release_models()
 
     report = {
         "created_at": datetime.now(UTC).isoformat(timespec="seconds"),
+        "label": args.label,
         "retrieval_config": cfg.model_dump(),
         "configs": [{"name": c.name, "mode": c.mode, "embedder": c.embedder} for c in configs],
         "chunks_sha256": chunks_sha,
@@ -291,7 +317,8 @@ def main() -> int:
 
 def write_report(report: dict[str, Any], out_dir: Path) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
-    prefix = out_dir / f"{report['created_at'][:10]}_retrieval"
+    label = f"_{report['label']}" if report.get("label") else ""
+    prefix = out_dir / f"{report['created_at'][:10]}_retrieval{label}"
     prefix.with_suffix(".json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
     )

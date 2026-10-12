@@ -6,6 +6,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import Any
 
+import numpy as np
 import psycopg
 from pgvector.psycopg import register_vector
 
@@ -105,6 +106,13 @@ def assert_fresh(conn: Connection, embedder: str, chunks_sha: str) -> None:
     if row is None or row[0] != chunks_sha:
         state = "missing" if row is None else "stale (chunks.jsonl changed)"
         raise StaleIndexError(f"{embedder} index is {state}; run `uv run tasks.py index`")
+
+
+def chunk_vectors(conn: Connection, embedder: str) -> dict[str, Vectors]:
+    rows = conn.execute(
+        "SELECT chunk_id, embedding FROM embeddings WHERE embedder = %s", (embedder,)
+    ).fetchall()
+    return {str(r[0]): np.asarray(r[1].to_numpy(), dtype=np.float32) for r in rows}
 
 
 def dense_search(
