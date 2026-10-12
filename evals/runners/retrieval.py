@@ -97,12 +97,13 @@ def summarize(rows: Sequence[dict[str, Any]]) -> dict[str, dict[str, Any]]:
 
 
 def comparison_pairs(configs: Sequence[RunConfig]) -> list[tuple[str, str]]:
-    """Each config vs bm25, the reranker vs plain hybrid, and each later embedder vs the first
-    one, mode by mode; only pairs whose two configs were run."""
+    """Each config vs bm25, hybrid vs dense, the reranker vs plain hybrid, and each later embedder
+    vs the first one, mode by mode; only pairs whose two configs were run."""
     names = {c.name for c in configs}
     pairs = [(c.name, "bm25") for c in configs if c.name != "bm25"]
     embedders = list(dict.fromkeys(c.embedder for c in configs if c.embedder))
-    pairs += [(f"hybrid_rerank:{e}", f"hybrid:{e}") for e in embedders]
+    pairs += [(f"hybrid:{e}", f"dense:{e}") for e in embedders]  # what BM25 adds to dense
+    pairs += [(f"hybrid_rerank:{e}", f"hybrid:{e}") for e in embedders]  # what the reranker adds
     for other in embedders[1:]:
         for mode in ("dense", "hybrid", "hybrid_rerank"):
             pairs.append((f"{mode}:{other}", f"{mode}:{embedders[0]}"))
