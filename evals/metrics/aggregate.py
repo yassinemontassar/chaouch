@@ -52,11 +52,16 @@ def aggregate(results: Sequence[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def breakdown(results: Sequence[dict[str, Any]], field: str) -> dict[str, dict[str, Any]]:
+Aggregator = Callable[[Sequence[dict[str, Any]]], dict[str, Any]]
+
+
+def breakdown(
+    results: Sequence[dict[str, Any]], field: str, agg: Aggregator = aggregate
+) -> dict[str, dict[str, Any]]:
     groups: dict[str, list[dict[str, Any]]] = {}
     for r in results:
         groups.setdefault(r[field], []).append(r)
-    return {key: aggregate(group) for key, group in sorted(groups.items())}
+    return {key: agg(group) for key, group in sorted(groups.items())}
 
 
 def bootstrap_ci(
@@ -77,6 +82,25 @@ def bootstrap_ci(
         if (m := mean([values[rng.randrange(len(values))] for _ in values])) is not None
     )
     return [round(means[int(0.025 * len(means))], 3), round(means[int(0.975 * len(means)) - 1], 3)]
+
+
+def paired_bootstrap_ci(
+    a: Sequence[float], b: Sequence[float], *, resamples: int = 2000, seed: int = 0
+) -> dict[str, Any]:
+    """Mean of a - b over the same questions, with a 95% interval that resamples question pairs.
+    Two systems on the same questions: overlapping per-system intervals alone settle nothing."""
+    if len(a) != len(b) or not a:
+        raise ValueError("need two non-empty lists of the same length (one value per question)")
+    diffs = [x - y for x, y in zip(a, b, strict=True)]
+    rng = random.Random(seed)
+    means = sorted(fmean(diffs[rng.randrange(len(diffs))] for _ in diffs) for _ in range(resamples))
+    return {
+        "diff": round(fmean(diffs), 3),
+        "ci95": [
+            round(means[int(0.025 * resamples)], 3),
+            round(means[int(0.975 * resamples) - 1], 3),
+        ],
+    }
 
 
 def confidence_intervals(results: Sequence[dict[str, Any]]) -> dict[str, list[float] | None]:

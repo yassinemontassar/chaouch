@@ -57,6 +57,8 @@ Option 2:
 ## Consequences
 - `passport_renewal` now has a single French source and no Arabic one.
 - Arabic coverage is the two birth certificate pages only; add Arabic HTML sources rather than PDF forms.
+  Planned (owner, 2026-10-12; gold set v2, before Phase 2): the Arabic versions of the passport, CIN,
+  bulletin n°3 and CNSS pages from the same portal (ADR 0013, Consequences).
 - `recall` adds some page clutter (a stray table marker at the start of `doc_birth_01`); use it only per source.
 - NFKC also folds other compatibility characters (e.g. ligatures, non-breaking spaces), which is fine for
   retrieval and prompts.

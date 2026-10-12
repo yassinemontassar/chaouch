@@ -10,3 +10,9 @@ sources:
     procedure: proc_b
     language: ar
     license_note: test fixture
+  - doc_id: dist_x_01
+    url: https://example.org/other
+    procedure: other
+    language: fr
+    license_note: test fixture
+    role: distractor

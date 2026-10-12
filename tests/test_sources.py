@@ -50,6 +50,15 @@ def test_invalid_entry(tmp_path: Path, bad: str) -> None:
         load_sources(write(tmp_path, bad))
 
 
+def test_role_defaults_to_core(tmp_path: Path) -> None:
+    core, distractor = load_sources(
+        write(tmp_path, entry(), entry(doc_id="proc_a_02") + "    role: distractor\n")
+    )
+    assert (core.role, distractor.role) == ("core", "distractor")
+    with pytest.raises(ConfigError):
+        load_sources(write(tmp_path, entry() + "    role: gold\n"))
+
+
 def test_duplicate_doc_id(tmp_path: Path) -> None:
     with pytest.raises(ConfigError, match="duplicate doc_id: proc_a_01"):
         load_sources(write(tmp_path, entry(), entry(url="https://example.org/b")))

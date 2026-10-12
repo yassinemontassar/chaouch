@@ -105,6 +105,18 @@ def test_in_scope_procedure_without_source(tmp_path: Path) -> None:
     assert report.errors == ["t-001: procedure 'proc_z' has no source in sources.yaml"]
 
 
+def test_distractor_is_never_a_gold_document(tmp_path: Path) -> None:
+    path = write_gold(tmp_path, with_changes(0, gold_doc_ids=["dist_x_01"]))
+    report = validate_gold(path, SOURCES, NO_WARNINGS)
+    assert report.errors == ["t-001: gold_doc_ids are distractors: dist_x_01"]
+
+
+def test_distractor_procedure_is_not_supported(tmp_path: Path) -> None:
+    path = write_gold(tmp_path, with_changes(0, procedure="other"))
+    report = validate_gold(path, SOURCES, NO_WARNINGS)
+    assert report.errors == ["t-001: procedure 'other' has no source in sources.yaml"]
+
+
 def test_load_gold_raises_on_errors(tmp_path: Path) -> None:
     path = write_gold(tmp_path, with_changes(0, script="latin"))
     with pytest.raises(ConfigError, match="line 1"):

@@ -1,0 +1,4361 @@
+{
+  "created_at": "2026-10-12T01:41:01+00:00",
+  "label": "rerank",
+  "retrieval_config": {
+    "embedders": {
+      "bge_m3": {
+        "name": "BAAI/bge-m3",
+        "dim": 1024,
+        "query_prompt_name": null
+      },
+      "qwen3_emb_0_6b": {
+        "name": "Qwen/Qwen3-Embedding-0.6B",
+        "dim": 1024,
+        "query_prompt_name": "query"
+      }
+    },
+    "default_embedder": "bge_m3",
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "device": "cpu",
+    "embed_batch_size": 8,
+    "rerank_max_length": 512,
+    "bm25": {
+      "k1": 1.2,
+      "b": 0.75
+    },
+    "rrf_k": 60,
+    "candidates": 20,
+    "rerank_candidates": 20,
+    "top_k": 5
+  },
+  "configs": [
+    {
+      "name": "bm25",
+      "mode": "bm25",
+      "embedder": null
+    },
+    {
+      "name": "dense:bge_m3",
+      "mode": "dense",
+      "embedder": "bge_m3"
+    },
+    {
+      "name": "hybrid:bge_m3",
+      "mode": "hybrid",
+      "embedder": "bge_m3"
+    },
+    {
+      "name": "hybrid_rerank:bge_m3",
+      "mode": "hybrid_rerank",
+      "embedder": "bge_m3"
+    }
+  ],
+  "chunks_sha256": "2081d39596d82737dfe76c3445b8a6927db64e4f0f7a2ee28df090d8f39d80bb",
+  "corpora": {
+    "full": {
+      "docs": 27,
+      "chunks": 51
+    }
+  },
+  "gold": {
+    "sha256": "35830b865fa896d3fd8f185b786e5537994177096a8b59089d6b312dc6dad745",
+    "n_questions": 43
+  },
+  "summary": {
+    "full": {
+      "bm25": {
+        "metrics": {
+          "n": 43,
+          "recall@1": 0.3023255813953488,
+          "recall@3": 0.46511627906976744,
+          "recall@5": 0.4883720930232558,
+          "mrr": 0.40345003833375925
+        },
+        "ci95": {
+          "recall@1": [
+            0.174,
+            0.442
+          ],
+          "recall@3": [
+            0.326,
+            0.628
+          ],
+          "recall@5": [
+            0.349,
+            0.628
+          ],
+          "rr": [
+            0.275,
+            0.539
+          ]
+        },
+        "breakdowns": {
+          "script": {
+            "arabic": {
+              "n": 16,
+              "recall@1": 0.125,
+              "recall@3": 0.1875,
+              "recall@5": 0.1875,
+              "mrr": 0.1620497557997558
+            },
+            "arabizi": {
+              "n": 15,
+              "recall@1": 0.26666666666666666,
+              "recall@3": 0.4666666666666667,
+              "recall@5": 0.5333333333333333,
+              "mrr": 0.41703703703703704
+            },
+            "mixed_fr": {
+              "n": 12,
+              "recall@1": 0.5833333333333334,
+              "recall@3": 0.8333333333333334,
+              "recall@5": 0.8333333333333334,
+              "mrr": 0.7083333333333334
+            }
+          },
+          "doc_language": {
+            "ar": {
+              "n": 7,
+              "recall@1": 0.2857142857142857,
+              "recall@3": 0.42857142857142855,
+              "recall@5": 0.42857142857142855,
+              "mrr": 0.33333333333333337
+            },
+            "fr": {
+              "n": 36,
+              "recall@1": 0.3055555555555556,
+              "recall@3": 0.4722222222222222,
+              "recall@5": 0.5,
+              "mrr": 0.4170838420838421
+            }
+          },
+          "procedure": {
+            "birth_certificate": {
+              "n": 7,
+              "recall@1": 0.2857142857142857,
+              "recall@3": 0.42857142857142855,
+              "recall@5": 0.42857142857142855,
+              "mrr": 0.33333333333333337
+            },
+            "cin": {
+              "n": 8,
+              "recall@1": 0.4375,
+              "recall@3": 0.5,
+              "recall@5": 0.625,
+              "mrr": 0.525
+            },
+            "cnss_registration": {
+              "n": 7,
+              "recall@1": 0.14285714285714285,
+              "recall@3": 0.42857142857142855,
+              "recall@5": 0.42857142857142855,
+              "mrr": 0.2857142857142857
+            },
+            "criminal_record": {
+              "n": 9,
+              "recall@1": 0.2777777777777778,
+              "recall@3": 0.6666666666666666,
+              "recall@5": 0.6666666666666666,
+              "mrr": 0.5288291954958622
+            },
+            "passport_renewal": {
+              "n": 12,
+              "recall@1": 0.3333333333333333,
+              "recall@3": 0.3333333333333333,
+              "recall@5": 0.3333333333333333,
+              "mrr": 0.33796296296296297
+            }
+          }
+        }
+      },
+      "dense:bge_m3": {
+        "metrics": {
+          "n": 43,
+          "recall@1": 0.5813953488372093,
+          "recall@3": 0.8488372093023255,
+          "recall@5": 0.9069767441860465,
+          "mrr": 0.7416666666666667
+        },
+        "ci95": {
+          "recall@1": [
+            0.442,
+            0.733
+          ],
+          "recall@3": [
+            0.733,
+            0.942
+          ],
+          "recall@5": [
+            0.814,
+            0.977
+          ],
+          "rr": [
+            0.642,
+            0.843
+          ]
+        },
+        "breakdowns": {
+          "script": {
+            "arabic": {
+              "n": 16,
+              "recall@1": 0.53125,
+              "recall@3": 0.84375,
+              "recall@5": 0.875,
+              "mrr": 0.7223958333333333
+            },
+            "arabizi": {
+              "n": 15,
+              "recall@1": 0.5666666666666667,
+              "recall@3": 0.8,
+              "recall@5": 0.8666666666666667,
+              "mrr": 0.7200000000000001
+            },
+            "mixed_fr": {
+              "n": 12,
+              "recall@1": 0.6666666666666666,
+              "recall@3": 0.9166666666666666,
+              "recall@5": 1.0,
+              "mrr": 0.7944444444444444
+            }
+          },
+          "doc_language": {
+            "ar": {
+              "n": 7,
+              "recall@1": 0.42857142857142855,
+              "recall@3": 0.5714285714285714,
+              "recall@5": 0.7142857142857143,
+              "mrr": 0.5190476190476191
+            },
+            "fr": {
+              "n": 36,
+              "recall@1": 0.6111111111111112,
+              "recall@3": 0.9027777777777778,
+              "recall@5": 0.9444444444444444,
+              "mrr": 0.7849537037037037
+            }
+          },
+          "procedure": {
+            "birth_certificate": {
+              "n": 7,
+              "recall@1": 0.42857142857142855,
+              "recall@3": 0.5714285714285714,
+              "recall@5": 0.7142857142857143,
+              "mrr": 0.5190476190476191
+            },
+            "cin": {
+              "n": 8,
+              "recall@1": 0.6875,
+              "recall@3": 1.0,
+              "recall@5": 1.0,
+              "mrr": 0.875
+            },
+            "cnss_registration": {
+              "n": 7,
+              "recall@1": 0.14285714285714285,
+              "recall@3": 0.7142857142857143,
+              "recall@5": 0.8571428571428571,
+              "mrr": 0.47500000000000003
+            },
+            "criminal_record": {
+              "n": 9,
+              "recall@1": 0.5,
+              "recall@3": 0.9444444444444444,
+              "recall@5": 1.0,
+              "mrr": 0.7592592592592592
+            },
+            "passport_renewal": {
+              "n": 12,
+              "recall@1": 0.9166666666666666,
+              "recall@3": 0.9166666666666666,
+              "recall@5": 0.9166666666666666,
+              "mrr": 0.9249999999999999
+            }
+          }
+        }
+      },
+      "hybrid:bge_m3": {
+        "metrics": {
+          "n": 43,
+          "recall@1": 0.4186046511627907,
+          "recall@3": 0.7325581395348837,
+          "recall@5": 0.7674418604651163,
+          "mrr": 0.6014182522903453
+        },
+        "ci95": {
+          "recall@1": [
+            0.279,
+            0.558
+          ],
+          "recall@3": [
+            0.605,
+            0.86
+          ],
+          "recall@5": [
+            0.651,
+            0.884
+          ],
+          "rr": [
+            0.489,
+            0.711
+          ]
+        },
+        "breakdowns": {
+          "script": {
+            "arabic": {
+              "n": 16,
+              "recall@1": 0.25,
+              "recall@3": 0.59375,
+              "recall@5": 0.625,
+              "mrr": 0.4522964015151515
+            },
+            "arabizi": {
+              "n": 15,
+              "recall@1": 0.4666666666666667,
+              "recall@3": 0.8,
+              "recall@5": 0.8666666666666667,
+              "mrr": 0.6644444444444445
+            },
+            "mixed_fr": {
+              "n": 12,
+              "recall@1": 0.5833333333333334,
+              "recall@3": 0.8333333333333334,
+              "recall@5": 0.8333333333333334,
+              "mrr": 0.7214646464646465
+            }
+          },
+          "doc_language": {
+            "ar": {
+              "n": 7,
+              "recall@1": 0.2857142857142857,
+              "recall@3": 0.42857142857142855,
+              "recall@5": 0.42857142857142855,
+              "mrr": 0.393939393939394
+            },
+            "fr": {
+              "n": 36,
+              "recall@1": 0.4444444444444444,
+              "recall@3": 0.7916666666666666,
+              "recall@5": 0.8333333333333334,
+              "mrr": 0.6417613636363636
+            }
+          },
+          "procedure": {
+            "birth_certificate": {
+              "n": 7,
+              "recall@1": 0.2857142857142857,
+              "recall@3": 0.42857142857142855,
+              "recall@5": 0.42857142857142855,
+              "mrr": 0.393939393939394
+            },
+            "cin": {
+              "n": 8,
+              "recall@1": 0.4375,
+              "recall@3": 0.8125,
+              "recall@5": 0.875,
+              "mrr": 0.6666666666666666
+            },
+            "cnss_registration": {
+              "n": 7,
+              "recall@1": 0.14285714285714285,
+              "recall@3": 0.42857142857142855,
+              "recall@5": 0.5714285714285714,
+              "mrr": 0.36893939393939396
+            },
+            "criminal_record": {
+              "n": 9,
+              "recall@1": 0.2777777777777778,
+              "recall@3": 1.0,
+              "recall@5": 1.0,
+              "mrr": 0.6296296296296297
+            },
+            "passport_renewal": {
+              "n": 12,
+              "recall@1": 0.75,
+              "recall@3": 0.8333333333333334,
+              "recall@5": 0.8333333333333334,
+              "mrr": 0.7934027777777778
+            }
+          }
+        }
+      },
+      "hybrid_rerank:bge_m3": {
+        "metrics": {
+          "n": 43,
+          "recall@1": 0.5116279069767442,
+          "recall@3": 0.7325581395348837,
+          "recall@5": 0.872093023255814,
+          "mrr": 0.669047619047619
+        },
+        "ci95": {
+          "recall@1": [
+            0.372,
+            0.651
+          ],
+          "recall@3": [
+            0.605,
+            0.86
+          ],
+          "recall@5": [
+            0.767,
+            0.953
+          ],
+          "rr": [
+            0.564,
+            0.776
+          ]
+        },
+        "breakdowns": {
+          "script": {
+            "arabic": {
+              "n": 16,
+              "recall@1": 0.375,
+              "recall@3": 0.46875,
+              "recall@5": 0.71875,
+              "mrr": 0.5230654761904762
+            },
+            "arabizi": {
+              "n": 15,
+              "recall@1": 0.5333333333333333,
+              "recall@3": 0.8666666666666667,
+              "recall@5": 0.9333333333333333,
+              "mrr": 0.7355555555555555
+            },
+            "mixed_fr": {
+              "n": 12,
+              "recall@1": 0.6666666666666666,
+              "recall@3": 0.9166666666666666,
+              "recall@5": 1.0,
+              "mrr": 0.7805555555555556
+            }
+          },
+          "doc_language": {
+            "ar": {
+              "n": 7,
+              "recall@1": 0.42857142857142855,
+              "recall@3": 0.5714285714285714,
+              "recall@5": 0.8571428571428571,
+              "mrr": 0.5571428571428572
+            },
+            "fr": {
+              "n": 36,
+              "recall@1": 0.5277777777777778,
+              "recall@3": 0.7638888888888888,
+              "recall@5": 0.875,
+              "mrr": 0.6908068783068784
+            }
+          },
+          "procedure": {
+            "birth_certificate": {
+              "n": 7,
+              "recall@1": 0.42857142857142855,
+              "recall@3": 0.5714285714285714,
+              "recall@5": 0.8571428571428571,
+              "mrr": 0.5571428571428572
+            },
+            "cin": {
+              "n": 8,
+              "recall@1": 0.5625,
+              "recall@3": 0.625,
+              "recall@5": 0.8125,
+              "mrr": 0.7083333333333334
+            },
+            "cnss_registration": {
+              "n": 7,
+              "recall@1": 0.2857142857142857,
+              "recall@3": 0.8571428571428571,
+              "recall@5": 1.0,
+              "mrr": 0.5357142857142857
+            },
+            "criminal_record": {
+              "n": 9,
+              "recall@1": 0.5,
+              "recall@3": 0.9444444444444444,
+              "recall@5": 1.0,
+              "mrr": 0.7592592592592592
+            },
+            "passport_renewal": {
+              "n": 12,
+              "recall@1": 0.6666666666666666,
+              "recall@3": 0.6666666666666666,
+              "recall@5": 0.75,
+              "mrr": 0.7182539682539683
+            }
+          }
+        }
+      }
+    }
+  },
+  "paired": {
+    "full": [
+      {
+        "a": "dense:bge_m3",
+        "b": "bm25",
+        "metric": "rr",
+        "diff": 0.338,
+        "ci95": [
+          0.18,
+          0.486
+        ]
+      },
+      {
+        "a": "dense:bge_m3",
+        "b": "bm25",
+        "metric": "recall@1",
+        "diff": 0.279,
+        "ci95": [
+          0.093,
+          0.453
+        ]
+      },
+      {
+        "a": "hybrid:bge_m3",
+        "b": "bm25",
+        "metric": "rr",
+        "diff": 0.198,
+        "ci95": [
+          0.101,
+          0.301
+        ]
+      },
+      {
+        "a": "hybrid:bge_m3",
+        "b": "bm25",
+        "metric": "recall@1",
+        "diff": 0.116,
+        "ci95": [
+          0.0,
+          0.233
+        ]
+      },
+      {
+        "a": "hybrid_rerank:bge_m3",
+        "b": "bm25",
+        "metric": "rr",
+        "diff": 0.266,
+        "ci95": [
+          0.152,
+          0.383
+        ]
+      },
+      {
+        "a": "hybrid_rerank:bge_m3",
+        "b": "bm25",
+        "metric": "recall@1",
+        "diff": 0.209,
+        "ci95": [
+          0.07,
+          0.349
+        ]
+      },
+      {
+        "a": "hybrid:bge_m3",
+        "b": "dense:bge_m3",
+        "metric": "rr",
+        "diff": -0.14,
+        "ci95": [
+          -0.243,
+          -0.037
+        ]
+      },
+      {
+        "a": "hybrid:bge_m3",
+        "b": "dense:bge_m3",
+        "metric": "recall@1",
+        "diff": -0.163,
+        "ci95": [
+          -0.314,
+          -0.023
+        ]
+      },
+      {
+        "a": "hybrid_rerank:bge_m3",
+        "b": "hybrid:bge_m3",
+        "metric": "rr",
+        "diff": 0.068,
+        "ci95": [
+          -0.035,
+          0.173
+        ]
+      },
+      {
+        "a": "hybrid_rerank:bge_m3",
+        "b": "hybrid:bge_m3",
+        "metric": "recall@1",
+        "diff": 0.093,
+        "ci95": [
+          -0.047,
+          0.233
+        ]
+      }
+    ]
+  },
+  "latency": {
+    "embed query (bge_m3)": {
+      "p50_ms": 354.9274999531917,
+      "p95_ms": 547.2090999828652
+    },
+    "dense search (pgvector)": {
+      "p50_ms": 3.426999959629029,
+      "p95_ms": 5.050399980973452
+    },
+    "bm25": {
+      "p50_ms": 0.4710000357590616,
+      "p95_ms": 5.042799981310964
+    },
+    "fuse + rerank 20": {
+      "p50_ms": 79563.41399997473,
+      "p95_ms": 99575.1806999906
+    }
+  },
+  "results": [
+    {
+      "id": "pass-001",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "pass-001",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_passport_01-0001",
+        "doc_b3_02-0000",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-001",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_passport_01-0001",
+        "doc_b3_02-0000",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-001",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_passport_01-0001",
+        "doc_dist_navigation_01-0000",
+        "doc_dist_seaman_book_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-002",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "pass-002",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_dist_cassation_01-0000",
+        "doc_birth_01-0001",
+        "doc_dist_temp_registration_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-002",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_dist_cassation_01-0000",
+        "doc_birth_01-0001",
+        "doc_dist_temp_registration_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-002",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cassation_01-0000",
+        "doc_dist_seaman_book_01-0000",
+        "doc_dist_seaman_book_01-0001",
+        "doc_dist_birth_fix_02-0000",
+        "doc_birth_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.08333333333333333
+    },
+    {
+      "id": "pass-003",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_passport_01-0001",
+        "doc_dist_post_02-0000",
+        "doc_dist_death_capital_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-003",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0001",
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-003",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_passport_01-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-003",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0001",
+        "doc_passport_01-0000",
+        "doc_b3_01-0000",
+        "doc_passport_01-0002",
+        "doc_b3_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-004",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "pass-004",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_passport_01-0001",
+        "doc_dist_seaman_book_01-0000",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-004",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_passport_01-0001",
+        "doc_dist_seaman_book_01-0000",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-004",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_b3_01-0001",
+        "doc_cin_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-005",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_navigation_01-0000",
+        "doc_cnss_01-0004",
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cin_02-0000",
+        "doc_cnss_01-0003"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "pass-005",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_birth_fix_02-0000",
+        "doc_birth_01-0001",
+        "doc_birth_01-0000",
+        "doc_dist_birth_fix_02-0001",
+        "doc_dist_temp_registration_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.1
+    },
+    {
+      "id": "pass-005",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_cin_02-0000",
+        "doc_dist_navigation_01-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_cnss_01-0004",
+        "doc_birth_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0625
+    },
+    {
+      "id": "pass-005",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_dist_navigation_01-0000",
+        "doc_birth_01-0002",
+        "doc_cin_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.14285714285714285
+    },
+    {
+      "id": "pass-006",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_passport_01-0001",
+        "doc_dist_post_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-006",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0001",
+        "doc_passport_01-0002",
+        "doc_cin_01-0000",
+        "doc_cin_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-006",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_cin_02-0000",
+        "doc_cin_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-006",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_dist_post_02-0000",
+        "doc_dist_cassation_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-007",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "pass-007",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_b3_01-0000",
+        "doc_passport_01-0000",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-007",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_b3_01-0000",
+        "doc_passport_01-0000",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-007",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_b3_02-0000",
+        "doc_dist_cassation_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-008",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "pass-008",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_birth_01-0001",
+        "doc_dist_cassation_01-0000",
+        "doc_dist_marriage_02-0000",
+        "doc_passport_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-008",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_birth_01-0001",
+        "doc_dist_cassation_01-0000",
+        "doc_dist_marriage_02-0000",
+        "doc_passport_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-008",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cassation_01-0000",
+        "doc_dist_seaman_book_01-0001",
+        "doc_dist_marriage_01-0000",
+        "doc_passport_01-0002",
+        "doc_dist_seaman_book_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.25
+    },
+    {
+      "id": "pass-009",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_dist_care_card_02-0001",
+        "doc_passport_01-0001",
+        "doc_dist_post_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-009",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_b3_01-0000",
+        "doc_passport_01-0002",
+        "doc_b3_01-0001",
+        "doc_passport_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-009",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-009",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_dist_post_01-0000",
+        "doc_dist_navigation_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-010",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_family_allowance_01-0001",
+        "doc_dist_care_card_01-0000",
+        "doc_dist_vehicle_rental_01-0000",
+        "doc_cnss_01-0002",
+        "doc_dist_care_card_02-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.05555555555555555
+    },
+    {
+      "id": "pass-010",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0001",
+        "doc_passport_01-0002",
+        "doc_passport_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-010",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_dist_care_card_01-0000",
+        "doc_passport_01-0001",
+        "doc_dist_family_allowance_01-0001",
+        "doc_b3_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "pass-010",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0001",
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_dist_cassation_01-0000",
+        "doc_b3_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-011",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_marriage_02-0000",
+        "doc_dist_navigation_01-0000",
+        "doc_birth_02-0000",
+        "doc_dist_seaman_book_01-0000",
+        "doc_birth_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "pass-011",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_dist_cassation_01-0000",
+        "doc_dist_navigation_01-0000",
+        "doc_dist_abroad_info_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-011",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_navigation_01-0000",
+        "doc_dist_seaman_book_01-0000",
+        "doc_dist_seaman_book_01-0001",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_customs_id_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.125
+    },
+    {
+      "id": "pass-011",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cassation_01-0000",
+        "doc_dist_navigation_01-0000",
+        "doc_dist_orphan_pension_01-0002",
+        "doc_dist_abroad_info_01-0000",
+        "doc_dist_temp_registration_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.14285714285714285
+    },
+    {
+      "id": "pass-012",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0001",
+        "doc_passport_01-0002",
+        "doc_dist_post_02-0000",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-012",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_passport_01-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-012",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_passport_01-0001",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "pass-012",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "passport_renewal",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_passport_01"
+      ],
+      "top_chunks": [
+        "doc_passport_01-0001",
+        "doc_passport_01-0000",
+        "doc_passport_01-0002",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-001",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_dist_post_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-001",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_dist_seaman_book_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-001",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_dist_marriage_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-001",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_dist_post_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-002",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01",
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_dist_birth_fix_02-0001",
+        "doc_dist_temp_registration_01-0000",
+        "doc_birth_01-0002",
+        "doc_dist_seaman_book_01-0001",
+        "doc_dist_navigation_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.1111111111111111
+    },
+    {
+      "id": "b3-002",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01",
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_dist_care_card_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_cin_02-0002",
+        "doc_b3_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.5,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-002",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01",
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_dist_temp_registration_01-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-002",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01",
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_dist_temp_registration_01-0000",
+        "doc_b3_01-0001",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.5,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-003",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0001",
+        "doc_dist_care_card_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-003",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0001",
+        "doc_b3_02-0001",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_dist_family_allowance_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-003",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0001",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_dist_care_card_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-003",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0001",
+        "doc_dist_abroad_info_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-004",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01",
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_cin_02-0000"
+      ],
+      "recall@1": 0.5,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-004",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01",
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_dist_family_allowance_01-0001"
+      ],
+      "recall@1": 0.5,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-004",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01",
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_dist_marriage_01-0001"
+      ],
+      "recall@1": 0.5,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-004",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01",
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0001",
+        "doc_cnss_01-0004"
+      ],
+      "recall@1": 0.5,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-005",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_birth_02-0000",
+        "doc_dist_birth_fix_02-0001",
+        "doc_dist_temp_registration_01-0000",
+        "doc_birth_01-0002",
+        "doc_dist_navigation_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.07692307692307693
+    },
+    {
+      "id": "b3-005",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0001",
+        "doc_cin_02-0001",
+        "doc_dist_care_card_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-005",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_dist_temp_registration_01-0000",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0000",
+        "doc_dist_customs_id_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-005",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0001",
+        "doc_b3_02-0001",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_dist_temp_registration_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-006",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_cnss_01-0004"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-006",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0001",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_02-0000",
+        "doc_dist_post_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "b3-006",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0001",
+        "doc_cnss_01-0004"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-006",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_dist_family_allowance_01-0002"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-007",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_dist_marriage_01-0001",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-007",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-007",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_dist_marriage_01-0001",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-007",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_02"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0001",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_cin_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "b3-008",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0002",
+        "doc_dist_birth_fix_02-0001",
+        "doc_dist_seaman_book_01-0001",
+        "doc_dist_navigation_01-0000",
+        "doc_dist_temp_registration_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.07142857142857142
+    },
+    {
+      "id": "b3-008",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0001",
+        "doc_passport_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-008",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_dist_seaman_book_01-0001",
+        "doc_b3_01-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_navigation_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "b3-008",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0001",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "b3-009",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001",
+        "doc_cnss_01-0004",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-009",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_dist_family_allowance_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "b3-009",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0001",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_cnss_01-0004"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "b3-009",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "criminal_record",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_b3_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0001",
+        "doc_b3_01-0001",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_birth_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "birth-001",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_birth_02-0000",
+        "doc_dist_marriage_02-0000",
+        "doc_birth_01-0002"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-001",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0000",
+        "doc_birth_01-0001",
+        "doc_birth_01-0002",
+        "doc_dist_birth_fix_02-0000",
+        "doc_birth_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-001",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_birth_01-0001",
+        "doc_birth_02-0000",
+        "doc_birth_01-0002"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-001",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0001",
+        "doc_birth_01-0000",
+        "doc_birth_01-0002",
+        "doc_birth_02-0000",
+        "doc_dist_birth_fix_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-002",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "birth-002",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_marriage_01-0001",
+        "doc_dist_marriage_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.1
+    },
+    {
+      "id": "birth-002",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_marriage_01-0001",
+        "doc_dist_marriage_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.1
+    },
+    {
+      "id": "birth-002",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_post_01-0000",
+        "doc_dist_cassation_01-0000",
+        "doc_dist_abroad_info_01-0000",
+        "doc_b3_01-0000",
+        "doc_birth_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.2
+    },
+    {
+      "id": "birth-003",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_birth_fix_01-0000",
+        "doc_cnss_01-0000",
+        "doc_dist_marriage_01-0000",
+        "doc_b3_02-0000",
+        "doc_dist_orphan_pension_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "birth-003",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_birth_fix_02-0001",
+        "doc_dist_marriage_01-0000",
+        "doc_dist_marriage_01-0001",
+        "doc_passport_01-0002",
+        "doc_birth_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.2
+    },
+    {
+      "id": "birth-003",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_marriage_01-0000",
+        "doc_b3_02-0000",
+        "doc_passport_01-0000",
+        "doc_dist_marriage_01-0001",
+        "doc_cin_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.06666666666666667
+    },
+    {
+      "id": "birth-003",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_birth_fix_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0000",
+        "doc_dist_marriage_01-0000",
+        "doc_birth_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.2
+    },
+    {
+      "id": "birth-004",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0001",
+        "doc_passport_01-0001",
+        "doc_dist_post_02-0001",
+        "doc_dist_post_01-0000",
+        "doc_b3_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "birth-004",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_b3_02-0001",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0000",
+        "doc_dist_post_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "birth-004",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0001",
+        "doc_b3_01-0000",
+        "doc_dist_post_01-0000",
+        "doc_passport_01-0001",
+        "doc_dist_post_02-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "birth-004",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_post_01-0000",
+        "doc_b3_02-0001",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "birth-005",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0001",
+        "doc_birth_01-0000",
+        "doc_dist_marriage_02-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_birth_fix_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-005",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_dist_birth_fix_02-0000",
+        "doc_dist_birth_fix_02-0001",
+        "doc_birth_01-0000",
+        "doc_birth_01-0001",
+        "doc_birth_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "birth-005",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0001",
+        "doc_birth_01-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_dist_birth_fix_02-0001",
+        "doc_birth_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-005",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0001",
+        "doc_dist_birth_fix_02-0000",
+        "doc_dist_birth_fix_02-0001",
+        "doc_birth_01-0000",
+        "doc_birth_01-0002"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-006",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_02"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_b3_01-0001",
+        "doc_dist_birth_fix_01-0000",
+        "doc_dist_family_allowance_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "birth-006",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_02"
+      ],
+      "top_chunks": [
+        "doc_birth_02-0000",
+        "doc_dist_death_capital_01-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_b3_01-0000",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-006",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_02"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0000",
+        "doc_b3_01-0001",
+        "doc_b3_02-0000",
+        "doc_b3_02-0001",
+        "doc_dist_family_allowance_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.09090909090909091
+    },
+    {
+      "id": "birth-006",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_02"
+      ],
+      "top_chunks": [
+        "doc_b3_01-0000",
+        "doc_birth_02-0000",
+        "doc_b3_02-0000",
+        "doc_birth_01-0001",
+        "doc_b3_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "birth-007",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_02-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_birth_01-0000",
+        "doc_birth_01-0001",
+        "doc_dist_marriage_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "birth-007",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0001",
+        "doc_birth_01-0000",
+        "doc_birth_01-0002",
+        "doc_birth_02-0000",
+        "doc_dist_birth_fix_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "birth-007",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_02-0000",
+        "doc_birth_01-0001",
+        "doc_birth_01-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_birth_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "birth-007",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "birth_certificate",
+      "doc_language": "ar",
+      "gold_doc_ids": [
+        "doc_birth_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0001",
+        "doc_dist_birth_fix_02-0000",
+        "doc_birth_01-0002",
+        "doc_birth_01-0000",
+        "doc_birth_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-001",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0002",
+        "doc_cin_02-0000",
+        "doc_dist_care_card_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-001",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0000",
+        "doc_cin_02-0002",
+        "doc_cin_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-001",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0002",
+        "doc_cin_02-0000",
+        "doc_cin_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-001",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_02-0000",
+        "doc_cin_02-0001",
+        "doc_cin_01-0001",
+        "doc_cin_02-0002"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-002",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01",
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_marriage_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "cin-002",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01",
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0001",
+        "doc_dist_customs_id_01-0000",
+        "doc_cin_02-0002",
+        "doc_cin_02-0001",
+        "doc_dist_care_card_02-0000"
+      ],
+      "recall@1": 0.5,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-002",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01",
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_cin_01-0001",
+        "doc_dist_marriage_02-0000",
+        "doc_cin_02-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.5,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "cin-002",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01",
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_marriage_02-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_customs_id_01-0000",
+        "doc_cin_02-0001",
+        "doc_cin_02-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.5,
+      "rr": 0.25
+    },
+    {
+      "id": "cin-003",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0002",
+        "doc_cin_02-0000",
+        "doc_dist_care_card_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-003",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0000",
+        "doc_cin_02-0002",
+        "doc_cin_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-003",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0002",
+        "doc_cin_02-0000",
+        "doc_cin_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-003",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_passport_01-0000",
+        "doc_cin_02-0001",
+        "doc_cin_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-004",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_marriage_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "cin-004",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_dist_seaman_book_01-0000",
+        "doc_dist_customs_id_01-0000",
+        "doc_cin_02-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-004",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_dist_marriage_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "cin-004",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01"
+      ],
+      "top_chunks": [
+        "doc_dist_family_allowance_01-0002",
+        "doc_cin_02-0002",
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_marriage_02-0000",
+        "doc_cin_02-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.16666666666666666
+    },
+    {
+      "id": "cin-005",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_post_02-0001",
+        "doc_dist_post_01-0000",
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.2
+    },
+    {
+      "id": "cin-005",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_02-0000",
+        "doc_cin_01-0000",
+        "doc_cin_02-0001",
+        "doc_dist_care_card_02-0000",
+        "doc_cin_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-005",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_02-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0001",
+        "doc_dist_care_card_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cin-005",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_02-0001",
+        "doc_cin_01-0001",
+        "doc_cin_01-0000",
+        "doc_cin_02-0002",
+        "doc_cin_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-006",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_02-0002",
+        "doc_cin_02-0000",
+        "doc_passport_01-0000",
+        "doc_cin_02-0001",
+        "doc_cin_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-006",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_02-0000",
+        "doc_cin_01-0000",
+        "doc_b3_01-0000",
+        "doc_b3_02-0000",
+        "doc_passport_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-006",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_02-0000",
+        "doc_passport_01-0000",
+        "doc_cin_02-0001",
+        "doc_b3_02-0000",
+        "doc_cin_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-006",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_02-0000",
+        "doc_passport_01-0000",
+        "doc_cin_02-0001",
+        "doc_cin_01-0000",
+        "doc_b3_01-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-007",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01",
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_cin_02-0002",
+        "doc_cin_02-0000",
+        "doc_dist_care_card_01-0000"
+      ],
+      "recall@1": 0.5,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-007",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01",
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_care_card_02-0000",
+        "doc_cin_02-0001",
+        "doc_cin_01-0001",
+        "doc_cin_02-0002",
+        "doc_dist_temp_registration_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cin-007",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01",
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0001",
+        "doc_cin_01-0000",
+        "doc_cin_02-0002",
+        "doc_cin_02-0001",
+        "doc_dist_care_card_02-0000"
+      ],
+      "recall@1": 0.5,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-007",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_01",
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_cin_01-0001",
+        "doc_cin_02-0001",
+        "doc_cin_02-0002",
+        "doc_cin_01-0000",
+        "doc_passport_01-0000"
+      ],
+      "recall@1": 0.5,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cin-008",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_marriage_02-0000",
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_seaman_book_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "cin-008",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_birth_fix_02-0000",
+        "doc_cin_02-0000",
+        "doc_cin_01-0000",
+        "doc_cin_01-0001",
+        "doc_dist_care_card_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cin-008",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_marriage_02-0000",
+        "doc_dist_seaman_book_01-0000",
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_birth_fix_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.16666666666666666
+    },
+    {
+      "id": "cin-008",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "cin",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cin_02"
+      ],
+      "top_chunks": [
+        "doc_dist_marriage_02-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_customs_id_01-0000",
+        "doc_cin_02-0000",
+        "doc_cin_02-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.25
+    },
+    {
+      "id": "cnss-001",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_cnss_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-001",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0000",
+        "doc_cnss_01-0004",
+        "doc_cnss_01-0001",
+        "doc_cnss_01-0003"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-001",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0000",
+        "doc_cnss_01-0002",
+        "doc_dist_family_allowance_01-0000",
+        "doc_cnss_01-0004"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-001",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_cnss_01-0000",
+        "doc_cnss_01-0004",
+        "doc_cnss_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "cnss-002",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_cnss_01-0001",
+        "doc_cnss_01-0002",
+        "doc_cnss_01-0000",
+        "doc_cnss_01-0003",
+        "doc_dist_care_card_02-0000"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cnss-002",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0001",
+        "doc_b3_01-0000",
+        "doc_cnss_01-0000",
+        "doc_b3_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-002",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_cnss_01-0001",
+        "doc_cnss_01-0000",
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0003",
+        "doc_cnss_01-0002"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cnss-002",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0002",
+        "doc_cnss_01-0001",
+        "doc_cnss_01-0003",
+        "doc_cnss_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-003",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_marriage_02-0000",
+        "doc_dist_navigation_01-0000",
+        "doc_birth_02-0000",
+        "doc_dist_seaman_book_01-0000",
+        "doc_birth_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "cnss-003",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0000",
+        "doc_dist_care_card_02-0000",
+        "doc_cnss_01-0001",
+        "doc_cnss_01-0003"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-003",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_seaman_book_01-0000",
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_birth_fix_02-0001",
+        "doc_dist_seaman_book_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.09090909090909091
+    },
+    {
+      "id": "cnss-003",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_cnss_01-0000",
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0003",
+        "doc_cnss_01-0004",
+        "doc_dist_family_allowance_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cnss-004",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabizi",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_dist_family_allowance_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "cnss-004",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabizi",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_dist_care_card_02-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_cnss_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.2
+    },
+    {
+      "id": "cnss-004",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabizi",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_dist_care_card_02-0000",
+        "doc_dist_birth_fix_02-0000",
+        "doc_cnss_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.2
+    },
+    {
+      "id": "cnss-004",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabizi",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_cnss_01-0001",
+        "doc_cnss_01-0002",
+        "doc_dist_care_card_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "cnss-005",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "mixed_fr",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0000",
+        "doc_dist_orphan_pension_01-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_dist_orphan_pension_01-0001"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-005",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0000",
+        "doc_cnss_01-0004",
+        "doc_cnss_01-0003",
+        "doc_dist_family_allowance_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-005",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_dist_orphan_pension_01-0000",
+        "doc_cnss_01-0004"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.5
+    },
+    {
+      "id": "cnss-005",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "mixed_fr",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_dist_family_allowance_01-0000",
+        "doc_cnss_01-0000",
+        "doc_cnss_01-0004",
+        "doc_cnss_01-0003"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "cnss-006",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_marriage_02-0000",
+        "doc_dist_navigation_01-0000",
+        "doc_birth_02-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "cnss-006",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_cnss_01-0000",
+        "doc_dist_care_card_02-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0001"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cnss-006",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_customs_id_01-0000",
+        "doc_dist_seaman_book_01-0000",
+        "doc_dist_seaman_book_01-0001",
+        "doc_dist_navigation_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.16666666666666666
+    },
+    {
+      "id": "cnss-006",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_cnss_01-0000",
+        "doc_dist_family_allowance_01-0001",
+        "doc_dist_vehicle_rental_01-0000",
+        "doc_dist_family_allowance_01-0002",
+        "doc_cnss_01-0003"
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "rr": 1.0
+    },
+    {
+      "id": "cnss-007",
+      "corpus": "full",
+      "config": "bm25",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.0
+    },
+    {
+      "id": "cnss-007",
+      "corpus": "full",
+      "config": "dense:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0001",
+        "doc_dist_post_02-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_care_card_02-0000",
+        "doc_birth_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.125
+    },
+    {
+      "id": "cnss-007",
+      "corpus": "full",
+      "config": "hybrid:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_birth_01-0001",
+        "doc_dist_post_02-0000",
+        "doc_dist_temp_registration_01-0000",
+        "doc_dist_care_card_02-0000",
+        "doc_birth_01-0002"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "rr": 0.125
+    },
+    {
+      "id": "cnss-007",
+      "corpus": "full",
+      "config": "hybrid_rerank:bge_m3",
+      "script": "arabic",
+      "procedure": "cnss_registration",
+      "doc_language": "fr",
+      "gold_doc_ids": [
+        "doc_cnss_01"
+      ],
+      "top_chunks": [
+        "doc_dist_family_allowance_01-0002",
+        "doc_b3_02-0001",
+        "doc_dist_cnss_contrib_01-0000",
+        "doc_cnss_01-0003",
+        "doc_dist_abroad_info_01-0000"
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "rr": 0.25
+    }
+  ]
+}

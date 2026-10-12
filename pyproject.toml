@@ -6,12 +6,17 @@ readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "httpx2>=2.13.1",
+    "numpy>=2.5.3",
     "openai>=3.28.0",
+    "pgvector>=0.5.1",
+    "psycopg[binary]>=3.3.6",
     "pydantic>=2.14.0",
     "pydantic-settings>=2.15.0",
     "pymupdf4llm>=1.28.2",
     "pyyaml>=6.0.3",
+    "sentence-transformers>=6.1.0",
     "tokenizers>=0.23.3",
+    "torch>=2.14.1",
     "trafilatura>=2.3.1",
 ]
 
@@ -51,10 +56,22 @@ testpaths = ["tests"]
 pythonpath = ["."]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
-markers = ["live: calls real LLM providers; opt-in via `uv run tasks.py test-live`"]
-addopts = "-m 'not live'"
+markers = [
+    "live: calls real LLM providers; opt-in via `uv run tasks.py test-live`",
+    "integration: needs Postgres (Docker) and the retrieval models; `uv run tasks.py test-integration`",
+]
+addopts = "-m 'not live and not integration'"
 
 [[tool.mypy.overrides]]
 # PyMuPDF ships no type information.
 module = ["pymupdf4llm"]
 ignore_missing_imports = true
+
+# CPU-only torch: embeddings and the reranker run on CPU (spec 3.1.2). Switch to a CUDA index in Phase 4.
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }

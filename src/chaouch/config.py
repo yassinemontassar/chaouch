@@ -66,9 +66,43 @@ class ChunkingConfig(StrictModel):
         return self
 
 
+class EmbedderConfig(StrictModel):
+    name: str  # Hugging Face model id
+    dim: int = Field(gt=0)
+    query_prompt_name: str | None  # the model's built-in query prompt, applied to queries only
+
+
+class BM25Config(StrictModel):
+    k1: float = Field(gt=0)
+    b: float = Field(ge=0, le=1)
+
+
+class SearchConfig(StrictModel):
+    embedders: dict[str, EmbedderConfig]
+    default_embedder: str
+    reranker_model: str
+    device: str
+    embed_batch_size: int = Field(gt=0)
+    rerank_max_length: int = Field(gt=0)
+    bm25: BM25Config
+    rrf_k: int = Field(gt=0)
+    candidates: int = Field(gt=0)  # per retriever, before fusion
+    rerank_candidates: int = Field(gt=0)
+    top_k: int = Field(gt=0)
+
+    @model_validator(mode="after")
+    def _consistent(self) -> SearchConfig:
+        if not self.top_k <= self.rerank_candidates <= self.candidates:
+            raise ValueError("need top_k <= rerank_candidates <= candidates")
+        if self.default_embedder not in self.embedders:
+            raise ValueError(f"default_embedder {self.default_embedder!r} not in embedders")
+        return self
+
+
 class RetrievalConfig(StrictModel):
     ingestion: IngestionConfig
     chunking: ChunkingConfig
+    retrieval: SearchConfig
 
 
 class Settings(BaseSettings):
@@ -76,6 +110,8 @@ class Settings(BaseSettings):
 
     gemini_api_key: SecretStr | None = None
     groq_api_key: SecretStr | None = None
+    database_url: SecretStr | None = None
+    hf_token: SecretStr | None = None  # optional; faster, less throttled model downloads
 
     def _keys(self) -> dict[str, SecretStr | None]:
         return {"GEMINI_API_KEY": self.gemini_api_key, "GROQ_API_KEY": self.groq_api_key}
@@ -87,6 +123,11 @@ class Settings(BaseSettings):
         if secret is None or not secret.get_secret_value():
             raise ConfigError(f"{env_name} is not set; add it to .env (see .env.example)")
         return secret.get_secret_value()
+
+    def database_dsn(self) -> str:
+        if self.database_url is None or not self.database_url.get_secret_value():
+            raise ConfigError("DATABASE_URL is not set; add it to .env (see .env.example)")
+        return self.database_url.get_secret_value()
 
 
 def load_yaml[T: BaseModel](path: Path, model: type[T]) -> T:
