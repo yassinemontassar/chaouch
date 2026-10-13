@@ -10,6 +10,12 @@ sources:
     procedure: proc_b
     language: ar
     license_note: test fixture
+  - doc_id: proc_a_02
+    url: https://example.org/proc-a-ar
+    procedure: proc_a
+    language: ar
+    license_note: test fixture
+    translation_of: proc_a_01
   - doc_id: dist_x_01
     url: https://example.org/other
     procedure: other

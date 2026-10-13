@@ -121,6 +121,10 @@ What it shows:
 
 Phase 2 uses bge-m3 alone.
 
+Gold v2 light ([ADR 0014](docs/decisions/0014-gold-v2-arabic-twins.md)) adds the Arabic versions of the
+French procedure pages: bge-m3 stays first (R@1 0.62, R@5 0.93, MRR 0.77 on 33 documents), and
+BM25 fusion no longer hurts once Arabic-script questions have Arabic pages to match.
+
 ## Roadmap
 
 Each phase targets a weakness the baseline found.

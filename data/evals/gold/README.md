@@ -29,3 +29,11 @@ Claude is neither an evaluated system nor the judge (`configs/models.yaml`).
 uv run scripts/gold_from_xlsx.py ../chaouch_gold_questions.xlsx
 uv run tasks.py validate-evals
 ```
+
+## Versions
+
+- **v1** (2026-10-11): the 51 questions above. Phase 0 baselines (B0–B3) and ADR 0013 use it.
+- **v2 light** (2026-10-13, ADR 0014): same questions and `gold_doc_ids`. The Arabic twins of the
+  passport, CIN, bulletin n°3 and CNSS pages were added as core sources with `translation_of` in
+  `sources.yaml`, so `eval-retrieval` counts either language version as the gold document
+  (owner-approved mapping). New Derja questions come later ([HUMAN]).

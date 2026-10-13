@@ -62,6 +62,66 @@ sources:
     license_note: "Footer: '© L'information et la Communication Administrative 2015'. No terms-of-use page found."
     notes: "Tunisians abroad + foreigners who lived in Tunisia. Validity of the bulletin not stated."
 
+  # ── Arabic twins (gold v2, ADR 0014) ───────────────────────────────────
+  # The same portal pages in Arabic. Owner approved the list on 2026-10-13; Claude checked that each
+  # carries the same facts as its French original. Gold questions keep naming the original:
+  # retrieval scoring counts either version (translation_of). The default extraction drops the
+  # conditions and required documents, hence extract_mode: recall (as doc_birth_01, ADR 0006).
+
+  - doc_id: doc_passport_03
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D1618"
+    procedure: passport_renewal
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "استخراج جواز سفر لأوّل مرة أو تجديده بالنسبة إلى التونسيين المقيمين بالتراب التونسي"
+    extract_mode: recall
+    translation_of: doc_passport_01
+
+  - doc_id: doc_cin_03
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D1309"
+    procedure: cin
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "استخراج بطاقة تعريف وطنية لأول مرة"
+    extract_mode: recall
+    translation_of: doc_cin_02
+
+  - doc_id: doc_cin_04
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D1310"
+    procedure: cin
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "تجديد بطاقة تعريف قومية ببطاقة تعريف وطنية"
+    extract_mode: recall
+    translation_of: doc_cin_01
+
+  - doc_id: doc_cnss_02
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_3_D717"
+    procedure: cnss_registration
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "انخراط العملة غير الأجراء"
+    extract_mode: recall
+    translation_of: doc_cnss_01
+
+  - doc_id: doc_b3_03
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_7_D1705"
+    procedure: criminal_record
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "استخراج بطاقة عدد 3 بالنسبة إلى التونسيين والأجانب المولودين بالتراب التونسي والأجانب المقيمين به"
+    extract_mode: recall
+    translation_of: doc_b3_01
+
+  - doc_id: doc_b3_04
+    url: "http://www.sicad.gov.tn/Ar/Prestations_57_7_D1702"
+    procedure: criminal_record
+    language: ar
+    license_note: "Footer: '© الإرشاد و الاتصال الإداري 2015'. No terms-of-use page found."
+    notes: "استخراج بطاقة عدد 3 بالنسبة إلى التونسيين المقيمين بالخارج وإلى الأجانب الذين أقاموا بالتراب التونسي مدة معينة"
+    extract_mode: recall
+    translation_of: doc_b3_02
+
   # ── Distractors (ADR 0013) ─────────────────────────────────────────────
   # Official pages on other procedures from the same portal, indexed only to make retrieval
   # harder. They must not answer any gold question (Claude's pre-check; owner approved the

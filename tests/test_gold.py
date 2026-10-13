@@ -111,6 +111,12 @@ def test_distractor_is_never_a_gold_document(tmp_path: Path) -> None:
     assert report.errors == ["t-001: gold_doc_ids are distractors: dist_x_01"]
 
 
+def test_gold_names_the_original_not_its_translation(tmp_path: Path) -> None:
+    path = write_gold(tmp_path, with_changes(0, gold_doc_ids=["proc_a_02"]))
+    report = validate_gold(path, SOURCES, NO_WARNINGS)
+    assert report.errors == ["t-001: gold_doc_ids are translations, name the original: proc_a_02"]
+
+
 def test_distractor_procedure_is_not_supported(tmp_path: Path) -> None:
     path = write_gold(tmp_path, with_changes(0, procedure="other"))
     report = validate_gold(path, SOURCES, NO_WARNINGS)
