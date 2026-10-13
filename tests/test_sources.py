@@ -70,3 +70,30 @@ def test_notes_are_optional(tmp_path: Path) -> None:
     assert plain.notes is None
     assert plain.extract_mode == "precision"
     assert noted.notes == "Fee not stated."
+
+
+def test_translation_of(tmp_path: Path) -> None:
+    twin = entry(doc_id="proc_a_02", language="ar") + "    translation_of: proc_a_01\n"
+    original, translation = load_sources(write(tmp_path, entry(), twin))
+    assert (original.translation_of, translation.translation_of) == (None, "proc_a_01")
+
+
+@pytest.mark.parametrize(
+    ("extra", "message"),
+    [
+        ("    translation_of: proc_a_09\n", "unknown"),
+        ("    translation_of: proc_a_02\n", "itself a translation"),
+        ("    translation_of: proc_a_01\n    role: distractor\n", "core"),
+    ],
+)
+def test_invalid_translation_of(tmp_path: Path, extra: str, message: str) -> None:
+    first = entry(doc_id="proc_a_02", language="ar") + "    translation_of: proc_a_01\n"
+    bad = entry(doc_id="proc_a_03", url="https://example.org/c", language="ar") + extra
+    with pytest.raises(ConfigError, match=message):
+        load_sources(write(tmp_path, entry(), first, bad))
+
+
+def test_translation_needs_the_other_language(tmp_path: Path) -> None:
+    twin = entry(doc_id="proc_a_02") + "    translation_of: proc_a_01\n"
+    with pytest.raises(ConfigError, match="same language"):
+        load_sources(write(tmp_path, entry(), twin))

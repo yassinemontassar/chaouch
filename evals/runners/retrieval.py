@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from chaouch.config import SearchConfig, Settings, load_retrieval_config
+from chaouch.ingestion.sources import load_sources
 from chaouch.retrieval.chunks import ChunkRecord, load_chunks
 from chaouch.retrieval.models import load_embedder, load_reranker, release_models
 from chaouch.retrieval.pipeline import Corpus, Mode, rank
@@ -52,9 +53,12 @@ def run_configs(cfg: SearchConfig) -> list[RunConfig]:
     return out
 
 
-def gold_doc_language(gold: Sequence[str], language_of: Mapping[str, str]) -> str:
-    languages = {language_of[d] for d in gold}
-    return languages.pop() if len(languages) == 1 else "mixed"
+def gold_doc_language(
+    gold: Sequence[str], language_of: Mapping[str, str], canonical: Mapping[str, str]
+) -> str:
+    """Languages of the gold documents and their translations, e.g. "fr" or "ar+fr"."""
+    twins = {d for d in language_of if canonical.get(d, d) in gold}
+    return "+".join(sorted({language_of[d] for d in {*gold, *twins}}))
 
 
 def score_row(
@@ -64,16 +68,18 @@ def score_row(
     ranking: Sequence[str],
     chunks_by_id: dict[str, ChunkRecord],
     language_of: Mapping[str, str],
+    canonical: Mapping[str, str],
     top_k: int,
 ) -> dict[str, Any]:
-    chunk_docs = [chunks_by_id[c].doc_id for c in ranking]
+    """canonical maps a translation to its original document, so either one counts as gold."""
+    chunk_docs = [canonical.get(chunks_by_id[c].doc_id, chunks_by_id[c].doc_id) for c in ranking]
     return {
         "id": q.id,
         "corpus": corpus,
         "config": config,
         "script": q.script,
         "procedure": q.procedure,
-        "doc_language": gold_doc_language(q.gold_doc_ids, language_of),
+        "doc_language": gold_doc_language(q.gold_doc_ids, language_of, canonical),
         "gold_doc_ids": q.gold_doc_ids,
         "top_chunks": list(ranking[:top_k]),
         **{f"recall@{k}": recall_at_k(chunk_docs, q.gold_doc_ids, k) for k in KS},
@@ -150,6 +156,8 @@ def markdown(report: dict[str, Any]) -> str:
         f"Chunks: sha256 {report['chunks_sha256'][:12]}.",
         "R@k = share of the gold documents found in the top k **chunks** (what the LLM sees); "
         "MRR = mean of 1 / rank of the first chunk from a gold document. "
+        "A document and its translation (`translation_of` in sources.yaml) count as one gold "
+        "document. "
         "In brackets: 95% bootstrap intervals over questions.",
     ]
     configs = [c["name"] for c in report["configs"]]
@@ -239,6 +247,7 @@ def main() -> int:
     questions = [q for q in load_gold() if q.category == "in_scope"]
     chunks_by_id = {c.chunk_id: c for c in chunks}
     language_of = {c.doc_id: c.language for c in chunks}
+    canonical = {s.doc_id: s.translation_of for s in load_sources() if s.translation_of}
     available = {"core": [c for c in chunks if c.role == "core"]}
     if any(c.role == "distractor" for c in chunks):
         available["full"] = chunks
@@ -287,7 +296,16 @@ def main() -> int:
                 if c.mode == "hybrid_rerank":
                     timings[f"fuse + rerank {cfg.rerank_candidates}"].append(ms_since(start))
                 rows.append(
-                    score_row(q, corpus_name, c.name, ranking, chunks_by_id, language_of, cfg.top_k)
+                    score_row(
+                        q,
+                        corpus_name,
+                        c.name,
+                        ranking,
+                        chunks_by_id,
+                        language_of,
+                        canonical,
+                        cfg.top_k,
+                    )
                 )
             elapsed = (time.perf_counter() - run_start) / 60
             print(f"{corpus_name}: {i}/{len(questions)} questions, {elapsed:.1f} min", flush=True)

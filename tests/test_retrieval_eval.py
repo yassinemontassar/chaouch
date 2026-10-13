@@ -110,15 +110,32 @@ LANGUAGE = {c.doc_id: c.language for c in CHUNKS.values()}
 
 
 def test_gold_doc_language() -> None:
-    assert gold_doc_language(["a"], LANGUAGE) == "fr"
-    assert gold_doc_language(["a", "b"], LANGUAGE) == "mixed"
+    assert gold_doc_language(["a"], LANGUAGE, {}) == "fr"
+    assert gold_doc_language(["a", "b"], LANGUAGE, {}) == "ar+fr"
+    assert gold_doc_language(["a"], LANGUAGE, {"b": "a"}) == "ar+fr"  # b translates a
 
 
 def test_score_row() -> None:
-    row = score_row(question("q1", ["b"]), "core", "bm25", ["a-0", "b-0"], CHUNKS, LANGUAGE, 1)
+    row = score_row(question("q1", ["b"]), "core", "bm25", ["a-0", "b-0"], CHUNKS, LANGUAGE, {}, 1)
     assert row["recall@1"] == 0 and row["recall@3"] == 1 and row["rr"] == 0.5
     assert row["doc_language"] == "ar"
     assert row["top_chunks"] == ["a-0"]
+
+
+def test_a_translation_counts_as_its_original() -> None:
+    # gold v2 (ADR 0014): b is the Arabic twin of a, either one finds the gold document
+    chunks = {**CHUNKS, "c-0": chunk("c-0", "fr")}
+    language = {**LANGUAGE, "c": "fr"}
+    canonical = {"b": "a"}
+    row = score_row(
+        question("q1", ["a"]), "core", "bm25", ["b-0", "c-0"], chunks, language, canonical, 1
+    )
+    assert row["recall@1"] == 1 and row["rr"] == 1
+    assert row["doc_language"] == "ar+fr"
+    row = score_row(
+        question("q2", ["a", "c"]), "core", "bm25", ["b-0", "a-0"], chunks, language, canonical, 3
+    )
+    assert row["recall@3"] == 0.5  # the twins fill one gold slot, not two
 
 
 def test_configs_and_pairs() -> None:
